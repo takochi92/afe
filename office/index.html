@@ -556,7 +556,22 @@ function renderLog(){
     b.addEventListener("click", async () => { try { const r = await mcp.callTool(SERVER, "list_events", EVENTS_INPUT); logState = {kind:"items", items: parseEvents(r.payload)}; renderLog(); } catch (e) { logState = errState(e); renderLog(); } });
     box.append(document.createElement("br"), b);
   }
-  logEl.replaceChildren(box);
+  logEl.replaceChildren(box, ...orderThread());
+}
+function msgNode(kind, text, at){
+  const m = document.createElement("div"); m.className = "msg " + (kind === "user" ? "owner" : "ceo");
+  const who = document.createElement("div"); who.className = "who"; who.innerHTML = `<span></span><span></span>`;
+  who.firstChild.textContent = kind === "user" ? "オーナー" : "社長（Claude）"; who.lastChild.textContent = at ? fmtTime(at) : "";
+  const body = document.createElement("div"); body.className = "body"; body.textContent = text;
+  m.append(who, body); return m;
+}
+function orderThread(){
+  const out = [];
+  for (const o of [...orders].reverse()) {
+    out.push(msgNode("user", o.text, o.createdAt));
+    if (o.reply) out.push(msgNode("ceo", o.reply, o.repliedAt));
+  }
+  return out;
 }
 function errState(e){
   const code = e?.code;
@@ -584,7 +599,7 @@ function bucketOf(p){
 
 /* ---------- 指示の送信 ---------- */
 const form = document.getElementById("composer"), ta = document.getElementById("order"), sendBtn = document.getElementById("send"), toast = document.getElementById("toast");
-let db = null, mcp = null, orders = [];
+let db = null, mcp = null, comments = null, orders = [];
 try { const d = localStorage.getItem("afe-draft"); if (d) ta.value = d; } catch {}
 ta.addEventListener("input", () => { try { localStorage.setItem("afe-draft", ta.value); } catch {} });
 ta.addEventListener("keydown", e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); form.requestSubmit(); } });
@@ -600,7 +615,13 @@ function renderOrders(){
     const who = STAFF.find(s => s.id === o.to);
     tx.textContent = `${fmtTime(o.createdAt)} → ${who ? (who.id === "ceo" ? "社長" : who.dept) : ""}：${o.text}`;
     tx.title = o.note ? `${o.text}\n\n${o.note}` : o.text;
-    d.append(st, tx); return d;
+    d.append(st, tx);
+    if (o.state === "queued" || o.state === "failed" || o.state === "unknown") {
+      const box = document.createElement("div"); box.style.cssText = "display:grid;gap:2px;min-width:0";
+      const n = document.createElement("span"); n.style.cssText = "font-size:.72rem;color:var(--ink-soft)"; n.textContent = o.note || "";
+      box.append(tx, n); d.replaceChildren(st, box);
+    }
+    return d;
   }));
 }
 
@@ -608,7 +629,7 @@ form.addEventListener("submit", async e => {
   e.preventDefault();
   const text = ta.value.trim();
   if (!text) { say("指示の内容を入力してください。", "err"); ta.focus(); return; }
-  if (!db && !mcp) { say("この表示では指示を送れません。Claude のアプリか claude.ai でこのページを開いてください。", "err"); return; }
+  if (!db && !mcp && !comments) { say("この表示では指示を送れません。Claude のアプリか claude.ai でこのページを開いてください。", "err"); return; }
   sendBtn.disabled = true; say("送信しています…");
   const s = STAFF.find(x => x.id === toEl.value) || STAFF[0];
   const toLabel = s.id === "ceo" ? "社長" : `${s.dept}（${s.name}）`;
@@ -616,7 +637,25 @@ form.addEventListener("submit", async e => {
   let ref = null;
   if (db) { try { ref = await db.collection("orders").add({text, to:s.id, createdAt:new Date().toISOString(), state:"sending"}); } catch {} }
   let state = "queued", note = "";
-  if (mcp) {
+  if (comments) {
+    try {
+      const can = await comments.canSendToClaude();
+      if (can === "available") {
+        const anchor = await comments.anchorFor(form);
+        const r = await comments.sendToClaude({anchor, text: message.slice(0, 1300)});
+        state = "sent"; note = "コメントとして社長に届けました（thread " + r.threadId + "）";
+      } else {
+        note = {writers_only:"このページの編集権限がないため、社長に直接は送れません。", no_session:"社長（Claudeのセッション）が今は受け取れない状態です。", off:"この表示ではClaudeへの送信が使えません。"}[can] || "";
+      }
+    } catch (err) {
+      const code = err?.code;
+      if (code === "consent_required") note = "コメントの許可が必要です。表示された確認で許可してから、もう一度送ってください。";
+      else if (code === "forbidden") note = "このページからのコメントがオフになっています。コメント欄の設定から許可できます。";
+      else if (code === "rate_limited") note = "送信が続いたため一時的に止まっています。少し待ってから送ってください。";
+      else note = err?.message || String(code || "");
+    }
+  }
+  if (state !== "sent" && mcp) {
     try {
       await mcp.callTool(SERVER, "send_message", {session_id: SESSION_ID, message});
       state = "sent";
@@ -628,7 +667,7 @@ form.addEventListener("submit", async e => {
       else if (code === "not_in_manifest" || code === "approval_required") { note = "このページからの送信が許可されていません。ページの権限メニューで許可してください。"; }
       else { note = err?.message || String(code || "送信エラー"); }
     }
-  } else note = "コネクタが使えない表示のため、指示を保留しました。社長が次に動いたときに読みます。";
+  } else if (state !== "sent" && !note) note = "この表示では社長に直接届けられないため、指示を保留しました。社長が次に動いたときに読みます。";
   if (ref) { try { await ref.update({state, note}); } catch {} }
   else if (state !== "sent") state = "failed";
   sendBtn.disabled = false;
@@ -656,8 +695,9 @@ requestAnimationFrame(loop);
       renderStaff();
     }, () => {});
     db.collection("tasks").onSnapshot(snap => { tasks = snap.docs.map(d => ({id:d.id, ...d.data()})); renderBoard(); }, () => { tasks = []; renderBoard(); });
-    db.collection("orders").orderBy("createdAt","desc").limit(30).onSnapshot(snap => { orders = snap.docs.map(d => ({id:d.id, ...d.data()})); renderOrders(); }, () => {});
+    db.collection("orders").orderBy("createdAt","desc").limit(30).onSnapshot(snap => { orders = snap.docs.map(d => ({id:d.id, ...d.data()})); renderOrders(); if (logState.kind !== "items") renderLog(); }, () => {});
   });
+  claude.use("comments").then(c => { comments = c; });
   claude.use("mcp").then(m => {
     mcp = m;
     if (!mcp) { logState = {kind:"nomcp"}; renderLog(); return; }
