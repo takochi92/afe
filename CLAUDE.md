@@ -61,3 +61,12 @@
 - `/produce <テーマ>` … リサーチ〜記録までの記事制作ラインを一気通貫で回す
 - `/morning-meeting` … 各部署の状況を確認し、今日のタスクを決める
 - `/weekly-report` … 記録部に週次レポートを作らせる
+
+## 会社サイト（本社オフィス）
+
+- URL: https://claude.ai/artifact/JR1Rb6roSuorr2AQB8zzNM （ソース: `office/index.html`）
+- オーナーはこのページの「コマンドセンター」から指示を送れる。指示は `【会社サイトからの指示】宛先：…` という形でこのセッションに届く。同じ内容がデータベースの `orders` にも残る
+- 社長は、社員に仕事を振ったら、または仕事が終わったら、ArtifactData でデータベースを更新してオフィスの表示を実態に合わせる
+  - `staff/<id>`（id: ceo, researcher, planner, writer, inspector, recorder, sales）：`status`（working / idle / waiting）、`task`（今の仕事）、`line`（吹き出しのひとこと）
+  - `tasks/<id>`：`title`、`col`（todo / doing / wait / done）、`owner`（社員id または owner）、`order`
+  - `orders/<id>`：対応したら `state` を `done` にする。`state` が `queued` のもの（届かなかった指示）は、次に動いたときに読んで対応する

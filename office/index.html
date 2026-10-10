@@ -1,0 +1,677 @@
+<title>AFE本社オフィス</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=BIZ+UDPGothic:wght@400;700&family=M+PLUS+1+Code:wght@400;500&display=swap">
+<style>
+/* Layout: レトロゲーム風の本社。左にドット絵オフィス、右にコマンドセンター、下に社員バー。単一テーマ（ゲーム画面の色で固定） */
+:root{
+  --desk:#d8cdaa;      /* 画面の地（机の天板色） */
+  --paper:#f4ecd6;     /* パネル */
+  --paper-2:#ebe1c3;   /* パネル内の段差 */
+  --ink:#2c2a21;       /* 文字 */
+  --ink-soft:#6c6650;  /* 補助文字 */
+  --rule:#b5a87f;      /* 罫線 */
+  --accent:#2f7a68;    /* オフィスの床の緑 */
+  --accent-ink:#f4ecd6;
+  --ok:#3d8a45; --warn:#c07a22; --bad:#b0442e; --idle:#8c8670;
+  --font-pixel:"DotGothic16","BIZ UDPGothic",system-ui,sans-serif;
+  --font-body:"BIZ UDPGothic","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  --font-mono:"M PLUS 1 Code","BIZ UDGothic",ui-monospace,monospace;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{background:var(--desk);color:var(--ink);font-family:var(--font-body);font-size:14px;line-height:1.6;padding-inline:16px;padding-block:12px 24px;box-sizing:border-box}
+*,*::before,*::after{box-sizing:border-box}
+button,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.wrap{max-width:1280px;margin-inline:auto;display:grid;gap:12px}
+
+/* header */
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;justify-content:space-between}
+.brand{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.brand h1{font-family:var(--font-pixel);font-weight:400;font-size:1.5rem;margin:0;letter-spacing:.04em;text-wrap:balance}
+.brand .sub{font-family:var(--font-pixel);color:var(--ink-soft);font-size:.85rem}
+.status{display:flex;align-items:center;gap:8px;font-family:var(--font-pixel);font-size:.9rem;background:var(--paper);border:2px solid var(--ink);padding:4px 10px}
+.dot{width:10px;height:10px;display:inline-block;background:var(--idle);flex:none}
+.dot.working{background:var(--ok)} .dot.waiting{background:var(--warn)} .dot.failed{background:var(--bad)}
+
+/* main grid */
+.main{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:12px;align-items:start}
+@media (max-width:900px){.main{grid-template-columns:minmax(0,1fr)}}
+
+/* office */
+.office{position:relative;border:3px solid var(--ink);background:#1f2219;box-shadow:4px 4px 0 var(--ink)}
+.office canvas{display:block;width:100%;height:auto;image-rendering:pixelated;image-rendering:crisp-edges;aspect-ratio:320/200}
+.layer{position:absolute;inset:0;pointer-events:none}
+.tag{position:absolute;transform:translate(-50%,2px);pointer-events:auto;cursor:pointer;font-family:var(--font-pixel);font-size:clamp(9px,1.1vw,12px);line-height:1.2;background:var(--paper);color:var(--ink);border:1px solid var(--ink);padding:1px 4px;white-space:nowrap;display:flex;gap:4px;align-items:center}
+.tag .dot{width:7px;height:7px}
+.tag.sel{background:var(--accent);color:var(--accent-ink)}
+.bubble{position:absolute;transform:translate(-50%,calc(-100% - 2px));font-family:var(--font-pixel);font-size:clamp(9px,1.05vw,12px);line-height:1.3;background:#fffdf4;color:var(--ink);border:1px solid var(--ink);padding:2px 6px;max-width:42%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bubble::after{content:"";position:absolute;left:50%;bottom:-5px;width:6px;height:6px;background:#fffdf4;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);transform:translateX(-50%) rotate(45deg)}
+.room{position:absolute;font-family:var(--font-pixel);font-size:clamp(8px,.95vw,11px);color:#f4ecd6;background:rgba(30,32,24,.72);padding:0 4px;transform:translate(-50%,0)}
+.room.dept{opacity:.85}
+@media (max-width:600px){.room.dept{display:none}}
+.office .note{position:absolute;left:8px;bottom:8px;font-family:var(--font-pixel);font-size:11px;background:var(--bad);color:#fff;padding:1px 6px}
+
+/* command center */
+.cc{background:var(--paper);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);display:flex;flex-direction:column;min-width:0}
+.cc-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px;border-bottom:2px solid var(--ink);background:var(--paper-2)}
+.cc-head h2{margin:0;font-family:var(--font-pixel);font-weight:400;font-size:1.05rem;letter-spacing:.06em}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tabs button{border:2px solid var(--ink);background:var(--paper);padding:2px 10px;font-family:var(--font-pixel);font-size:.85rem;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+.pane{padding:10px 12px;height:min(52vh,460px);overflow:auto;min-width:0}
+@media (max-width:900px){.pane{height:min(56vh,420px)}}
+
+/* log */
+.log{display:flex;flex-direction:column;gap:8px}
+.msg{border:1px solid var(--rule);background:#fffaf0;padding:6px 8px;min-width:0}
+.msg .who{font-family:var(--font-pixel);font-size:.78rem;color:var(--ink-soft);display:flex;gap:8px;justify-content:space-between}
+.msg.owner{background:#e4efe9;border-color:#9cbfb3;margin-left:12%}
+.msg.ceo{margin-right:6%}
+.msg .body{white-space:pre-wrap;word-break:break-word;font-size:.88rem;line-height:1.55}
+.msg .body.clamp{display:-webkit-box;-webkit-line-clamp:8;-webkit-box-orient:vertical;overflow:hidden}
+.msg .more{border:0;background:none;padding:0;color:var(--accent);cursor:pointer;font-size:.8rem;text-decoration:underline}
+.tool{font-family:var(--font-mono);font-size:.75rem;color:var(--ink-soft);padding-left:8px;border-left:3px solid var(--rule)}
+.empty{color:var(--ink-soft);font-size:.88rem;border:1px dashed var(--rule);padding:12px;background:var(--paper-2)}
+.empty b{color:var(--ink)}
+.empty button{margin-top:8px}
+
+/* board */
+.board{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.col{background:var(--paper-2);border:1px solid var(--rule);padding:6px;min-width:0}
+.col h3{margin:0 0 6px;font-family:var(--font-pixel);font-weight:400;font-size:.85rem;display:flex;justify-content:space-between}
+.col h3 .n{font-variant-numeric:tabular-nums;color:var(--ink-soft)}
+.col.todo h3{color:var(--ink)} .col.doing h3{color:var(--ok)} .col.wait h3{color:var(--warn)} .col.done h3{color:var(--ink-soft)}
+.card{background:#fffaf0;border:1px solid var(--ink);padding:5px 7px;margin-bottom:6px;font-size:.82rem;line-height:1.45}
+.card .own{display:block;font-family:var(--font-pixel);font-size:.72rem;color:var(--ink-soft);margin-top:2px}
+.col.wait .card{border-left:4px solid var(--warn)}
+.col.doing .card{border-left:4px solid var(--ok)}
+
+/* roster */
+.roster{display:grid;gap:8px}
+.person{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px;align-items:start;border-bottom:1px dashed var(--rule);padding-bottom:8px}
+.person canvas{width:36px;height:auto;image-rendering:pixelated;background:var(--accent);border:1px solid var(--ink)}
+.person .nm{font-family:var(--font-pixel);font-size:.95rem}
+.person .rl{color:var(--ink-soft);font-size:.8rem}
+.person .tk{grid-column:2;font-size:.82rem}
+.person code{font-family:var(--font-mono);font-size:.75rem;background:var(--paper-2);padding:0 4px}
+
+/* composer */
+.composer{border-top:2px solid var(--ink);padding:10px 12px;display:grid;gap:8px;background:var(--paper-2)}
+.composer .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.composer label{font-family:var(--font-pixel);font-size:.82rem}
+.composer select{border:2px solid var(--ink);background:var(--paper);padding:2px 6px}
+.composer textarea{width:100%;min-height:76px;resize:vertical;border:2px solid var(--ink);background:#fffdf6;padding:6px 8px;font-size:.92rem;line-height:1.5}
+.composer .hint{font-size:.75rem;color:var(--ink-soft);flex:1;min-width:12em}
+.btn{border:2px solid var(--ink);background:var(--paper);padding:3px 12px;font-family:var(--font-pixel);cursor:pointer;box-shadow:2px 2px 0 var(--ink)}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn:active:not(:disabled){transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.orders{display:grid;gap:4px;max-height:120px;overflow:auto}
+.order{display:flex;gap:8px;font-size:.78rem;align-items:baseline;min-width:0}
+.order .st{font-family:var(--font-pixel);flex:none;padding:0 4px;border:1px solid var(--ink);background:var(--paper)}
+.order .st.sent{background:#d6ead9} .order .st.queued{background:#f3e0bd} .order .st.failed,.order .st.unknown{background:#efc9bd} .order .st.done{background:var(--paper-2);color:var(--ink-soft)}
+.order .tx{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.toast{font-size:.8rem;min-height:1.2em}
+.toast.err{color:var(--bad)} .toast.ok{color:var(--ok)}
+
+/* staff bar */
+.bar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+@media (max-width:1000px){.bar{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:560px){.bar{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.chip{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 8px;align-items:center;background:var(--paper);border:2px solid var(--ink);padding:6px 8px;cursor:pointer;text-align:left;min-width:0}
+.chip.sel{outline:3px solid var(--accent);outline-offset:-1px}
+.chip canvas{grid-row:span 2;width:28px;height:auto;image-rendering:pixelated;background:var(--accent);border:1px solid var(--ink)}
+.chip .nm{font-family:var(--font-pixel);font-size:.9rem;display:flex;gap:6px;align-items:center;min-width:0}
+.chip .nm span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip .st{font-size:.72rem;color:var(--ink-soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+@media (prefers-reduced-motion:reduce){.btn:active:not(:disabled){transform:none}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1>株式会社AFE 本社</h1>
+      <span class="sub">アフィリエイト事業部 ／ 社員6名＋社長</span>
+    </div>
+    <div class="status" id="ceoStatus"><span class="dot" id="ceoDot"></span><span id="ceoText">社長の状態を確認中</span></div>
+  </header>
+
+  <div class="main">
+    <section class="office" aria-label="オフィスの様子">
+      <canvas id="floor" width="320" height="200"></canvas>
+      <div class="layer" id="rooms"></div>
+      <div class="layer" id="people"></div>
+    </section>
+
+    <section class="cc" aria-label="コマンドセンター">
+      <div class="cc-head">
+        <h2>コマンドセンター</h2>
+        <div class="tabs" role="tablist">
+          <button role="tab" id="tab-log" aria-selected="true" data-pane="log">指示ログ</button>
+          <button role="tab" id="tab-board" aria-selected="false" data-pane="board">進行ボード</button>
+          <button role="tab" id="tab-roster" aria-selected="false" data-pane="roster">社員名簿</button>
+        </div>
+      </div>
+      <div class="pane" id="pane-log" role="tabpanel"><div class="log" id="log"></div></div>
+      <div class="pane" id="pane-board" role="tabpanel" hidden><div class="board" id="board"></div></div>
+      <div class="pane" id="pane-roster" role="tabpanel" hidden><div class="roster" id="roster"></div></div>
+
+      <form class="composer" id="composer" autocomplete="off">
+        <div class="row">
+          <label for="to">宛先</label>
+          <select id="to"></select>
+          <span class="hint">社員を直接は動かせません。社長（Claude）が受け取って担当に割り振ります。</span>
+        </div>
+        <textarea id="order" placeholder="例：こどもNISAの柱記事①の企画を企画部に作らせて"></textarea>
+        <div class="row">
+          <span class="toast" id="toast"></span>
+          <span style="flex:1"></span>
+          <button type="submit" class="btn primary" id="send">指示を送る</button>
+        </div>
+        <div class="orders" id="orders"></div>
+      </form>
+    </section>
+  </div>
+
+  <nav class="bar" id="bar" aria-label="社員一覧"></nav>
+</div>
+
+<script>
+(() => {
+"use strict";
+const SESSION_ID = "session_016eD9xCr7yvyvgGHZSW11X3";
+const SERVER = "Claude Code Remote";
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- 社員の固定情報（状態は db の staff/<id> から） ---------- */
+const STAFF = [
+  {id:"ceo",       name:"Claude", role:"社長", dept:"社長室",     seat:[48,34],  hair:"#e9dcc4", skin:"#f1c9a5", shirt:"#d97757", pants:"#3b3a33", desc:"全体の指揮。指示を受けて各部署に割り振る", files:"CLAUDE.md"},
+  {id:"researcher",name:"ミナト", role:"リサーチ", dept:"リサーチ部", seat:[56,100], hair:"#2b2b2b", skin:"#f1c9a5", shirt:"#4a78b5", pants:"#2f3542", desc:"市場・キーワード・競合・制度の調査", files:"research/"},
+  {id:"planner",   name:"ハルカ", role:"企画",     dept:"企画部",     seat:[160,100],hair:"#6b3e26", skin:"#e8b892", shirt:"#c9822b", pants:"#3d3428", desc:"記事の構成案と収益導線の設計", files:"plans/"},
+  {id:"writer",    name:"ソウ",   role:"執筆",     dept:"編集部",     seat:[264,100],hair:"#1f1f1f", skin:"#d9a27a", shirt:"#5f8a36", pants:"#2e3326", desc:"構成案に沿って記事を書く・直す", files:"articles/drafts/"},
+  {id:"inspector", name:"リン",   role:"検品",     dept:"品質管理部", seat:[56,160], hair:"#3a2a4a", skin:"#f1c9a5", shirt:"#a33f3f", pants:"#2c2630", desc:"法令・事実・品質を検品し合否を出す", files:"reviews/"},
+  {id:"recorder",  name:"タモツ", role:"記録",     dept:"管理部",     seat:[160,160],hair:"#8f8f8f", skin:"#e8b892", shirt:"#5b6b7a", pants:"#2d3238", desc:"台帳・業務日誌・週次レポート", files:"records/"},
+  {id:"sales",     name:"ケン",   role:"営業",     dept:"営業部",     seat:[264,160],hair:"#4a2e1e", skin:"#c68a5e", shirt:"#2f4f8f", pants:"#22263a", desc:"ASP案件の開拓・提携申請・交渉文の下書き", files:"sales/"},
+];
+const STATUS_LABEL = {working:"稼働中", idle:"待機中", waiting:"確認待ち"};
+const live = Object.fromEntries(STAFF.map(s => [s.id, {status:"idle", task:"", line:""}]));
+let selected = "ceo";
+let ceoBucket = null;
+
+/* ---------- オフィスの地図（論理 320x200 px） ---------- */
+const W = 320, H = 200, WALL_Y = 64;
+const DOORS = {ceo:48, meet:152, kitchen:264};
+const ROOMS = [
+  {label:"社長室", x:48, y:3}, {label:"会議室", x:152, y:3}, {label:"給湯室", x:264, y:3},
+];
+const POIS = [[230,40],[252,46],[296,44],[126,48],[178,48],[140,22],[106,132],[212,132],[160,190],[30,128],[296,128],[110,188],[214,188]];
+
+function roomOf([x,y]){ if (y < WALL_Y) return x < 96 ? "ceo" : x < 208 ? "meet" : "kitchen"; return "floor"; }
+function route(from, to){
+  const a = roomOf(from), b = roomOf(to), pts = [];
+  if (a === b) { pts.push([to[0], from[1]], to); return pts; }
+  if (a !== "floor") pts.push([DOORS[a], 56], [DOORS[a], 74]);
+  if (b !== "floor") pts.push([DOORS[b], 74], [DOORS[b], 56]);
+  pts.push([to[0], pts.length ? pts[pts.length-1][1] : from[1]], to);
+  return pts;
+}
+
+/* ---------- 描画 ---------- */
+const cv = document.getElementById("floor");
+const g = cv.getContext("2d");
+g.imageSmoothingEnabled = false;
+const R = (x,y,w,h,c) => { g.fillStyle = c; g.fillRect(x|0, y|0, w|0, h|0); };
+
+const bg = document.createElement("canvas"); bg.width = W; bg.height = H;
+(function paintStatic(){
+  const b = bg.getContext("2d");
+  const r = (x,y,w,h,c) => { b.fillStyle = c; b.fillRect(x,y,w,h); };
+  // 床
+  for (let y=0;y<H;y+=8) for (let x=0;x<W;x+=8) {
+    const odd = ((x+y)/8)%2;
+    let c;
+    if (y < WALL_Y) {
+      if (x < 96) c = odd ? "#8a6a4f" : "#82634a";          // 社長室: 木の床
+      else if (x < 208) c = odd ? "#6f8ea0" : "#68869a";   // 会議室: カーペット
+      else c = odd ? "#d6cdb3" : "#cbc1a5";                // 給湯室: タイル
+    } else c = odd ? "#5f907e" : "#588775";                // 執務フロア
+    r(x,y,8,8,c);
+  }
+  // 窓（上壁）
+  r(0,0,W,6,"#3a3528");
+  for (let x=10;x<W-10;x+=26) { r(x,1,18,4,"#a9cbd6"); r(x,1,18,1,"#d7eef3"); }
+  // 仕切り壁（縦）
+  for (const x of [95,207]) { r(x,6,3,WALL_Y-6,"#e9e2cf"); r(x+2,6,1,WALL_Y-6,"#b5a87f"); }
+  // 横の壁（ドアの穴を開ける）
+  const gaps = Object.values(DOORS).map(x => [x-9, x+9]);
+  for (let x=0;x<W;x++) {
+    if (gaps.some(([a,z]) => x>=a && x<=z)) continue;
+    r(x,WALL_Y-3,1,5,"#e9e2cf"); r(x,WALL_Y+2,1,1,"#b5a87f");
+  }
+  // 外枠
+  r(0,0,W,2,"#2c2a21"); r(0,H-2,W,2,"#2c2a21"); r(0,0,2,H,"#2c2a21"); r(W-2,0,2,H,"#2c2a21");
+
+  // 社長室: 大きな机・本棚・観葉植物
+  r(8,10,22,14,"#5a3f2c"); for (let i=0;i<4;i++) r(10+i*5,12,3,10,["#b5452f","#2f7a68","#c9822b","#4a78b5"][i]);
+  r(34,32,30,10,"#6b4a33"); r(34,32,30,2,"#8a6448");
+  r(76,12,10,10,"#3d6b3a"); r(78,10,6,4,"#4f8a4a"); r(78,22,6,5,"#a0643a");
+  // 会議室: 長机・ホワイトボード
+  r(120,10,64,12,"#f7f5ee"); r(120,22,64,2,"#9a9a90");
+  r(126,13,20,1,"#2f7a68"); r(126,16,30,1,"#b0442e"); r(160,13,14,1,"#4a78b5");
+  r(126,30,52,14,"#c9b48a"); r(126,30,52,2,"#e0cfa8");
+  // 給湯室: カウンター・冷蔵庫・コーヒーマシン・ゴミ箱
+  r(214,10,64,10,"#9a9282"); r(214,10,64,2,"#c9c1ad"); r(220,12,8,5,"#7aa1b0");
+  r(284,8,14,22,"#e9ecef"); r(284,18,14,1,"#9aa4ab"); r(295,11,1,4,"#9aa4ab");
+  r(260,6,8,8,"#3a3a3a"); r(262,8,3,2,"#c0392b");
+  r(302,46,6,8,"#6d6d6d");
+  // 執務フロア: 植物と書類棚
+  for (const [x,y] of [[8,72],[304,72],[8,186],[304,186]]) { r(x,y+4,8,6,"#a0643a"); r(x-1,y-2,10,7,"#3d6b3a"); r(x+1,y-4,6,4,"#4f8a4a"); }
+  r(140,70,40,8,"#b5a87f"); r(140,70,40,2,"#d2c59c");
+  // 各部署の机（キャラの手前に描くので動的描画側で）
+})();
+
+function drawDesk(cx, cy, lit, t){
+  R(cx-15, cy-5, 30, 9, "#b9895a"); R(cx-15, cy-5, 30, 2, "#d3a675"); R(cx-15, cy+4, 30, 2, "#7d5a39");
+  R(cx+5, cy-11, 9, 7, "#2c2a21"); R(cx+6, cy-10, 7, 5, lit ? ((t>>3)%6 ? "#9fe0c8" : "#c8f2e2") : "#3c4a45"); R(cx+8, cy-4, 3, 1, "#2c2a21");
+  R(cx-11, cy-3, 7, 3, "#f4ecd6"); R(cx-10, cy-2, 5, 1, "#b5a87f");
+}
+
+function drawPerson(s, p, t, ctx = g, ox = 0, oy = 0){
+  const P = (x,y,w,h,c) => { ctx.fillStyle = c; ctx.fillRect((p.x+ox+x)|0, (p.y+oy+y)|0, w, h); };
+  const walking = p.moving && !REDUCED;
+  const step = walking ? ((t>>3)&1) : 0;
+  const bob = walking ? step : 0;
+  P(-4,0,9,2,"rgba(0,0,0,.25)");                          // 影
+  // 脚
+  if (step) { P(-3,-3,2,3,s.pants); P(1,-2,2,2,s.pants); } else { P(-3,-2,2,2,s.pants); P(1,-3,2,3,s.pants); }
+  // 体
+  P(-4,-8-bob,8,6,s.shirt); P(-4,-8-bob,8,1,"rgba(255,255,255,.18)");
+  P(-5,-7-bob,1,4,s.shirt); P(4,-7-bob,1,4,s.shirt);
+  P(-5,-3-bob,1,1,s.skin); P(4,-3-bob,1,1,s.skin);
+  if (s.id === "sales") P(0,-8-bob,1,4,"#b0442e");      // ネクタイ
+  if (s.id === "ceo") P(-1,-8-bob,2,2,"#f4ecd6");       // 襟
+  // 頭
+  if (p.dir === "up") { P(-3,-14-bob,6,6,s.hair); }
+  else {
+    P(-3,-14-bob,6,6,s.skin);
+    P(-3,-15-bob,6,2,s.hair); P(-4,-14-bob,1,4,s.hair); P(3,-14-bob,1,4,s.hair);
+    const blink = !REDUCED && (t + p.seed*37) % 140 < 4;
+    if (!blink) { P(-2,-11-bob,1,1,"#2c2a21"); P(1,-11-bob,1,1,"#2c2a21"); }
+    if (s.id === "inspector") { P(-3,-11-bob,3,1,"#2c2a21"); P(0,-11-bob,3,1,"#2c2a21"); } // 眼鏡
+  }
+}
+
+function avatar(s, size){
+  const c = document.createElement("canvas"); c.width = 12; c.height = 18;
+  const x = c.getContext("2d"); x.imageSmoothingEnabled = false;
+  drawPerson(s, {x:6, y:16, dir:"down", moving:false, seed:0}, 10, x);
+  c.setAttribute("aria-hidden","true");
+  return c;
+}
+
+/* ---------- キャラクターの動き ---------- */
+const actors = Object.fromEntries(STAFF.map((s,i) => [s.id, {x:s.seat[0], y:s.seat[1], path:[], wait:60+i*40, moving:false, dir:"down", seed:i+1, mode:""}]));
+
+function goal(s){
+  const st = live[s.id].status;
+  if (st === "working") return {kind:"seat", pt:s.seat};
+  if (st === "waiting") return {kind:"stand", pt:[s.seat[0]-20, s.seat[1]+12]};
+  return {kind:"wander"};
+}
+
+function tick(t){
+  for (const s of STAFF) {
+    const a = actors[s.id], gl = goal(s);
+    if (gl.kind !== "wander" && a.mode !== gl.kind) {
+      a.mode = gl.kind; a.path = route([a.x,a.y], gl.pt); a.wait = 0;
+    } else if (gl.kind === "wander") {
+      if (a.mode !== "wander") { a.mode = "wander"; a.wait = 30 + Math.random()*120; }
+      if (!a.path.length && --a.wait <= 0) {
+        const home = Math.random() < .35 ? s.seat : POIS[(Math.random()*POIS.length)|0];
+        a.path = route([a.x,a.y], home); a.wait = 120 + Math.random()*260;
+      }
+    }
+    if (REDUCED && a.path.length) { const end = a.path[a.path.length-1]; a.x = end[0]; a.y = end[1]; a.path = []; }
+    a.moving = false;
+    if (a.path.length) {
+      const [tx,ty] = a.path[0], dx = tx-a.x, dy = ty-a.y, d = Math.hypot(dx,dy), v = 0.7;
+      if (d <= v) { a.x = tx; a.y = ty; a.path.shift(); }
+      else { a.x += dx/d*v; a.y += dy/d*v; a.moving = true; a.dir = Math.abs(dy) > Math.abs(dx) && dy < 0 ? "up" : "down"; }
+    } else a.dir = "down";
+  }
+}
+
+let frame = 0;
+function draw(){
+  g.drawImage(bg, 0, 0);
+  const order = STAFF.map(s => [s, actors[s.id]]).sort((a,b) => a[1].y - b[1].y);
+  const desks = STAFF.filter(s => s.id !== "ceo");
+  // 机はキャラの奥（座っている人の手前）に描く：y順で混ぜる
+  const items = [
+    ...order.map(([s,a]) => ({y:a.y, f:() => drawPerson(s, a, frame)})),
+    ...desks.map(s => ({y:s.seat[1]+0.5, f:() => drawDesk(s.seat[0], s.seat[1]+2, live[s.id].status === "working", frame)})),
+    {y:36.5, f:() => { R(34,32,30,10,"#6b4a33"); R(34,32,30,2,"#8a6448"); R(52,26,9,7,"#2c2a21"); R(53,27,7,5, live.ceo.status === "working" ? "#ffd2b8" : "#4a3c36"); }},
+  ].sort((a,b) => a.y - b.y);
+  for (const it of items) it.f();
+  // 稼働中は頭上にタイピングの点
+  for (const s of STAFF) {
+    if (live[s.id].status !== "working" || REDUCED) continue;
+    const a = actors[s.id]; if (a.path.length) continue;
+    const n = (frame>>4)%4;
+    for (let i=0;i<n;i++) R(a.x-3+i*2, a.y-19, 1, 1, "#f4ecd6");
+  }
+}
+
+function loop(){
+  frame++;
+  if (frame % 2 === 0) tick(frame);
+  draw();
+  placeOverlays();
+  requestAnimationFrame(loop);
+}
+
+/* ---------- 重ね表示（名札・吹き出し） ---------- */
+const roomsEl = document.getElementById("rooms");
+for (const r of ROOMS) { const d = document.createElement("div"); d.className = "room"; d.textContent = r.label; d.style.left = (r.x/W*100)+"%"; d.style.top = (r.y/H*100+3)+"%"; roomsEl.append(d); }
+for (const s of STAFF.filter(s => s.id !== "ceo")) { const d = document.createElement("div"); d.className = "room dept"; d.textContent = s.dept; d.style.left = (s.seat[0]/W*100)+"%"; d.style.top = ((s.seat[1]+12)/H*100)+"%"; roomsEl.append(d); }
+
+const peopleEl = document.getElementById("people");
+const tags = {}, bubbles = {};
+for (const s of STAFF) {
+  const t = document.createElement("button"); t.type = "button"; t.className = "tag";
+  t.innerHTML = `<span class="dot"></span><span></span>`;
+  t.lastChild.textContent = s.name;
+  t.title = `${s.dept}：${s.desc}`;
+  t.addEventListener("click", () => select(s.id));
+  const b = document.createElement("div"); b.className = "bubble"; b.hidden = true;
+  peopleEl.append(b, t); tags[s.id] = t; bubbles[s.id] = b;
+}
+function placeOverlays(){
+  for (const s of STAFF) {
+    const a = actors[s.id];
+    const L = (a.x/W*100)+"%";
+    tags[s.id].style.left = L; tags[s.id].style.top = ((a.y+1)/H*100)+"%";
+    bubbles[s.id].style.left = L; bubbles[s.id].style.top = ((a.y-17)/H*100)+"%";
+  }
+}
+function bubbleText(id){
+  const l = live[id];
+  if (l.line) return l.line;
+  if (l.status === "waiting") return "オーナーの確認待ちです";
+  if (l.status === "working" && l.task) return l.task;
+  return "";
+}
+
+/* ---------- 社員バー・名簿・宛先 ---------- */
+const barEl = document.getElementById("bar"), rosterEl = document.getElementById("roster"), toEl = document.getElementById("to");
+const chips = {};
+for (const s of STAFF) {
+  const c = document.createElement("button"); c.type = "button"; c.className = "chip";
+  c.append(avatar(s));
+  const nm = document.createElement("div"); nm.className = "nm"; nm.innerHTML = `<i class="dot"></i><span></span>`; nm.lastChild.textContent = s.name;
+  const st = document.createElement("div"); st.className = "st";
+  c.append(nm, st); c.addEventListener("click", () => select(s.id));
+  barEl.append(c); chips[s.id] = {el:c, dot:nm.firstChild, st};
+  const o = document.createElement("option"); o.value = s.id; o.textContent = s.id === "ceo" ? "社長（Claude）" : `${s.dept}・${s.name}`; toEl.append(o);
+}
+toEl.addEventListener("change", () => select(toEl.value));
+function select(id){
+  selected = id; toEl.value = id;
+  for (const s of STAFF) { chips[s.id].el.classList.toggle("sel", s.id === id); tags[s.id].classList.toggle("sel", s.id === id); }
+}
+
+function renderStaff(){
+  for (const s of STAFF) {
+    const l = live[s.id];
+    const st = s.id === "ceo" && ceoBucket ? ceoBucket.status : l.status;
+    const lab = s.id === "ceo" && ceoBucket ? ceoBucket.label : (STATUS_LABEL[st] || st);
+    chips[s.id].dot.className = "dot " + st;
+    chips[s.id].st.textContent = `${s.role}・${lab}${l.task ? "｜" + l.task : ""}`;
+    tags[s.id].firstChild.className = "dot " + st;
+    const bt = bubbleText(s.id); bubbles[s.id].hidden = !bt; bubbles[s.id].textContent = bt;
+  }
+  rosterEl.replaceChildren(...STAFF.map(s => {
+    const l = live[s.id], d = document.createElement("div"); d.className = "person";
+    d.append(avatar(s));
+    const h = document.createElement("div");
+    h.innerHTML = `<div class="nm"></div><div class="rl"></div>`;
+    h.firstChild.textContent = `${s.name}　${s.dept}`;
+    h.lastChild.textContent = `${s.desc}（成果物 `;
+    const code = document.createElement("code"); code.textContent = s.files; h.lastChild.append(code, "）");
+    const tk = document.createElement("div"); tk.className = "tk";
+    tk.textContent = `${STATUS_LABEL[l.status] || l.status}${l.task ? "：" + l.task : ""}`;
+    d.append(h, tk); return d;
+  }));
+}
+
+/* ---------- タブ ---------- */
+for (const b of document.querySelectorAll(".tabs button")) b.addEventListener("click", () => {
+  for (const x of document.querySelectorAll(".tabs button")) x.setAttribute("aria-selected", String(x === b));
+  for (const p of ["log","board","roster"]) document.getElementById("pane-"+p).hidden = p !== b.dataset.pane;
+  if (b.dataset.pane === "log") scrollLog();
+});
+
+/* ---------- 進行ボード ---------- */
+const COLS = [["doing","進行中"],["wait","オーナー確認待ち"],["todo","やること"],["done","完了"]];
+let tasks = null;
+function renderBoard(){
+  const el = document.getElementById("board");
+  if (!tasks) { el.innerHTML = `<div class="empty" style="grid-column:1/-1">進行ボードを読み込んでいます。表示されない場合は、このページのデータ保存が許可されているか確認してください。</div>`; return; }
+  if (!tasks.length) { el.innerHTML = `<div class="empty" style="grid-column:1/-1"><b>まだタスクがありません。</b><br>下の欄から社長に指示を送ると、社長がここにタスクを並べます。</div>`; return; }
+  el.replaceChildren(...COLS.map(([k,label]) => {
+    const list = tasks.filter(t => t.col === k).sort((a,b) => (a.order ?? 99) - (b.order ?? 99));
+    const c = document.createElement("div"); c.className = "col " + k;
+    c.innerHTML = `<h3><span></span><span class="n"></span></h3>`;
+    c.querySelector("h3 span").textContent = label; c.querySelector(".n").textContent = list.length;
+    for (const t of list) {
+      const card = document.createElement("div"); card.className = "card"; card.textContent = t.title;
+      const who = STAFF.find(s => s.id === t.owner);
+      const own = document.createElement("span"); own.className = "own"; own.textContent = t.owner === "owner" ? "担当：オーナー" : who ? `担当：${who.dept}・${who.name}` : "";
+      if (own.textContent) card.append(own);
+      c.append(card);
+    }
+    return c;
+  }));
+}
+
+/* ---------- 指示ログ（Claude Code Remote の会話） ---------- */
+const logEl = document.getElementById("log");
+let logState = {kind:"loading"};
+function scrollLog(){ const p = document.getElementById("pane-log"); p.scrollTop = p.scrollHeight; }
+function stripText(s){ return s.replace(/<system-reminder>[\s\S]*?<\/system-reminder>/g, "").replace(/<\/?(command-[a-z-]+|local-command-[a-z-]+)>/g, "").trim(); }
+function parseEvents(payload){
+  const data = payload?.ccr?.data || payload?.data || [];
+  const out = [];
+  for (const ev of data) {
+    const kind = ev.user ? "user" : ev.assistant ? "assistant" : null;
+    if (!kind) continue;
+    const c = ev[kind]?.internal_anthropic_catchall;
+    if (!c || c.isSynthetic) continue;
+    const content = c.message?.content;
+    const texts = [], tools = [];
+    if (typeof content === "string") texts.push(content);
+    else if (Array.isArray(content)) for (const b of content) {
+      if (b?.type === "text" && b.text) texts.push(b.text);
+      else if (b?.type === "tool_use") tools.push(b.name === "Agent" && b.input?.subagent_type ? `社員を呼び出し：${b.input.subagent_type}（${b.input.description || ""}）` : `作業：${b.name}${b.input?.description ? "（" + b.input.description + "）" : ""}`);
+    }
+    const text = stripText(texts.join("\n"));
+    if (!text && !tools.length) continue;
+    out.push({kind, text, tools, at: ev.created_at});
+  }
+  return out;
+}
+const fmtTime = iso => { try { const d = new Date(iso); return d.toLocaleString("ja-JP", {month:"numeric", day:"numeric", hour:"2-digit", minute:"2-digit"}); } catch { return ""; } };
+function renderLog(){
+  const s = logState;
+  if (s.kind === "items") {
+    const atBottom = (() => { const p = document.getElementById("pane-log"); return p.scrollHeight - p.scrollTop - p.clientHeight < 60; })();
+    const nodes = [];
+    let tl = null;
+    for (const it of s.items) {
+      if (it.text) {
+        tl = null;
+        const m = document.createElement("div"); m.className = "msg " + (it.kind === "user" ? "owner" : "ceo");
+        const who = document.createElement("div"); who.className = "who";
+        who.innerHTML = `<span></span><span></span>`;
+        who.firstChild.textContent = it.kind === "user" ? "オーナー" : "社長（Claude）";
+        who.lastChild.textContent = fmtTime(it.at);
+        const body = document.createElement("div"); body.className = "body"; body.textContent = it.text;
+        m.append(who, body);
+        if (it.text.length > 360 || it.text.split("\n").length > 8) {
+          body.classList.add("clamp");
+          const more = document.createElement("button"); more.type = "button"; more.className = "more"; more.textContent = "全文を表示";
+          more.addEventListener("click", () => { const on = body.classList.toggle("clamp"); more.textContent = on ? "全文を表示" : "たたむ"; });
+          m.append(more);
+        }
+        nodes.push(m);
+      }
+      for (const tname of it.tools) {
+        if (!tl) { tl = document.createElement("div"); tl.className = "tool"; nodes.push(tl); }
+        if (tl.childNodes.length < 6) { const d = document.createElement("div"); d.textContent = tname; tl.append(d); }
+      }
+    }
+    if (!nodes.length) nodes.push(Object.assign(document.createElement("div"), {className:"empty", textContent:"まだ会話がありません。"}));
+    logEl.replaceChildren(...nodes);
+    if (atBottom || !s.scrolled) { scrollLog(); s.scrolled = true; }
+    return;
+  }
+  const box = document.createElement("div"); box.className = "empty";
+  const msgs = {
+    loading: ["社長との会話を読み込んでいます。", "初回は Claude Code Remote コネクタの利用許可を求められます。"],
+    nomcp: ["この表示では会話ログを読み込めません。", "Claude のアプリか claude.ai でこのページを開くと表示されます。指示は送れます（社長が次に動いたときに読みます）。"],
+    needs_reauth: ["Claude Code Remote の接続が切れています。", "claude.ai の 設定 → コネクタ で再接続してください。"],
+    server_not_connected: ["Claude Code Remote コネクタが見つかりません。", "claude.ai の 設定 → コネクタ で追加してください。"],
+    not_in_manifest: ["このページでの Claude Code Remote の利用が許可されていません。", "ページ右上の権限メニューから許可できます。"],
+    approval_required: ["会話ログの読み込みには許可が必要です。", ""],
+    error: ["会話ログを読み込めませんでした。", s.message || ""],
+  }[s.kind] || ["会話ログを読み込めませんでした。", ""];
+  box.innerHTML = `<b></b><br><span></span>`;
+  box.querySelector("b").textContent = msgs[0]; box.querySelector("span").textContent = msgs[1];
+  if (s.kind === "approval_required") {
+    const b = document.createElement("button"); b.type = "button"; b.className = "btn"; b.textContent = "許可して読み込む";
+    b.addEventListener("click", async () => { try { const r = await mcp.callTool(SERVER, "list_events", EVENTS_INPUT); logState = {kind:"items", items: parseEvents(r.payload)}; renderLog(); } catch (e) { logState = errState(e); renderLog(); } });
+    box.append(document.createElement("br"), b);
+  }
+  logEl.replaceChildren(box);
+}
+function errState(e){
+  const code = e?.code;
+  if (["needs_reauth","server_not_connected","not_in_manifest","approval_required"].includes(code)) return {kind:code};
+  if (code === "selection_required") return {kind:"error", message:"同名のコネクタが複数あります。表示された選択画面で1つ選んでください。"};
+  if (code === "not_granted" || code === "capability_disabled" || code === "capability_removed") return {kind:"nomcp"};
+  return {kind:"error", message: e?.message || String(code || "")};
+}
+
+/* ---------- 社長の状態（セッション） ---------- */
+function renderCeo(){
+  const dot = document.getElementById("ceoDot"), txt = document.getElementById("ceoText");
+  if (!ceoBucket) { dot.className = "dot"; txt.textContent = "社長の状態：不明"; return; }
+  dot.className = "dot " + ceoBucket.status; txt.textContent = "社長：" + ceoBucket.label;
+}
+function bucketOf(p){
+  const ccr = p?.ccr || p || {};
+  const b = String(ccr.status_bucket || "");
+  if (/WORKING/.test(b)) return {status:"working", label:"作業中"};
+  if (/BLOCKED/.test(b)) return {status:"waiting", label:"オーナーの返事待ち"};
+  if (/FAILED/.test(b)) return {status:"failed", label:"エラーで停止"};
+  if (/REVIEW_READY|COMPLETED|IDLE/.test(b)) return {status:"idle", label:"待機中（指示を受け付けます）"};
+  return {status:"idle", label: ccr.session_status ? "待機中" : "不明"};
+}
+
+/* ---------- 指示の送信 ---------- */
+const form = document.getElementById("composer"), ta = document.getElementById("order"), sendBtn = document.getElementById("send"), toast = document.getElementById("toast");
+let db = null, mcp = null, orders = [];
+try { const d = localStorage.getItem("afe-draft"); if (d) ta.value = d; } catch {}
+ta.addEventListener("input", () => { try { localStorage.setItem("afe-draft", ta.value); } catch {} });
+ta.addEventListener("keydown", e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); form.requestSubmit(); } });
+function say(text, kind=""){ toast.textContent = text; toast.className = "toast " + kind; }
+
+const ORDER_LABEL = {sending:"送信中", sent:"届いた", queued:"保留", unknown:"不明", failed:"失敗", done:"対応済"};
+function renderOrders(){
+  const el = document.getElementById("orders");
+  el.replaceChildren(...orders.slice(0, 12).map(o => {
+    const d = document.createElement("div"); d.className = "order";
+    const st = document.createElement("span"); st.className = "st " + o.state; st.textContent = ORDER_LABEL[o.state] || o.state;
+    const tx = document.createElement("span"); tx.className = "tx";
+    const who = STAFF.find(s => s.id === o.to);
+    tx.textContent = `${fmtTime(o.createdAt)} → ${who ? (who.id === "ceo" ? "社長" : who.dept) : ""}：${o.text}`;
+    tx.title = o.note ? `${o.text}\n\n${o.note}` : o.text;
+    d.append(st, tx); return d;
+  }));
+}
+
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  const text = ta.value.trim();
+  if (!text) { say("指示の内容を入力してください。", "err"); ta.focus(); return; }
+  if (!db && !mcp) { say("この表示では指示を送れません。Claude のアプリか claude.ai でこのページを開いてください。", "err"); return; }
+  sendBtn.disabled = true; say("送信しています…");
+  const s = STAFF.find(x => x.id === toEl.value) || STAFF[0];
+  const toLabel = s.id === "ceo" ? "社長" : `${s.dept}（${s.name}）`;
+  const message = `【会社サイトからの指示】宛先：${toLabel}\n${text}`;
+  let ref = null;
+  if (db) { try { ref = await db.collection("orders").add({text, to:s.id, createdAt:new Date().toISOString(), state:"sending"}); } catch {} }
+  let state = "queued", note = "";
+  if (mcp) {
+    try {
+      await mcp.callTool(SERVER, "send_message", {session_id: SESSION_ID, message});
+      state = "sent";
+    } catch (err) {
+      const code = err?.code;
+      if (code === "server_unavailable" || code === "upstream_error" || code === "cancelled") { state = "unknown"; note = "届いたか確認できませんでした。指示ログに出てこなければ、もう一度送ってください。"; }
+      else if (code === "needs_reauth") { note = "Claude Code Remote の接続が切れています。設定 → コネクタで再接続してください。"; }
+      else if (code === "server_not_connected") { note = "Claude Code Remote コネクタがありません。設定 → コネクタで追加してください。"; }
+      else if (code === "not_in_manifest" || code === "approval_required") { note = "このページからの送信が許可されていません。ページの権限メニューで許可してください。"; }
+      else { note = err?.message || String(code || "送信エラー"); }
+    }
+  } else note = "コネクタが使えない表示のため、指示を保留しました。社長が次に動いたときに読みます。";
+  if (ref) { try { await ref.update({state, note}); } catch {} }
+  else if (state !== "sent") state = "failed";
+  sendBtn.disabled = false;
+  if (state === "sent") {
+    say("社長に届きました。返事は指示ログに表示されます。", "ok");
+    ta.value = ""; try { localStorage.removeItem("afe-draft"); } catch {}
+    if (mcp) mcp.invalidate(SERVER, "list_events").catch(() => {});
+  } else if (state === "queued") { say("保留しました：" + note, "err"); ta.value = ""; try { localStorage.removeItem("afe-draft"); } catch {} }
+  else if (state === "unknown") say(note, "err");
+  else say("送れませんでした：" + (note || "データ保存も使えない表示です。"), "err");
+});
+
+/* ---------- 起動 ---------- */
+const EVENTS_INPUT = {session_id: SESSION_ID, kinds:["user","assistant"], limit:100};
+select("ceo"); renderStaff(); renderBoard(); renderLog(); renderCeo(); renderOrders();
+requestAnimationFrame(loop);
+
+(async () => {
+  if (!window.claude?.use) { logState = {kind:"nomcp"}; renderLog(); tasks = []; renderBoard(); return; }
+  claude.use("db").then(d => {
+    db = d;
+    if (!db) { tasks = []; renderBoard(); return; }
+    db.collection("staff").onSnapshot(snap => {
+      for (const doc of snap.docs) if (live[doc.id]) { const v = doc.data() || {}; live[doc.id] = {status: v.status || "idle", task: v.task || "", line: v.line || ""}; }
+      renderStaff();
+    }, () => {});
+    db.collection("tasks").onSnapshot(snap => { tasks = snap.docs.map(d => ({id:d.id, ...d.data()})); renderBoard(); }, () => { tasks = []; renderBoard(); });
+    db.collection("orders").orderBy("createdAt","desc").limit(30).onSnapshot(snap => { orders = snap.docs.map(d => ({id:d.id, ...d.data()})); renderOrders(); }, () => {});
+  });
+  claude.use("mcp").then(m => {
+    mcp = m;
+    if (!mcp) { logState = {kind:"nomcp"}; renderLog(); return; }
+    mcp.watchTool(SERVER, "list_events", EVENTS_INPUT, ev => {
+      if (ev.type === "data") { const prev = logState; logState = {kind:"items", items: parseEvents(ev.result.payload), scrolled: prev.scrolled}; }
+      else { const st = errState(ev.error); if (logState.kind !== "items" || st.kind !== "error") logState = st; }
+      renderLog();
+    }, {refetchInterval: 30000});
+    mcp.watchTool(SERVER, "get_session", {session_id: SESSION_ID}, ev => {
+      if (ev.type === "data") ceoBucket = bucketOf(ev.result.payload);
+      else if (!["server_unavailable","upstream_error"].includes(ev.error?.code)) ceoBucket = null;
+      renderCeo(); renderStaff();
+    }, {refetchInterval: 30000});
+  });
+})();
+})();
+</script>
