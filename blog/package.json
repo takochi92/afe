@@ -1,0 +1,5 @@
+{
+  "name": "kodomo-okane-note",
+  "private": true,
+  "scripts": { "build": "node build.js" }
+}
