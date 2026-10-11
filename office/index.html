@@ -85,6 +85,12 @@ button,select,textarea{font:inherit;color:inherit}
 .col h3 .n{font-variant-numeric:tabular-nums;color:var(--ink-soft)}
 .col.todo h3{color:var(--ink)} .col.doing h3{color:var(--ok)} .col.wait h3{color:var(--warn)} .col.done h3{color:var(--ink-soft)}
 .card{background:#fffaf0;border:1px solid var(--ink);padding:5px 7px;margin-bottom:6px;font-size:.82rem;line-height:1.45}
+.card .meta{display:flex;flex-wrap:wrap;gap:2px 10px;margin-top:3px;font-size:.72rem;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.card .late{color:var(--bad);font-weight:700}
+.act{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:2px 8px;font-size:.82rem;padding:4px 0;border-bottom:1px dashed var(--rule);align-items:baseline}
+.act time{font-family:var(--font-mono);font-size:.74rem;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.act .who{font-family:var(--font-pixel)}
+.sec{font-family:var(--font-pixel);font-size:.9rem;margin:2px 0 4px}
 .card .own{display:block;font-family:var(--font-pixel);font-size:.72rem;color:var(--ink-soft);margin-top:2px}
 .col.wait .card{border-left:4px solid var(--warn)}
 .col.doing .card{border-left:4px solid var(--ok)}
@@ -137,6 +143,7 @@ button,select,textarea{font:inherit;color:inherit}
       <h1>株式会社AFE 本社</h1>
       <span class="sub">アフィリエイト事業部 ／ 社員6名＋社長</span>
     </div>
+    <div class="status" id="lastAct" title="最後に記録された社員の動き">最後の動き：―</div>
     <div class="status" id="ceoStatus"><span class="dot" id="ceoDot"></span><span id="ceoText">社長の状態を確認中</span></div>
   </header>
 
@@ -158,7 +165,7 @@ button,select,textarea{font:inherit;color:inherit}
         </div>
       </div>
       <div class="pane" id="pane-log" role="tabpanel"><div class="log" id="log"></div></div>
-      <div class="pane" id="pane-work" role="tabpanel" hidden><div class="log" id="work"></div></div>
+      <div class="pane" id="pane-work" role="tabpanel" hidden><div class="sec">社員の動き（日本時間）</div><div id="activity"></div><div class="sec" style="margin-top:12px">社長とのやり取りの記録</div><div class="log" id="work"></div></div>
       <div class="pane" id="pane-board" role="tabpanel" hidden><div class="board" id="board"></div></div>
       <div class="pane" id="pane-roster" role="tabpanel" hidden><div class="roster" id="roster"></div></div>
 
@@ -200,7 +207,7 @@ const STAFF = [
   {id:"sales",     name:"ケン",   role:"営業",     dept:"営業部",     seat:[264,160],hair:"#4a2e1e", skin:"#c68a5e", shirt:"#2f4f8f", pants:"#22263a", desc:"ASP案件の開拓・提携申請・交渉文の下書き", files:"sales/"},
 ];
 const STATUS_LABEL = {working:"稼働中", idle:"待機中", waiting:"確認待ち"};
-const live = Object.fromEntries(STAFF.map(s => [s.id, {status:"idle", task:"", line:""}]));
+const live = Object.fromEntries(STAFF.map(s => [s.id, {status:"idle", task:"", line:"", at:""}]));
 let selected = "ceo";
 let ceoBucket = null;
 
@@ -432,7 +439,7 @@ function renderStaff(){
     const st = s.id === "ceo" && ceoBucket ? ceoBucket.status : l.status;
     const lab = s.id === "ceo" && ceoBucket ? ceoBucket.label : (STATUS_LABEL[st] || st);
     chips[s.id].dot.className = "dot " + st;
-    chips[s.id].st.textContent = `${s.role}・${lab}${l.task ? "｜" + l.task : ""}`;
+    chips[s.id].st.textContent = `${s.role}・${lab}${l.task ? "｜" + l.task : ""}${l.at ? "｜更新 " + fmtHM(l.at) : ""}`;
     tags[s.id].firstChild.className = "dot " + st;
     const bt = bubbleText(s.id); bubbles[s.id].hidden = !bt; bubbles[s.id].textContent = bt;
   }
@@ -445,7 +452,7 @@ function renderStaff(){
     h.lastChild.textContent = `${s.desc}（成果物 `;
     const code = document.createElement("code"); code.textContent = s.files; h.lastChild.append(code, "）");
     const tk = document.createElement("div"); tk.className = "tk";
-    tk.textContent = `${STATUS_LABEL[l.status] || l.status}${l.task ? "：" + l.task : ""}`;
+    tk.textContent = `${STATUS_LABEL[l.status] || l.status}${l.task ? "：" + l.task : ""}${l.at ? "（最終更新 " + fmtTime(l.at) + "）" : ""}`;
     d.append(h, tk); return d;
   }));
 }
@@ -474,6 +481,12 @@ function renderBoard(){
       const who = STAFF.find(s => s.id === t.owner);
       const own = document.createElement("span"); own.className = "own"; own.textContent = t.owner === "owner" ? "担当：オーナー" : who ? `担当：${who.dept}・${who.name}` : "";
       if (own.textContent) card.append(own);
+      const meta = document.createElement("div"); meta.className = "meta";
+      if (t.startedAt) { const x = document.createElement("span"); x.textContent = "開始 " + fmtTime(t.startedAt); meta.append(x); }
+      if (t.due) { const x = document.createElement("span"); const late = k !== "done" && new Date(t.due) < new Date(); x.textContent = (late ? "期限超過 " : "納期 ") + fmtTime(t.due) + (t.dueNote ? "（" + t.dueNote + "）" : ""); if (late) x.className = "late"; meta.append(x); }
+      if (t.doneAt) { const x = document.createElement("span"); x.textContent = "完了 " + fmtTime(t.doneAt); meta.append(x); }
+      if (!meta.childNodes.length) { const x = document.createElement("span"); x.textContent = "時刻の記録なし"; meta.append(x); }
+      card.append(meta);
       c.append(card);
     }
     return c;
@@ -506,7 +519,9 @@ function parseEvents(payload){
   }
   return out;
 }
-const fmtTime = iso => { try { const d = new Date(iso); return d.toLocaleString("ja-JP", {month:"numeric", day:"numeric", hour:"2-digit", minute:"2-digit"}); } catch { return ""; } };
+const TZ = "Asia/Tokyo";
+const fmtTime = iso => { try { const d = new Date(iso); if (isNaN(d)) return ""; return d.toLocaleString("ja-JP", {timeZone:TZ, month:"numeric", day:"numeric", hour:"2-digit", minute:"2-digit"}); } catch { return ""; } };
+const fmtHM = iso => { try { const d = new Date(iso); if (isNaN(d)) return ""; return d.toLocaleTimeString("ja-JP", {timeZone:TZ, hour:"2-digit", minute:"2-digit"}); } catch { return ""; } };
 function renderWork(){
   const s = logState;
   if (s.kind === "items") {
@@ -571,6 +586,20 @@ function renderLog(){
   }
   logEl.replaceChildren(...nodes);
   if (atBottom) scrollLog();
+}
+let activity = [];
+function renderActivity(){
+  const el = document.getElementById("activity");
+  const last = document.getElementById("lastAct");
+  if (!activity.length) { el.innerHTML = '<div class="empty">まだ記録がありません。社員が動くと、ここに時刻つきで並びます。</div>'; last.textContent = "最後の動き：―"; return; }
+  last.textContent = "最後の動き：" + fmtTime(activity[0].at) + "　" + (activity[0].who || "");
+  el.replaceChildren(...activity.map(a => {
+    const d = document.createElement("div"); d.className = "act";
+    const t = document.createElement("time"); t.textContent = fmtTime(a.at);
+    const w = document.createElement("span"); w.className = "who"; w.textContent = a.who || "";
+    const x = document.createElement("span"); x.textContent = a.text || "";
+    d.append(t, w, x); return d;
+  }));
 }
 function msgNode(kind, text, at){
   const m = document.createElement("div"); m.className = "msg " + (kind === "user" ? "owner" : "ceo");
@@ -699,7 +728,7 @@ form.addEventListener("submit", async e => {
 
 /* ---------- 起動 ---------- */
 const EVENTS_INPUT = {session_id: SESSION_ID, kinds:["user","assistant"], limit:100};
-select("ceo"); renderStaff(); renderBoard(); renderWork(); renderLog(); renderCeo(); renderOrders();
+select("ceo"); renderStaff(); renderBoard(); renderWork(); renderLog(); renderActivity(); renderCeo(); renderOrders();
 requestAnimationFrame(loop);
 
 (async () => {
@@ -708,10 +737,11 @@ requestAnimationFrame(loop);
     db = d;
     if (!db) { tasks = []; renderBoard(); return; }
     db.collection("staff").onSnapshot(snap => {
-      for (const doc of snap.docs) if (live[doc.id]) { const v = doc.data() || {}; live[doc.id] = {status: v.status || "idle", task: v.task || "", line: v.line || ""}; }
+      for (const doc of snap.docs) if (live[doc.id]) { const v = doc.data() || {}; live[doc.id] = {status: v.status || "idle", task: v.task || "", line: v.line || "", at: v.updatedAt || ""}; }
       renderStaff();
     }, () => {});
     db.collection("tasks").onSnapshot(snap => { tasks = snap.docs.map(d => ({id:d.id, ...d.data()})); renderBoard(); }, () => { tasks = []; renderBoard(); });
+    db.collection("activity").orderBy("at","desc").limit(40).onSnapshot(snap => { activity = snap.docs.map(d => d.data()); renderActivity(); }, () => {});
     db.collection("orders").orderBy("createdAt","desc").limit(30).onSnapshot(snap => { orders = snap.docs.map(d => ({id:d.id, ...d.data()})); renderOrders(); renderLog(); }, () => {});
   });
   claude.use("comments").then(c => { comments = c; });

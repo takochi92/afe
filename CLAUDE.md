@@ -68,7 +68,9 @@
 - オーナーはこのページの「コマンドセンター」から指示を送れる。指示はページのコメント機能（Claudeに送る）経由で `【会社サイトからの指示】宛先：…` という形でこのセッションに届く。コメントのスレッドには ArtifactComments で返事できる。同じ内容がデータベースの `orders` にも残る
 - 社長は、社員に仕事を振ったら、または仕事が終わったら、ArtifactData でデータベースを更新してオフィスの表示を実態に合わせる
   - `staff/<id>`（id: ceo, researcher, planner, writer, inspector, recorder, sales）：`status`（working / idle / waiting）、`task`（今の仕事）、`line`（吹き出しのひとこと）
-  - `tasks/<id>`：`title`、`col`（todo / doing / wait / done）、`owner`（社員id または owner）、`order`
+  - `tasks/<id>`：`title`、`col`（todo / doing / wait / done）、`owner`（社員id または owner）、`order`、**`startedAt`（着手）・`due`（納期の目安）・`dueNote`・`doneAt`（完了）**。時刻はISO形式のUTC（ページで日本時間に直して表示）。分からない時刻は推測で埋めない
+  - `staff/<id>` には、状態を更新するたびに **`updatedAt`** も書く
+  - `activity/<id>`：社員の動きの記録（`at`、`who`、`text`）。仕事を振ったとき・終えたとき・投稿したときに1件ずつ追加する（オーナーの指示、2026-10-11：ちゃんと働いているか分かるように）
   - `orders/<id>`：返事は `reply`（と `repliedAt`）に書く（ページの指示ログに表示される）。対応したら `state` を `done` にする。`state` が `queued` のもの（届かなかった指示）は、次に動いたときに読んで対応する
 
 ## SNS自動投稿（Threads）
