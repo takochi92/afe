@@ -1,7 +1,7 @@
 {
   "name": "こどものお金ノート",
   "tagline": "こどもNISAの制度と手続きを、公表資料にもとづいてやさしく整理",
-  "baseUrl": "",
+  "baseUrl": "https://kodomo-okane-note.site-kanri19.workers.dev",
   "lang": "ja",
   "contactNote": "お問い合わせは、Threads の @flysheep59 へどうぞ。"
 }
