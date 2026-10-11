@@ -13,9 +13,9 @@ h1{font-size:80px;line-height:1.3;margin:0 0 56px;font-weight:700}
 ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:30px}
 li{font-size:44px;line-height:1.5;padding-left:56px;position:relative}
 li::before{content:"";position:absolute;left:0;top:20px;width:22px;height:22px;background:#2f7a68}
-.note{margin-top:auto;font-size:30px;color:#6c6650;line-height:1.6}
+.note{margin-top:auto;font-size:34px;color:#2c2a21;line-height:1.6;word-break:keep-all}
 </style><div class="bar"></div><div class="tag">${esc(d.tag)}</div><h1>${esc(d.title).replace(/\n/g,'<br>')}</h1>
-<ul>${(d.bullets||[]).map(b=>`<li>${esc(b)}</li>`).join('')}</ul><div class="note">${esc(d.note)}</div>`;
+<ul>${(d.bullets||[]).map(b=>`<li>${esc(b)}</li>`).join('')}</ul><div class="note">${esc(d.note).replace(/\n/g,"<br>")}</div>`;
   const b = await chromium.launch({executablePath:'/opt/pw-browsers/chromium'}).catch(()=>chromium.launch());
   const p = await b.newPage({viewport:{width:1080,height:1350}});
   await p.setContent(html); await p.waitForTimeout(400);
