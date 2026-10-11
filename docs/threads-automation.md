@@ -15,7 +15,12 @@
 - ネットワーク: `graph.threads.net` に通る。トークンは環境のネットワークシークレットとして、通信時に自動で付く（`Authorization: Bearer`）。**値は私たちからは見えない**
 - Threadsのユーザーid: 29526192993649084（username: flysheep59）
 
-## 次にやること（新しいセッションで）
+## 完了したこと
+- テスト投稿（文字）、テスト投稿（画像つき）が成功。画像の公開先は `takochi92/afe-assets`（公開リポジトリ）の `images/<日付>/`
+- 部品: `scripts/make_card.js`（図解画像）、`scripts/threads_post.sh`（投稿・記録）
+- 毎日の手順: `docs/daily-sns-routine.md`
+
+## 次にやること（古いメモ。1と2は完了）
 1. 接続テスト: `graph.threads.net` に届くか。トークンが使えるか（`GET /v1.0/me?fields=id,username`）。ユーザーIDを取得して控える
 2. テスト投稿を1件だけ。**内容をオーナーに見せて許可をもらってから**出す
 3. 画像つき投稿: 画像は公開URLが必要。置き場所を決める（公開用リポジトリなど）

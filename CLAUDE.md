@@ -70,3 +70,10 @@
   - `staff/<id>`（id: ceo, researcher, planner, writer, inspector, recorder, sales）：`status`（working / idle / waiting）、`task`（今の仕事）、`line`（吹き出しのひとこと）
   - `tasks/<id>`：`title`、`col`（todo / doing / wait / done）、`owner`（社員id または owner）、`order`
   - `orders/<id>`：返事は `reply`（と `repliedAt`）に書く（ページの指示ログに表示される）。対応したら `state` を `done` にする。`state` が `queued` のもの（届かなかった指示）は、次に動いたときに読んで対応する
+
+## SNS自動投稿（Threads）
+
+- オーナーの許可（2026-10-11）：Threadsへの自動投稿と、その流れ（画像作成・公開リポジトリ `takochi92/afe-assets` への保存・投稿・記録）
+- 手順は `docs/daily-sns-routine.md`、前提と状況は `docs/threads-automation.md`。**検品に合格した投稿だけ**を出す。1日の上限は2件
+- トークンは環境のネットワークシークレット。**値は見えない・書かない・ログに出さない**
+- リンクの掲載、他のSNS、有料の操作、アカウント設定の変更は、オーナーに確認してから
