@@ -61,8 +61,10 @@ blockquote{margin:1.2em 0;padding:.4em 1em;border-left:6px solid var(--pop);back
 .talk{display:flex;gap:14px;align-items:flex-start;margin:1.2em 0}.talk img{width:68px;height:68px;border-radius:50%;border:3px solid var(--ink);background:#fff;object-fit:cover;flex:none}.talk .b{background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:10px 14px;flex:1}.talk.owl .b{background:#FFF3C4;color:#161616}
 footer{border-top:1px solid var(--line);color:var(--soft);font-size:.82rem;padding-block:20px}footer a{color:var(--soft)}
 `;
-const layout = ({ title, desc, body, url, jsonld }) => `<!doctype html><html lang="${site.lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${esc(title)}</title><meta name="description" content="${esc(desc)}">${site.baseUrl ? `<link rel="canonical" href="${site.baseUrl}${url}">` : ''}
+const layout = ({ title, desc, body, url, jsonld, noindex, ogType }) => `<!doctype html><html lang="${site.lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(title)}</title><meta name="description" content="${esc(desc)}">${noindex ? '<meta name="robots" content="noindex">' : ''}${site.googleVerification ? `<meta name="google-site-verification" content="${esc(site.googleVerification)}">` : ''}${site.baseUrl && !noindex ? `<link rel="canonical" href="${site.baseUrl}${url}">` : ''}
+<link rel="icon" href="/img/owl.jpg" type="image/jpeg"><meta property="og:type" content="${ogType || 'website'}"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:site_name" content="${esc(site.name)}"><meta property="og:locale" content="ja_JP">${site.baseUrl ? `<meta property="og:url" content="${site.baseUrl}${url}"><meta property="og:image" content="${site.baseUrl}/img/owl.jpg">` : ''}<meta name="twitter:card" content="summary">
+
 <link rel="alternate" type="application/rss+xml" title="${esc(site.name)}" href="/rss.xml"><style>${CSS}</style>${jsonld ? `<script type="application/ld+json">${jsonld}</script>` : ''}</head><body>
 <header class="top"><div class="wrap"><img src="/img/owl.jpg" alt="ふくろう博士" width="52" height="52"><a class="name" href="/">${esc(site.name)}</a><p class="tag">${esc(site.tagline)}</p></div></header>
 <nav class="main"><div class="wrap"><a href="/">記事一覧</a><a href="/about/">運営者情報</a><a href="/editorial-policy/">編集方針</a><a href="/ad-policy/">広告について</a><a href="/disclaimer/">免責事項</a></div></nav>
@@ -79,23 +81,23 @@ const write = (p, s) => { fs.mkdirSync(path.dirname(path.join(OUT, p)), { recurs
 const readDir = d => fs.existsSync(d) ? fs.readdirSync(d).filter(f => f.endsWith('.md')).map(f => parse(path.join(d, f))) : [];
 const posts = readDir('content/posts').filter(p => p.meta.draft !== 'true').sort((a, b) => (b.meta.updated || '').localeCompare(a.meta.updated || ''));
 const pages = readDir('content/pages');
-const urls = ['/'];
+const urls = [{ u: '/', m: posts[0] ? posts[0].meta.updated : '' }];
 
 for (const p of posts) {
-  const { meta } = p, url = `/${meta.slug}/`; urls.push(url);
+  const { meta } = p, url = `/${meta.slug}/`; urls.push({ u: url, m: meta.updated });
   const jsonld = JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: meta.title, dateModified: meta.updated, datePublished: meta.published || meta.updated, inLanguage: 'ja', author: { '@type': 'Organization', name: site.name }, publisher: { '@type': 'Organization', name: site.name } });
   const head = `<p class="meta">更新日：${esc(meta.updated)}${meta.published ? `　公開日：${esc(meta.published)}` : ''}　${esc(meta.asof || '')}</p><h1>${esc(meta.title)}</h1>`;
   const pr = meta.pr === 'true' ? '<div class="note">本記事はアフィリエイト広告（PR）を含みます。</div>' : '';
-  write(url + 'index.html', layout({ title: `${meta.title} | ${site.name}`, desc: meta.description || '', url, jsonld, body: `<article>${head}${pr}${talk(md(p.body))}<div class="note">この記事は、公表資料にもとづいて作成しています。制度や手続きは変更されることがあります。最新の情報は各金融機関や公式の資料で確認してください。投資には元本割れのリスクがあります。</div></article>` }));
+  write(url + 'index.html', layout({ title: `${meta.title} | ${site.name}`, desc: meta.description || '', url, jsonld, ogType: 'article', body: `<article>${head}${pr}${talk(md(p.body))}<div class="note">この記事は、公表資料にもとづいて作成しています。制度や手続きは変更されることがあります。最新の情報は各金融機関や公式の資料で確認してください。投資には元本割れのリスクがあります。</div></article>` }));
 }
 for (const p of pages) {
-  const { meta } = p, url = `/${meta.slug}/`; urls.push(url);
+  const { meta } = p, url = `/${meta.slug}/`; urls.push({ u: url, m: meta.updated });
   write(url + 'index.html', layout({ title: `${meta.title} | ${site.name}`, desc: meta.description || '', url, body: `<article><p class="meta">更新日：${esc(meta.updated || '')}</p><h1>${esc(meta.title)}</h1>${md(p.body)}</article>` }));
 }
 write('index.html', layout({ title: `${site.name} | ${site.tagline}`, desc: site.tagline, url: '/', body: `<h1>${esc(site.name)}</h1><p>${esc(site.tagline)}。うさぎとりすの疑問に、ふくろう博士が答えます。</p><div class="cards">${posts.map(p => `<div class="card"><a class="t" href="/${p.meta.slug}/">${esc(p.meta.title)}</a><p>${esc(p.meta.description || '')}（更新：${esc(p.meta.updated)}）</p></div>`).join('') || '<div class="card"><p>記事を準備しています。</p></div>'}</div>` }));
-write('404.html', layout({ title: `ページが見つかりません | ${site.name}`, desc: '', url: '/404.html', body: '<h1>ページが見つかりません</h1><p><a href="/">記事一覧へ</a></p>' }));
+write('404.html', layout({ title: `ページが見つかりません | ${site.name}`, desc: 'お探しのページは見つかりませんでした。記事一覧から探せます。', url: '/404.html', noindex: true, body: '<h1>ページが見つかりません</h1><p><a href="/">記事一覧へ</a></p>' }));
 const base = site.baseUrl || '';
-write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map(u => `<url><loc>${base}${u}</loc></url>`).join('')}</urlset>`);
+write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map(x => `<url><loc>${base}${x.u}</loc>${x.m ? `<lastmod>${x.m}</lastmod>` : ''}</url>`).join('')}</urlset>`);
 write('rss.xml', `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>${esc(site.name)}</title><link>${base}/</link><description>${esc(site.tagline)}</description>${posts.map(p => `<item><title>${esc(p.meta.title)}</title><link>${base}/${p.meta.slug}/</link><description>${esc(p.meta.description || '')}</description></item>`).join('')}</channel></rss>`);
 write('robots.txt', `User-agent: *\nAllow: /\n${base ? `Sitemap: ${base}/sitemap.xml\n` : ''}`);
 console.log(`built: ${posts.length} posts, ${pages.length} pages`);
