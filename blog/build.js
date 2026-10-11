@@ -14,6 +14,7 @@ function parse(file) {
   return { meta, body };
 }
 const inline = t => esc(t)
+  .replace(/!\[([^\]]*)\]\((\/[^)\s]+)\)/g, (_, a, u) => `<img class="fig" src="${u}" alt="${a}" loading="lazy" width="800">`)
   .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
   .replace(/\[([^\]]+)\]\((https?:[^)\s]+|\/[^)\s]*)\)/g, (_, a, u) => `<a href="${u}"${u.startsWith('http') ? ' rel="noopener nofollow" target="_blank"' : ''}>${a}</a>`);
 function md(src) {
@@ -34,7 +35,7 @@ function md(src) {
       out.push(`<div class="tablewrap"><table><thead><tr>${head.map(c => `<th>${inline(c)}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${inline(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`); continue;
     }
     const p = []; while (i < lines.length && lines[i].trim() && !/^(#{1,4}\s|>|\s*[-*]\s|\s*\d+\.\s|---+$)/.test(lines[i])) p.push(lines[i++]);
-    out.push(`<p>${inline(p.join(' '))}</p>`);
+    { const h = inline(p.join(' ')); out.push(/^<img class="fig"[^>]*>$/.test(h) ? `<figure>${h}</figure>` : `<p>${h}</p>`); }
   }
   return out.join('\n');
 }
@@ -59,6 +60,7 @@ h1{font-size:1.75rem;line-height:1.4;margin:.2em 0 .6em;text-wrap:balance}h2{fon
 blockquote{margin:1.2em 0;padding:.4em 1em;border-left:6px solid var(--pop);background:var(--card)}
 .cards{display:grid;gap:14px;margin-top:20px}.card{background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:14px 18px}.card a.t{font-weight:700;font-size:1.08rem;text-decoration:none}.card p{margin:.3em 0 0;color:var(--soft);font-size:.9rem;line-height:1.6}
 .talk{display:flex;gap:14px;align-items:flex-start;margin:1.2em 0}.talk img{width:68px;height:68px;border-radius:50%;border:3px solid var(--ink);background:#fff;object-fit:cover;flex:none}.talk .b{background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:10px 14px;flex:1}.talk.owl .b{background:#FFF3C4;color:#161616}
+figure{margin:1.4em 0}img.fig{display:block;width:100%;height:auto;background:#fff;border:3px solid var(--ink);border-radius:14px}
 footer{border-top:1px solid var(--line);color:var(--soft);font-size:.82rem;padding-block:20px}footer a{color:var(--soft)}
 `;
 const layout = ({ title, desc, body, url, jsonld, noindex, ogType }) => `<!doctype html><html lang="${site.lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">

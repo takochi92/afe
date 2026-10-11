@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 330" role="img" aria-labelledby="t d" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif">
+<title id="t">こどもNISAの引き出しの流れ</title><desc id="d">0〜11歳は原則引き出せない。12歳以降は条件つき。18歳になると成人のつみたて投資枠へ自動で移る</desc>
+<rect width="800" height="330" fill="#fff"/>
+<text x="400" y="36" text-anchor="middle" font-size="24" font-weight="900" fill="#161616">引き出しは、年齢で3つに分かれます</text>
+<g font-weight="700" fill="#161616" text-anchor="middle">
+<rect x="30" y="64" width="230" height="150" rx="16" fill="#F3F3F3" stroke="#161616" stroke-width="3"/>
+<text x="145" y="98" font-size="22">0〜11歳</text>
+<text x="145" y="144" font-size="26" font-weight="900" fill="#E5322D">原則</text>
+<text x="145" y="178" font-size="26" font-weight="900" fill="#E5322D">引き出せない</text>
+<rect x="285" y="64" width="230" height="150" rx="16" fill="#FFF3C4" stroke="#161616" stroke-width="3"/>
+<text x="400" y="98" font-size="22">12〜17歳</text>
+<text x="400" y="138" font-size="20">条件がそろえば</text>
+<text x="400" y="166" font-size="20">親権者等が申し出て</text>
+<text x="400" y="194" font-size="20">引き出せる</text>
+<rect x="540" y="64" width="230" height="150" rx="16" fill="#DFF3E4" stroke="#161616" stroke-width="3"/>
+<text x="655" y="98" font-size="22">18歳</text>
+<text x="655" y="138" font-size="20">特別な手続きなしで</text>
+<text x="655" y="166" font-size="20">成人のつみたて</text>
+<text x="655" y="194" font-size="20">投資枠へ移る</text>
+</g>
+<g fill="#161616" font-size="17" font-weight="700">
+<text x="30" y="250">12歳以降の「条件」＝ ① お金を子どものために使うこと</text>
+<text x="30" y="278">　　　　　　　　　　 ② 子どもの同意を示す書面を添えること</text>
+<text x="30" y="312" font-size="14" fill="#5b5640">※2026年10月時点の公表資料にもとづきます。細かい条件には、まだ確定していない部分があります。</text>
+</g>
+</svg>

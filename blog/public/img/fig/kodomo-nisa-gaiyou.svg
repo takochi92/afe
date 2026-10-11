@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 430" role="img" aria-labelledby="t d" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif">
+<title id="t">こどもNISAのしくみ（全体図）</title><desc id="d">対象は0〜17歳、年間60万円、上限600万円、買えるのは投資信託、2027年1月開始予定</desc>
+<rect width="800" height="430" fill="#fff"/>
+<rect x="0" y="0" width="800" height="64" fill="#FFD92E"/>
+<text x="400" y="42" text-anchor="middle" font-size="28" font-weight="900" fill="#161616">こどもNISAのしくみ（2027年1月開始予定）</text>
+<g font-weight="700" fill="#161616">
+<rect x="30" y="90" width="230" height="170" rx="16" fill="#FFF3C4" stroke="#161616" stroke-width="3"/>
+<text x="145" y="126" text-anchor="middle" font-size="20">① だれが使える？</text>
+<text x="145" y="186" text-anchor="middle" font-size="46" font-weight="900" fill="#E5322D">0〜17歳</text>
+<text x="145" y="226" text-anchor="middle" font-size="17">の子ども</text>
+<rect x="285" y="90" width="230" height="170" rx="16" fill="#FFF3C4" stroke="#161616" stroke-width="3"/>
+<text x="400" y="126" text-anchor="middle" font-size="20">② いくらまで？</text>
+<text x="400" y="170" text-anchor="middle" font-size="22">1年で <tspan font-size="30" font-weight="900" fill="#E5322D">60万円</tspan></text>
+<text x="400" y="216" text-anchor="middle" font-size="22">ぜんぶで <tspan font-size="30" font-weight="900" fill="#E5322D">600万円</tspan></text>
+<rect x="540" y="90" width="230" height="170" rx="16" fill="#FFF3C4" stroke="#161616" stroke-width="3"/>
+<text x="655" y="126" text-anchor="middle" font-size="20">③ 何を買える？</text>
+<text x="655" y="180" text-anchor="middle" font-size="30" font-weight="900" fill="#E5322D">投資信託</text>
+<text x="655" y="214" text-anchor="middle" font-size="15">（つみたて投資枠の対象商品。</text>
+<text x="655" y="236" text-anchor="middle" font-size="15">個別の株は買えません）</text>
+<text x="400" y="246" text-anchor="middle" font-size="15" font-weight="700" fill="#5b5640">（子ども1人あたり）</text>
+</g>
+<rect x="30" y="290" width="740" height="110" rx="16" fill="#fff" stroke="#161616" stroke-width="3"/>
+<text x="50" y="324" font-size="18" font-weight="700" fill="#161616">④ 引き出せるのは？（原則）</text>
+<line x1="70" y1="366" x2="730" y2="366" stroke="#161616" stroke-width="4"/>
+<g fill="#161616" font-size="16" font-weight="700" text-anchor="middle">
+<circle cx="70" cy="366" r="7" fill="#161616"/><text x="70" y="392">0歳</text>
+<circle cx="330" cy="366" r="7" fill="#E5322D"/><text x="330" y="392">12歳</text>
+<circle cx="730" cy="366" r="7" fill="#161616"/><text x="730" y="392">18歳</text>
+<text x="200" y="356" fill="#E5322D">原則 引き出せないとされる</text>
+<text x="530" y="356">条件つきで申し出れば引き出せる</text>
+</g>
+<text x="400" y="418" text-anchor="middle" font-size="13" fill="#5b5640">※2026年10月時点の公表資料にもとづく整理です。内容は変わることがあります。投資には元本割れのリスクがあります。</text>
+</svg>

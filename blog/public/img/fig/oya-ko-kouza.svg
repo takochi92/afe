@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" role="img" aria-labelledby="t d" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif">
+<title id="t">親の口座と、子どもの口座の関係</title><desc id="d">多くの会社で、親権者が同じ会社に口座を持つことが条件。会社ごとに違うので確認が必要</desc>
+<rect width="800" height="350" fill="#fff"/>
+<g font-weight="700" fill="#161616">
+<rect x="30" y="50" width="300" height="150" rx="16" fill="#FFF3C4" stroke="#161616" stroke-width="3"/>
+<text x="180" y="92" text-anchor="middle" font-size="24">親（親権者）の口座</text>
+<text x="180" y="132" text-anchor="middle" font-size="18" fill="#5b5640">ふだんの証券口座</text>
+<text x="180" y="168" text-anchor="middle" font-size="22" font-weight="900" fill="#E5322D">〇〇証券</text>
+<rect x="470" y="50" width="300" height="150" rx="16" fill="#FFF3C4" stroke="#161616" stroke-width="3"/>
+<text x="620" y="92" text-anchor="middle" font-size="24">子どもの口座</text>
+<text x="620" y="132" text-anchor="middle" font-size="18" fill="#5b5640">こどもNISA口座</text>
+<text x="620" y="168" text-anchor="middle" font-size="22" font-weight="900" fill="#E5322D">同じ〇〇証券</text>
+<line x1="335" y1="125" x2="465" y2="125" stroke="#E5322D" stroke-width="6"/>
+<polygon points="465,125 445,112 445,138" fill="#E5322D"/>
+<text x="400" y="108" text-anchor="middle" font-size="14" fill="#E5322D">条件が多い</text>
+<text x="400" y="30" text-anchor="middle" font-size="22" font-weight="900">多くの会社は「親も同じ会社の口座」が条件</text>
+</g>
+<g fill="#161616" font-size="18" font-weight="700">
+<text x="50" y="246">▶ 親の口座がない → 親も同じ会社で口座を開く</text>
+<text x="76" y="272" font-size="15" fill="#5b5640">（子の口座と同時に申し込める会社もあります）</text>
+<text x="50" y="302">▶ 親の口座が別の会社 → その会社のこども口座の条件を確認する</text>
+<text x="50" y="330" fill="#5b5640" font-size="14">※会社によって条件は違います。2026年10月時点の公表資料にもとづきます。</text>
+</g>
+</svg>

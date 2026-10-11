@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 484" role="img" aria-labelledby="t d" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif">
+<title id="t">こどもNISAと学資保険の比べ方（3つの見方）</title><desc id="d">いつ使うお金か、値下がりと確実さ、万一の備えと家計。どちらがよいかは家庭で変わる</desc>
+<rect width="800" height="484" fill="#fff"/>
+<text x="400" y="36" text-anchor="middle" font-size="24" font-weight="900" fill="#161616">3つの見方で、自分の家庭に当てはめる</text>
+<g font-weight="700" fill="#161616">
+<rect x="30" y="60" width="740" height="110" rx="16" fill="#FFF3C4" stroke="#161616" stroke-width="3"/>
+<text x="50" y="94" font-size="22" fill="#E5322D">見方1　いつ、いくら使うお金？</text>
+<text x="50" y="126" font-size="18">□ 使う時期が近くて、金額も決まっている</text>
+<text x="50" y="154" font-size="18">□ 当面使わない、長く置いておけるお金</text>
+<rect x="30" y="185" width="740" height="134" rx="16" fill="#FFF3C4" stroke="#161616" stroke-width="3"/>
+<text x="50" y="219" font-size="22" fill="#E5322D">見方2　値下がりを受け入れられる？</text>
+<text x="50" y="244" font-size="16">こどもNISA：元本は保証されない　学資保険：受取総額が払込総額を下回ることがある</text>
+<text x="50" y="270" font-size="16">（学資保険は、途中でやめると、戻る額が通常は払込総額より少ない）</text>
+<text x="50" y="302" font-size="16" font-weight="700">□ 値動きがあってもよい　　□ 受け取る額が分かるほうが安心</text>
+<rect x="30" y="336" width="740" height="108" rx="16" fill="#FFF3C4" stroke="#161616" stroke-width="3"/>
+<text x="50" y="368" font-size="22" fill="#E5322D">見方3　万一の備えと、毎月の家計</text>
+<text x="50" y="400" font-size="18">学資保険：払込免除がある場合がある（条件は商品ごと）</text>
+<text x="50" y="428" font-size="18">こどもNISA：自動の払込免除は確認できていません　□ 毎月いくら出せる？</text>
+</g>
+<text x="400" y="468" text-anchor="middle" font-size="14" fill="#5b5640">※どちらがよいかは家庭で変わります。2026年10月時点。投資には元本割れのリスクがあります。</text>
+</svg>
