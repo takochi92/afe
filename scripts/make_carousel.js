@@ -11,7 +11,7 @@ const { chromium } = require('playwright'); const fs = require('fs'), path = req
 const NAME = {owl:'ふくろう博士', rabbit:'うさぎ', squirrel:'りす'};
 const img = k => 'data:image/jpeg;base64,' + fs.readFileSync(path.join(__dirname,'..','assets','characters',k + '.jpg')).toString('base64');
 const esc = s => String(s ?? '').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])).replace(/\n/g,'<br>');
-const CSS = `body{margin:0;width:1080px;height:1350px;background:#FFD92E;font-family:"Noto Sans CJK JP","Noto Sans JP",sans-serif;color:#161616;position:relative;overflow:hidden;box-sizing:border-box;padding:84px 80px 130px 96px}
+const CSS = `body{word-break:auto-phrase;margin:0;width:1080px;height:1350px;background:#FFD92E;font-family:"Noto Sans CJK JP","Noto Sans JP",sans-serif;color:#161616;position:relative;overflow:hidden;box-sizing:border-box;padding:84px 80px 130px 96px}
 .bar{position:absolute;left:0;top:0;width:28px;height:100%;background:#161616}
 .pill{display:inline-block;background:#E5322D;color:#fff;font-size:40px;font-weight:700;padding:8px 26px;letter-spacing:.06em}
 h1{font-size:112px;line-height:1.2;margin:34px 0 0;font-weight:900}
@@ -22,7 +22,7 @@ ul{list-style:none;padding:0;margin:40px 0 0;display:flex;flex-direction:column;
 .say{position:absolute;left:96px;right:380px;bottom:170px;background:#fff;border:8px solid #161616;border-radius:36px;padding:26px 34px;font-size:44px;line-height:1.5;font-weight:700}
 .cta{position:absolute;left:96px;right:80px;bottom:170px;background:#161616;color:#FFD92E;border-radius:30px;padding:26px 34px;font-size:50px;font-weight:900;text-align:center}
 .swipe{position:absolute;left:96px;bottom:200px;font-size:48px;font-weight:900}
-.foot{position:absolute;left:96px;right:80px;bottom:52px;font-size:28px;line-height:1.5;display:flex;justify-content:space-between;gap:20px}
+.foot{position:absolute;left:96px;right:80px;bottom:52px;font-size:26px;line-height:1.5;display:flex;justify-content:space-between;gap:20px}.foot span:last-child{white-space:nowrap}
 `;
 (async () => {
   const [outDir, json] = process.argv.slice(2); const d = JSON.parse(json); const N = d.slides.length;
