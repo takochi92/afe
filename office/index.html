@@ -152,11 +152,13 @@ button,select,textarea{font:inherit;color:inherit}
         <h2>コマンドセンター</h2>
         <div class="tabs" role="tablist">
           <button role="tab" id="tab-log" aria-selected="true" data-pane="log">指示ログ</button>
+          <button role="tab" id="tab-work" aria-selected="false" data-pane="work">作業ログ</button>
           <button role="tab" id="tab-board" aria-selected="false" data-pane="board">進行ボード</button>
           <button role="tab" id="tab-roster" aria-selected="false" data-pane="roster">社員名簿</button>
         </div>
       </div>
       <div class="pane" id="pane-log" role="tabpanel"><div class="log" id="log"></div></div>
+      <div class="pane" id="pane-work" role="tabpanel" hidden><div class="log" id="work"></div></div>
       <div class="pane" id="pane-board" role="tabpanel" hidden><div class="board" id="board"></div></div>
       <div class="pane" id="pane-roster" role="tabpanel" hidden><div class="roster" id="roster"></div></div>
 
@@ -451,8 +453,8 @@ function renderStaff(){
 /* ---------- タブ ---------- */
 for (const b of document.querySelectorAll(".tabs button")) b.addEventListener("click", () => {
   for (const x of document.querySelectorAll(".tabs button")) x.setAttribute("aria-selected", String(x === b));
-  for (const p of ["log","board","roster"]) document.getElementById("pane-"+p).hidden = p !== b.dataset.pane;
-  if (b.dataset.pane === "log") scrollLog();
+  for (const p of ["log","work","board","roster"]) document.getElementById("pane-"+p).hidden = p !== b.dataset.pane;
+  if (b.dataset.pane === "log") scrollLog(); if (b.dataset.pane === "work") { const pw = document.getElementById("pane-work"); pw.scrollTop = pw.scrollHeight; }
 });
 
 /* ---------- 進行ボード ---------- */
@@ -479,7 +481,7 @@ function renderBoard(){
 }
 
 /* ---------- 指示ログ（Claude Code Remote の会話） ---------- */
-const logEl = document.getElementById("log");
+const logEl = document.getElementById("log"), workEl = document.getElementById("work");
 let logState = {kind:"loading"};
 function scrollLog(){ const p = document.getElementById("pane-log"); p.scrollTop = p.scrollHeight; }
 function stripText(s){ return s.replace(/<system-reminder>[\s\S]*?<\/system-reminder>/g, "").replace(/<\/?(command-[a-z-]+|local-command-[a-z-]+)>/g, "").trim(); }
@@ -505,10 +507,10 @@ function parseEvents(payload){
   return out;
 }
 const fmtTime = iso => { try { const d = new Date(iso); return d.toLocaleString("ja-JP", {month:"numeric", day:"numeric", hour:"2-digit", minute:"2-digit"}); } catch { return ""; } };
-function renderLog(){
+function renderWork(){
   const s = logState;
   if (s.kind === "items") {
-    const atBottom = (() => { const p = document.getElementById("pane-log"); return p.scrollHeight - p.scrollTop - p.clientHeight < 60; })();
+    const atBottom = (() => { const p = document.getElementById("pane-work"); return p.scrollHeight - p.scrollTop - p.clientHeight < 60; })();
     const nodes = [];
     let tl = null;
     for (const it of s.items) {
@@ -535,8 +537,8 @@ function renderLog(){
       }
     }
     if (!nodes.length) nodes.push(Object.assign(document.createElement("div"), {className:"empty", textContent:"まだ会話がありません。"}));
-    logEl.replaceChildren(...nodes);
-    if (atBottom || !s.scrolled) { scrollLog(); s.scrolled = true; }
+    workEl.replaceChildren(...nodes);
+    if (atBottom || !s.scrolled) { const pw = document.getElementById("pane-work"); pw.scrollTop = pw.scrollHeight; s.scrolled = true; }
     return;
   }
   const box = document.createElement("div"); box.className = "empty";
@@ -553,10 +555,22 @@ function renderLog(){
   box.querySelector("b").textContent = msgs[0]; box.querySelector("span").textContent = msgs[1];
   if (s.kind === "approval_required") {
     const b = document.createElement("button"); b.type = "button"; b.className = "btn"; b.textContent = "許可して読み込む";
-    b.addEventListener("click", async () => { try { const r = await mcp.callTool(SERVER, "list_events", EVENTS_INPUT); logState = {kind:"items", items: parseEvents(r.payload)}; renderLog(); } catch (e) { logState = errState(e); renderLog(); } });
+    b.addEventListener("click", async () => { try { const r = await mcp.callTool(SERVER, "list_events", EVENTS_INPUT); logState = {kind:"items", items: parseEvents(r.payload)}; renderWork(); } catch (e) { logState = errState(e); renderWork(); } });
     box.append(document.createElement("br"), b);
   }
-  logEl.replaceChildren(box, ...orderThread());
+  workEl.replaceChildren(box);
+}
+function renderLog(){
+  const nodes = orderThread();
+  const p = document.getElementById("pane-log");
+  const atBottom = p.scrollHeight - p.scrollTop - p.clientHeight < 80;
+  if (!nodes.length) {
+    const e = document.createElement("div"); e.className = "empty";
+    e.innerHTML = "<b>まだ指示がありません。</b><br>下の欄から社長に指示を送ると、ここに「あなたの指示」と「社長の返事」が並びます。";
+    nodes.push(e);
+  }
+  logEl.replaceChildren(...nodes);
+  if (atBottom) scrollLog();
 }
 function msgNode(kind, text, at){
   const m = document.createElement("div"); m.className = "msg " + (kind === "user" ? "owner" : "ceo");
@@ -570,6 +584,9 @@ function orderThread(){
   for (const o of [...orders].reverse()) {
     out.push(msgNode("user", o.text, o.createdAt));
     if (o.reply) out.push(msgNode("ceo", o.reply, o.repliedAt));
+    else if (o.state === "sent") out.push(msgNode("ceo", "届きました。社長が受け取りました。処理が終わると、ここに返事が出ます。", o.createdAt));
+    else if (o.state === "sending") out.push(msgNode("ceo", "送信しています…", o.createdAt));
+    else if (o.state === "queued" || o.state === "failed" || o.state === "unknown") out.push(msgNode("ceo", "まだ届いていません。" + (o.note ? "（" + o.note + "）" : ""), o.createdAt));
   }
   return out;
 }
@@ -682,11 +699,11 @@ form.addEventListener("submit", async e => {
 
 /* ---------- 起動 ---------- */
 const EVENTS_INPUT = {session_id: SESSION_ID, kinds:["user","assistant"], limit:100};
-select("ceo"); renderStaff(); renderBoard(); renderLog(); renderCeo(); renderOrders();
+select("ceo"); renderStaff(); renderBoard(); renderWork(); renderLog(); renderCeo(); renderOrders();
 requestAnimationFrame(loop);
 
 (async () => {
-  if (!window.claude?.use) { logState = {kind:"nomcp"}; renderLog(); tasks = []; renderBoard(); return; }
+  if (!window.claude?.use) { logState = {kind:"nomcp"}; renderWork(); tasks = []; renderBoard(); return; }
   claude.use("db").then(d => {
     db = d;
     if (!db) { tasks = []; renderBoard(); return; }
@@ -695,16 +712,16 @@ requestAnimationFrame(loop);
       renderStaff();
     }, () => {});
     db.collection("tasks").onSnapshot(snap => { tasks = snap.docs.map(d => ({id:d.id, ...d.data()})); renderBoard(); }, () => { tasks = []; renderBoard(); });
-    db.collection("orders").orderBy("createdAt","desc").limit(30).onSnapshot(snap => { orders = snap.docs.map(d => ({id:d.id, ...d.data()})); renderOrders(); if (logState.kind !== "items") renderLog(); }, () => {});
+    db.collection("orders").orderBy("createdAt","desc").limit(30).onSnapshot(snap => { orders = snap.docs.map(d => ({id:d.id, ...d.data()})); renderOrders(); renderLog(); }, () => {});
   });
   claude.use("comments").then(c => { comments = c; });
   claude.use("mcp").then(m => {
     mcp = m;
-    if (!mcp) { logState = {kind:"nomcp"}; renderLog(); return; }
+    if (!mcp) { logState = {kind:"nomcp"}; renderWork(); return; }
     mcp.watchTool(SERVER, "list_events", EVENTS_INPUT, ev => {
       if (ev.type === "data") { const prev = logState; logState = {kind:"items", items: parseEvents(ev.result.payload), scrolled: prev.scrolled}; }
       else { const st = errState(ev.error); if (logState.kind !== "items" || st.kind !== "error") logState = st; }
-      renderLog();
+      renderWork();
     }, {refetchInterval: 30000});
     mcp.watchTool(SERVER, "get_session", {session_id: SESSION_ID}, ev => {
       if (ev.type === "data") ceoBucket = bucketOf(ev.result.payload);
