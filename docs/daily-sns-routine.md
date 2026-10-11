@@ -37,3 +37,7 @@
 
 ## 会社サイトへの返事（オーナーの指示、2026-10-11）
 - 指示に対する返事は、**チャットより先に**、会社サイトのデータベース `orders/<id>` の `reply` に書く（ページの指示ログに出る）
+
+## Instagramについて
+- Instagramの自動投稿の流れ・準備・画像の枚数の考え方は `docs/instagram-flow.md`。**準備（アカウントと鍵）が終わるまでは、毎日の手順にInstagramを入れない**
+- 複数枚の画像は `scripts/make_carousel.js`。Threadsにも使える
