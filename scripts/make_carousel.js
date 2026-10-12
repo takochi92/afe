@@ -1,4 +1,5 @@
 // カルーセル（複数枚）画像を作る。Instagram / Threads 共用。
+// format:"tiktok" を JSON に入れると 1080×1920（9:16）で作る
 // 使い方: node scripts/make_carousel.js <出力フォルダ> '<JSON>'
 // 出力: <出力フォルダ>/slide-01.jpg, slide-02.jpg ...（JPEG。Instagramの投稿APIはJPEGのみ）
 // JSON: {"footer":"2026年10月時点｜公表資料にもとづく｜投資には元本割れのリスクがあります",
@@ -29,13 +30,14 @@ ul{list-style:none;padding:0;margin:40px 0 0;display:flex;flex-direction:column;
   if (N < 2 || N > 10) throw new Error('枚数は2〜10枚');
   fs.mkdirSync(outDir, {recursive:true});
   const b = await chromium.launch({executablePath:'/opt/pw-browsers/chromium'}).catch(()=>chromium.launch());
-  const p = await b.newPage({viewport:{width:1080,height:1350}});
+  const TT = d.format === 'tiktok', H = TT ? 1920 : 1350;  // tiktok: 9:16（1080×1920）。下と右はアプリの表示で隠れるので、余白を広げる
+  const p = await b.newPage({viewport:{width:1080,height:H}});
   for (let i = 0; i < N; i++) {
     const s = d.slides[i]; let inner = '';
     if (s.type === 'cover') inner = `<span class="pill">${esc(s.tag)}</span><h1>${esc(s.title)}</h1><div class="swipe">スワイプして見てね →</div><div class="who"><img src="${img(s.who||'owl')}">${NAME[s.who||'owl']}</div>`;
     else if (s.type === 'summary') inner = `<span class="pill">まとめ</span><h2>${esc(s.title)}</h2><ul>${(s.bullets||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul><div class="cta">${esc(s.cta||'保存して、あとで見返してね')}</div>`;
     else inner = `<span class="pill">${esc(s.label||'')}</span><h2>${esc(s.title)}</h2><div class="body">${esc(s.body)}</div>${s.say?`<div class="say">${esc(s.say)}</div><div class="who"><img src="${img(s.who||'owl')}">${NAME[s.who||'owl']}</div>`:''}`;
-    const html = `<!doctype html><meta charset="utf-8"><style>${CSS}</style><div class="bar"></div>${inner}<div class="foot"><span>${esc(d.footer||'')}</span><span>${i+1} / ${N}</span></div>`;
+    const html = `<!doctype html><meta charset="utf-8"><style>${CSS.replace('height:1350px', 'height:' + H + 'px')}${TT ? 'body{padding-bottom:420px!important;padding-right:170px!important}.foot{bottom:300px!important;right:170px!important}.say{bottom:430px!important;right:420px!important}.who{bottom:400px!important;right:150px!important}.cta{bottom:430px!important;right:170px!important}.swipe{bottom:430px!important}h1{font-size:112px!important}h2{font-size:88px!important}' : ''}</style><div class="bar"></div>${inner}<div class="foot"><span>${esc(d.footer||'')}</span><span>${i+1} / ${N}</span></div>`;
     await p.setContent(html); await p.waitForTimeout(250);
     await p.screenshot({path: path.join(outDir, `slide-${String(i+1).padStart(2,'0')}.jpg`), type:'jpeg', quality:92});
   }
