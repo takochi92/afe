@@ -3,6 +3,9 @@
 const fs = require('fs'), path = require('path');
 const site = JSON.parse(fs.readFileSync('site.json', 'utf8'));
 const OUT = 'dist';
+// 案件リンク：affiliate.json の {キー: {url, name}}。urlが空（提携前）なら、リンクにせず文字だけ出す。urlがあれば rel=sponsored で、記事の冒頭にPR表記が自動で入る
+const AFF = fs.existsSync('affiliate.json') ? JSON.parse(fs.readFileSync('affiliate.json', 'utf8')) : {};
+let affUsed = false;
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 function parse(file) {
@@ -16,6 +19,7 @@ function parse(file) {
 const inline = t => esc(t)
   .replace(/!\[([^\]]*)\]\((\/[^)\s]+)\)/g, (_, a, u) => `<img class="fig" src="${u}" alt="${a}" loading="lazy" width="800">`)
   .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+  .replace(/\[([^\]]+)\]\(aff:([a-z0-9-]+)\)/g, (_, a, k) => { const u = AFF[k] && AFF[k].url; if (!u) return a; affUsed = true; return `<a href="${esc(u)}" rel="sponsored nofollow noopener" target="_blank">${a}</a><span class="prtag">PR</span>`; })
   .replace(/\[([^\]]+)\]\((https?:[^)\s]+|\/[^)\s]*)\)/g, (_, a, u) => `<a href="${u}"${u.startsWith('http') ? ' rel="noopener nofollow" target="_blank"' : ''}>${a}</a>`);
 function md(src) {
   const lines = src.replace(/\r/g, '').split('\n'); const out = []; let i = 0;
@@ -60,7 +64,7 @@ h1{font-size:1.75rem;line-height:1.4;margin:.2em 0 .6em;text-wrap:balance}h2{fon
 blockquote{margin:1.2em 0;padding:.4em 1em;border-left:6px solid var(--pop);background:var(--card)}
 .cards{display:grid;gap:14px;margin-top:20px}.card{background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:14px 18px}.card a.t{font-weight:700;font-size:1.08rem;text-decoration:none}.card p{margin:.3em 0 0;color:var(--soft);font-size:.9rem;line-height:1.6}
 .talk{display:flex;gap:14px;align-items:flex-start;margin:1.2em 0}.talk img{width:68px;height:68px;border-radius:50%;border:3px solid var(--ink);background:#fff;object-fit:cover;flex:none}.talk .b{background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:10px 14px;flex:1}.talk.owl .b{background:#FFF3C4;color:#161616}
-figure{margin:1.4em 0}img.fig{display:block;width:100%;height:auto;background:#fff;border:3px solid var(--ink);border-radius:14px}
+figure{margin:1.4em 0}.prtag{font-size:.7rem;border:1px solid var(--ink);border-radius:4px;padding:0 4px;margin-left:4px;color:var(--soft)}img.fig{display:block;width:100%;height:auto;background:#fff;border:3px solid var(--ink);border-radius:14px}
 footer{border-top:1px solid var(--line);color:var(--soft);font-size:.82rem;padding-block:20px}footer a{color:var(--soft)}
 `;
 const layout = ({ title, desc, body, url, jsonld, noindex, ogType }) => `<!doctype html><html lang="${site.lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -86,11 +90,13 @@ const pages = readDir('content/pages');
 const urls = [{ u: '/', m: posts[0] ? posts[0].meta.updated : '' }];
 
 for (const p of posts) {
+  affUsed = false;
   const { meta } = p, url = `/${meta.slug}/`; urls.push({ u: url, m: meta.updated });
   const jsonld = JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: meta.title, dateModified: meta.updated, datePublished: meta.published || meta.updated, inLanguage: 'ja', author: { '@type': 'Organization', name: site.name }, publisher: { '@type': 'Organization', name: site.name } });
   const head = `<p class="meta">更新日：${esc(meta.updated)}${meta.published ? `　公開日：${esc(meta.published)}` : ''}　${esc(meta.asof || '')}</p><h1>${esc(meta.title)}</h1>`;
-  const pr = meta.pr === 'true' ? '<div class="note">本記事はアフィリエイト広告（PR）を含みます。</div>' : '';
-  write(url + 'index.html', layout({ title: `${meta.title} | ${site.name}`, desc: meta.description || '', url, jsonld, ogType: 'article', body: `<article>${head}${pr}${talk(md(p.body))}<div class="note">この記事は、公表資料にもとづいて作成しています。制度や手続きは変更されることがあります。最新の情報は各金融機関や公式の資料で確認してください。投資には元本割れのリスクがあります。</div></article>` }));
+  const bodyHtml = talk(md(p.body));
+  const pr = (meta.pr === 'true' || affUsed) ? '<div class="note">本記事はアフィリエイト広告（PR）を含みます。</div>' : '';
+  write(url + 'index.html', layout({ title: `${meta.title} | ${site.name}`, desc: meta.description || '', url, jsonld, ogType: 'article', body: `<article>${head}${pr}${bodyHtml}<div class="note">この記事は、公表資料にもとづいて作成しています。制度や手続きは変更されることがあります。最新の情報は各金融機関や公式の資料で確認してください。投資には元本割れのリスクがあります。</div></article>` }));
 }
 for (const p of pages) {
   const { meta } = p, url = `/${meta.slug}/`; urls.push({ u: url, m: meta.updated });
