@@ -8,6 +8,12 @@ CAP="${1:?キャプションが必要}"; shift; [ "$#" -ge 1 ] && [ "$#" -le 10 
 VER="${IG_API_VERSION:-v23.0}"; API="https://graph.instagram.com/$VER"
 REPO="$(cd "$(dirname "$0")/.." && pwd)"; ASSETS="/home/user/afe-assets"; D=$(date -u +%Y-%m-%d); T=$(date -u +%H%M%S)
 j() { python3 -c "import sys,json;print(json.load(sys.stdin).get('$1',''))"; }
+# 二重投稿の防止：直近の投稿に、同じ書き出し（キャプション先頭30字）があれば、投稿せず終了する
+IGID=$(curl -sS -m 20 "$API/me?fields=user_id" | j user_id 2>/dev/null || true)
+if [ -n "${IGID:-}" ]; then
+  RECENT=$(curl -sS -m 20 "$API/$IGID/media?fields=caption&limit=25" || true)
+  if echo "$RECENT" | python3 -c "import sys,json;t=sys.argv[1][:30];d=json.load(sys.stdin).get('data',[]);sys.exit(0 if any((p.get('caption') or '')[:30]==t for p in d) else 1)" "$CAP" 2>/dev/null; then echo "同じ書き出しの投稿が直近にあるため、投稿しません（二重投稿の防止）"; exit 6; fi
+fi
 [ -d "$ASSETS/.git" ] || { echo "afe-assets がありません"; exit 2; }
 # 1) 画像を公開リポジトリに保存して、公開URLを作る
 mkdir -p "$ASSETS/images/$D/ig-$T"; URLS=()

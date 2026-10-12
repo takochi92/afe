@@ -8,6 +8,9 @@ set -euo pipefail
 TEXT="${1:?投稿文が必要}"; IMG="${2:-}"
 UID_="29526192993649084"; API="https://graph.threads.net/v1.0"
 REPO="$(cd "$(dirname "$0")/.." && pwd)"; ASSETS="/home/user/afe-assets"
+# 二重投稿の防止：直近の投稿に、同じ書き出し（先頭30字）があれば、投稿せず終了する
+RECENT=$(curl -sS -m 20 "$API/$UID_/threads?fields=text&limit=25" || true)
+if echo "$RECENT" | python3 -c "import sys,json;t=sys.argv[1][:30];d=json.load(sys.stdin).get('data',[]);sys.exit(0 if any((p.get('text') or '')[:30]==t for p in d) else 1)" "$TEXT" 2>/dev/null; then echo "同じ書き出しの投稿が直近にあるため、投稿しません（二重投稿の防止）"; exit 6; fi
 URL=""
 if [ -n "$IMG" ]; then
   [ -d "$ASSETS/.git" ] || { echo "afe-assets がありません"; exit 2; }
