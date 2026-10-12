@@ -19,3 +19,8 @@
 ## リンク欄に入れるもの（オーナーが手で入れる）
 - ThreadsもInstagramも、リンク欄に: `https://kodomo-okane-note.site-kanri19.workers.dev`
 - プロフィール文は A のまま（文中にURLは入れない。リンク欄だけ）
+
+## TikTok アカウント（オーナー作成・2026-10-12）
+- 表示名：こどものお金ノート（@user4081615882975）
+- URL：https://www.tiktok.com/@user4081615882975
+- 運用：投稿はオーナーが手動（docs/tiktok-flow.md）。リンクの掲載（ブログ・Instagram・Threadsのプロフィール等）はオーナー確認後に行う。
