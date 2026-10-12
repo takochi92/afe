@@ -2,6 +2,8 @@
 
 新しい記録を上に追記する。形式: `- YYYY-MM-DD HH:MM [部署] 内容（成果物パス）`
 
+- 2026-10-12 15:40 JST [社長] Threadsに1件投稿（午後の回・投稿05「12歳からの払出し」・検品合格済み・画像つき）。https://www.threads.com/@flysheep59/post/DeYnCLRHNgH（posts/queue/post-05.md）。今日5件目＝上限。夕の回は投稿なし
+- 2026-10-12 12:27 JST [社長] Threadsに1件投稿（昼の回・投稿04「ジュニアNISAとの違い」）。https://www.threads.com/@flysheep59/post/DeYRFFHnEQD。当時の記録コミットが残っていなかったため、午後の回でposts.csvとINDEXに追記
 - 2026-10-12 11:30 JST [社長] Instagramに1件投稿（昼前の回・払出し・6枚・検品は2回目で合格）。https://www.instagram.com/p/DeYJz_7m-7x/（posts/ig/2026-10-12-1.md、reviews/ig-2026-10-12-1.md）。afe-assetsへの保存も成功
 - 2026-10-12 11:21 JST [社長] Threadsに1件投稿（昼の回・投稿01「親の口座が別の会社」・検品合格済み・画像つき）。https://www.threads.com/@flysheep59/post/DeYJX8HIPFs（posts/queue/post-01.md）。今日3件目
 - 2026-10-12 10:26 JST [社長] Threadsに1件投稿（午前の回・投稿07「18歳になったら」・検品合格済み・画像つき）。https://www.threads.com/@flysheep59/post/DeYDMIgoDs5（posts/queue/post-07.md）。画像置き場のクローンが別ブランチだったため、main へ直接反映して投稿
