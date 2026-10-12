@@ -1,3 +1,4 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>AFE本社ワークスペース</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -189,6 +190,30 @@ h1,h2,h3{font-family:var(--font-head);margin:0;text-wrap:balance}
 .person .tk{grid-column:2;font-size:.82rem}
 .person code{font-size:.75rem;background:var(--panel-2);padding:0 6px;border-radius:6px}
 [hidden]{display:none!important}
+
+/* TikTok素材 */
+.tt-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 4px}
+@media (max-width:700px){.tt-flow{grid-template-columns:minmax(0,1fr)}}
+.tt-flow div{border:1px solid var(--line);background:var(--panel-2);border-radius:14px;padding:10px 12px;font-size:.82rem;line-height:1.5}
+.tt-flow b{display:block;color:var(--accent);font-size:.78rem}
+.tt-list{display:grid;gap:14px}
+.tt-item{border:1px solid var(--line);border-radius:16px;background:var(--panel-2);padding:14px;display:grid;gap:10px;min-width:0}
+.tt-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;flex-wrap:wrap}
+.tt-top b{font-family:var(--font-head);font-size:1rem;line-height:1.4;overflow-wrap:anywhere}
+.tt-cols{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:14px;align-items:start}
+@media (max-width:700px){.tt-cols{grid-template-columns:minmax(0,1fr)}}
+.tt-vid{width:100%;max-width:260px;aspect-ratio:9/16;background:#0b1513;border-radius:14px;display:block}
+.tt-novid{width:100%;max-width:260px;aspect-ratio:9/16;border:1px dashed var(--line);border-radius:14px;display:grid;place-items:center;text-align:center;color:var(--ink-soft);font-size:.8rem;padding:12px}
+.tt-blk{display:grid;gap:4px}
+.tt-blk .lb{font-size:.74rem;color:var(--ink-soft);display:flex;gap:8px;align-items:center;justify-content:space-between}
+.tt-txt{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:.88rem;line-height:1.7;margin:0;font-family:inherit}
+.tt-acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tt-acts .btn{padding:5px 12px;font-size:.8rem}
+.tt-file{position:relative;overflow:hidden;display:inline-block}
+.tt-file input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+.tt-msg{font-size:.76rem;color:var(--ink-soft)}
+.pill.s-voice_wait{--st:var(--warn)} .pill.s-audio_in,.pill.s-making,.pill.s-review{--st:var(--c-researcher)} .pill.s-done{--st:var(--ok)} .pill.s-posted{--st:var(--idle)} .pill.s-draft{--st:var(--idle)}
+.tt-aud{width:100%;max-width:420px;height:36px}
 </style>
 
 <div class="app">
@@ -200,6 +225,7 @@ h1,h2,h3{font-family:var(--font-head);margin:0;text-wrap:balance}
       <button type="button" data-view="tasks"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>進行ボード</button>
       <button type="button" data-view="log"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>指示ログ</button>
       <button type="button" data-view="work"><svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r=".8"/><circle cx="4" cy="12" r=".8"/><circle cx="4" cy="18" r=".8"/></svg>作業ログ</button>
+      <button type="button" data-view="tiktok"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/></svg>TikTok素材</button>
     </nav>
     <div class="ceo-box">
       <div class="row"><span class="dot" id="ceoDot"></span><span id="ceoText">社長の状態を確認中</span></div>
@@ -272,6 +298,19 @@ h1,h2,h3{font-family:var(--font-head);margin:0;text-wrap:balance}
       <div class="sec">社員の動き（日本時間）</div><div id="activity"></div>
       <div class="sec" style="margin-top:16px">社長とのやり取りの記録</div><div class="scroll" id="pane-work"><div class="log" id="work"></div></div>
     </section>
+    <section id="view-tiktok" class="main" hidden>
+      <div class="card">
+        <div class="card-h"><h2><span class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/></svg></span>TikTok素材（縦動画）</h2><span class="sub">投稿はオーナーが手動。1日1本から</span></div>
+        <div class="tt-flow">
+          <div><b>① 台本が届く</b>毎朝、社長室が新しい台本（140字以内）と説明文を置きます。</div>
+          <div><b>② 音声を作る</b>台本をコピーして音声メーカーで作り、下の欄にmp3を入れます。</div>
+          <div><b>③ 動画になる</b>社長室が画像と音声を合わせて動画にし、検品します。</div>
+          <div><b>④ 保存して投稿</b>「完成」の動画を保存し、TikTokに投稿。投稿したら印を付けます。</div>
+        </div>
+        <p class="sub" style="margin:8px 0 0">音声は1日に朝・夕の2回まとめて拾います。初回に許可の確認が出たら「許可」を押してください。</p>
+      </div>
+      <div class="card"><div class="card-h"><h2>動画の一覧</h2><span class="sub" id="ttCount"></span></div><div class="tt-list" id="ttList"></div></div>
+    </section>
   </main>
 </div>
 
@@ -295,7 +334,7 @@ const STAFF = [
 const STATUS_LABEL = {working:"稼働中", idle:"待機中", waiting:"確認待ち"};
 const live = Object.fromEntries(STAFF.map(s => [s.id, {status:"idle", task:"", line:"", at:""}]));
 let selected = "ceo", ceoBucket = null, tasks = null, activity = [], orders = [], kpi = null;
-let db = null, mcp = null, comments = null;
+let db = null, mcp = null, comments = null, assets = null, tiktok = null;
 
 const h = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const $ = id => document.getElementById(id);
@@ -324,7 +363,7 @@ function avatar(s){
 
 /* ---------- ナビ ---------- */
 function go(view){
-  for (const v of ["home","roster","tasks","log","work"]) $("view-"+v).hidden = v !== view;
+  for (const v of ["home","roster","tasks","log","work","tiktok"]) $("view-"+v).hidden = v !== view;
   for (const b of document.querySelectorAll("#nav button")) { if (b.dataset.view === view) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); }
   if (view === "log") { const p = $("pane-log"); p.scrollTop = p.scrollHeight; }
   if (view === "work") { const p = $("pane-work"); p.scrollTop = p.scrollHeight; }
@@ -682,11 +721,113 @@ form.addEventListener("submit", async e => {
   else say("送れませんでした：" + (note || "データ保存も使えない表示です。"), "err");
 });
 
+/* ---------- TikTok素材 ---------- */
+const TT_ST = {draft:"台本づくり中", voice_wait:"音声待ち", audio_in:"音声を受け取りました", making:"動画づくり中", review:"検品中", done:"完成", posted:"投稿済み"};
+async function ttCopy(text, msgEl){
+  let ok = false;
+  try { await navigator.clipboard.writeText(text); ok = true; } catch {}
+  if (!ok) { const t = document.createElement("textarea"); t.value = text; t.style.cssText = "position:fixed;opacity:0"; document.body.append(t); t.select(); try { ok = document.execCommand("copy"); } catch {} t.remove(); }
+  msgEl.textContent = ok ? "コピーしました" : "コピーできませんでした。選んでコピーしてください";
+}
+function ttBlk(label, text, extra){
+  const b = document.createElement("div"); b.className = "tt-blk";
+  const lb = document.createElement("div"); lb.className = "lb";
+  const l = document.createElement("span"); l.textContent = label + (extra || "");
+  const msg = document.createElement("span"); msg.className = "tt-msg";
+  const cp = document.createElement("button"); cp.type = "button"; cp.className = "btn"; cp.style.cssText = "padding:2px 10px;font-size:.74rem"; cp.textContent = "コピー";
+  cp.addEventListener("click", () => ttCopy(text, msg));
+  const r = document.createElement("span"); r.style.cssText = "display:flex;gap:8px;align-items:center"; r.append(msg, cp);
+  lb.append(l, r);
+  const p = document.createElement("pre"); p.className = "tt-txt"; p.textContent = text;
+  b.append(lb, p); return b;
+}
+function ttCard(t){
+  const it = document.createElement("div"); it.className = "tt-item";
+  const top = document.createElement("div"); top.className = "tt-top";
+  const ti = document.createElement("b"); ti.textContent = t.title || t.id;
+  const pill = document.createElement("span"); pill.className = "pill s-" + (t.status || "draft"); pill.textContent = TT_ST[t.status] || t.status || "";
+  top.append(ti, pill);
+  const cols = document.createElement("div"); cols.className = "tt-cols";
+  const left = document.createElement("div"); left.style.cssText = "display:grid;gap:8px;justify-items:start";
+  if (t.videoUrl) {
+    const v = document.createElement("video"); v.className = "tt-vid"; v.controls = true; v.playsInline = true; v.preload = "metadata"; v.src = t.videoUrl;
+    left.append(v);
+    const acts = document.createElement("div"); acts.className = "tt-acts";
+    const msg = document.createElement("span"); msg.className = "tt-msg";
+    const dl = document.createElement("button"); dl.type = "button"; dl.className = "btn primary"; dl.textContent = "動画を保存";
+    dl.addEventListener("click", async () => {
+      try {
+        const d = window.claude?.use ? await window.claude.use("downloads").catch(() => null) : null;
+        if (!d) { window.open(t.videoUrl, "_blank", "noopener"); return; }
+        const blob = await (await fetch(t.videoUrl)).blob();
+        const r = await d.save({filename: (t.id || "tiktok") + ".mp4", data: blob});
+        msg.textContent = r?.status === "saved" ? "保存しました" : "";
+      } catch (e) { if (e?.code !== "cancelled" && e?.code !== "declined") msg.textContent = "保存できませんでした。動画を長押し（右クリック）して保存してください"; }
+    });
+    acts.append(dl);
+    if (t.status === "done" && db) {
+      const pb = document.createElement("button"); pb.type = "button"; pb.className = "btn"; pb.textContent = "TikTokに投稿した";
+      pb.addEventListener("click", async () => { try { await db.doc("tiktok/" + t.id).update({status:"posted", postedAt:new Date().toISOString()}); } catch { msg.textContent = "記録できませんでした"; } });
+      acts.append(pb);
+    }
+    acts.append(msg); left.append(acts);
+  } else {
+    const nv = document.createElement("div"); nv.className = "tt-novid";
+    nv.textContent = t.status === "making" || t.status === "review" || t.status === "audio_in" ? "動画をつくっています。しばらくお待ちください" : "音声が届くと、ここに動画が出ます";
+    left.append(nv);
+  }
+  const right = document.createElement("div"); right.style.cssText = "display:grid;gap:10px;min-width:0";
+  right.append(ttBlk("台本（音声メーカーに貼る）", t.narration || "", "　" + String((t.narration || "").length) + "字"));
+  if (t.caption) right.append(ttBlk("TikTokの説明文・ハッシュタグ", t.caption));
+  const au = document.createElement("div"); au.className = "tt-blk";
+  const alb = document.createElement("div"); alb.className = "lb"; alb.innerHTML = "<span>音声（mp3）</span>";
+  au.append(alb);
+  if (t.audioUrl) { const a = document.createElement("audio"); a.className = "tt-aud"; a.controls = true; a.preload = "none"; a.src = t.audioUrl; au.append(a); }
+  const row = document.createElement("div"); row.className = "tt-acts";
+  const msg = document.createElement("span"); msg.className = "tt-msg";
+  if (assets && t.status !== "posted") {
+    const lab = document.createElement("label"); lab.className = "btn tt-file"; lab.textContent = t.audioUrl ? "音声を差し替える" : "音声mp3を入れる";
+    const inp = document.createElement("input"); inp.type = "file"; inp.accept = "audio/*,.mp3,.m4a,.wav"; lab.append(inp);
+    inp.addEventListener("change", async () => {
+      const f = inp.files && inp.files[0]; if (!f) return;
+      if (f.size > 20 * 1024 * 1024) { msg.textContent = "ファイルが大きすぎます（20MB以内）"; return; }
+      msg.textContent = "アップロードしています…";
+      try {
+        const r = await assets.upload(f);
+        await db.doc("tiktok/" + t.id).update({audioId:r.id, audioUrl:r.url, audioName:f.name, audioAt:new Date().toISOString(), status:"audio_in"});
+        msg.textContent = "届きました。動画にします";
+        try {
+          if (comments && (await comments.canSendToClaude()) === "available") {
+            const anchor = await comments.anchorFor(it);
+            await comments.sendToClaude({anchor, text:"【会社サイトからの指示】宛先：社長\nTikTok素材「" + (t.title || t.id) + "」（id: " + t.id + "）の音声を入れました。動画にして検品まで進めてください。"});
+          }
+        } catch {}
+      } catch (e) { msg.textContent = e?.code === "not_granted" ? "音声を入れる権限がありません" : "アップロードできませんでした：" + (e?.message || e?.code || ""); }
+      inp.value = "";
+    });
+    row.append(lab);
+  } else if (!assets && t.status !== "posted") { const s = document.createElement("span"); s.className = "tt-msg"; s.textContent = "この表示では音声を入れられません（編集権限のある画面で開いてください）"; row.append(s); }
+  row.append(msg); au.append(row); right.append(au);
+  if (t.note) { const n = document.createElement("div"); n.className = "tt-msg"; n.textContent = t.note; right.append(n); }
+  const meta = [t.createdAt ? "台本 " + fmtTime(t.createdAt) : "", t.audioAt ? "音声 " + fmtTime(t.audioAt) : "", t.videoAt ? "動画 " + fmtTime(t.videoAt) : "", t.postedAt ? "投稿 " + fmtTime(t.postedAt) : ""].filter(Boolean).join("　");
+  if (meta) { const m = document.createElement("div"); m.className = "tt-msg num"; m.textContent = meta; right.append(m); }
+  cols.append(left, right); it.append(top, cols); return it;
+}
+function renderTiktok(){
+  const el = $("ttList"); if (!el) return;
+  if (!tiktok) { el.innerHTML = '<div class="empty">読み込んでいます…</div>'; return; }
+  $("ttCount").textContent = tiktok.length ? tiktok.length + "本" : "";
+  if (!tiktok.length) { el.innerHTML = '<div class="empty"><b>まだ素材がありません。</b><br>毎朝、社長室が台本を置きます。</div>'; return; }
+  const list = [...tiktok].sort((a,b) => (b.order ?? 0) - (a.order ?? 0) || String(b.createdAt || "").localeCompare(String(a.createdAt || "")));
+  // 入力中（アップロード中）の表示を壊さないよう、操作中は描き直しを遅らせる
+  el.replaceChildren(...list.map(ttCard));
+}
+
 /* ---------- 起動 ---------- */
 const EVENTS_INPUT = {session_id: SESSION_ID, kinds:["user","assistant"], limit:100};
-function renderAll(){ renderStaff(); renderToday(); renderNotices(); renderProjects(); renderBoard(); renderLog(); renderOrders(); renderCeo(); renderWork(); }
+function renderAll(){ renderStaff(); renderToday(); renderNotices(); renderProjects(); renderBoard(); renderLog(); renderOrders(); renderCeo(); renderWork(); renderTiktok(); }
 renderAll();
-{ const v = (location.hash || "").slice(1); if (["home","roster","tasks","log","work"].includes(v)) go(v); }
+{ const v = (location.hash || "").slice(1); if (["home","roster","tasks","log","work","tiktok"].includes(v)) go(v); }
 
 (async () => {
   if (!window.claude?.use) { logState = {kind:"nomcp"}; tasks = []; renderAll(); return; }
@@ -701,7 +842,9 @@ renderAll();
     db.collection("activity").orderBy("at","desc").limit(40).onSnapshot(snap => { activity = snap.docs.map(d => d.data()); renderNotices(); renderKpis(); }, () => {});
     db.collection("orders").orderBy("createdAt","desc").limit(30).onSnapshot(snap => { orders = snap.docs.map(d => ({id:d.id, ...d.data()})); renderOrders(); renderLog(); }, () => {});
     db.collection("kpi").onSnapshot(snap => { const doc = snap.docs.find(x => x.id === "summary"); kpi = doc ? doc.data() : null; renderKpis(); renderProjects(); }, () => {});
+    db.collection("tiktok").onSnapshot(snap => { tiktok = snap.docs.map(d => ({id:d.id, ...d.data()})); renderTiktok(); }, () => { tiktok = []; renderTiktok(); });
   });
+  claude.use("assets").then(a => { assets = a; renderTiktok(); }).catch(() => {});
   claude.use("comments").then(c => { comments = c; });
   claude.use("mcp").then(m => {
     mcp = m;
@@ -720,3 +863,678 @@ renderAll();
 })();
 })();
 </script>
+
+<!-- ===== 2ページ目：PT国試ドリル編集部（#pt で表示。AFE本社のページとは相互リンク） ===== -->
+<style>
+/* Layout: 左に濃色のナビ、中央に指示と社長の返事（会話）、右にタスク進行と生成コンテンツ。ライト／ダーク両対応 */
+:root{
+  --pw-bg:#f7f6f3; --pw-panel:#ffffff; --pw-panel2:#f9f8f6; --pw-line:#e7e4de; --pw-ink:#23211d; --pw-soft:#6f6a61;
+  --pw-side:#262522; --pw-side-ink:#ecebe7; --pw-side-soft:#a9a59c; --pw-side-hi:#3a3935;
+  --pw-accent:#d97757; --pw-blue:#4a7fe0; --pw-blue-soft:#e8effc; --pw-ok:#2e9d5b; --pw-warn:#c98a1b; --pw-lime:#8cc63f;
+  --pw-shadow:0 1px 2px rgba(35,33,29,.05),0 4px 14px rgba(35,33,29,.05);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --pw-bg:#1d1c1a; --pw-panel:#262522; --pw-panel2:#2d2c29; --pw-line:#3b3a36; --pw-ink:#eceae5; --pw-soft:#a6a198;
+  --pw-side:#151413; --pw-side-hi:#2f2e2b; --pw-blue:#6f9bf0; --pw-blue-soft:#24324d; --pw-ok:#4cc27c; --pw-warn:#e3a640;
+  --pw-shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);}}
+:root[data-theme="dark"]{
+  --pw-bg:#1d1c1a; --pw-panel:#262522; --pw-panel2:#2d2c29; --pw-line:#3b3a36; --pw-ink:#eceae5; --pw-soft:#a6a198;
+  --pw-side:#151413; --pw-side-hi:#2f2e2b; --pw-blue:#6f9bf0; --pw-blue-soft:#24324d; --pw-ok:#4cc27c; --pw-warn:#e3a640;
+  --pw-shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);}
+
+/* AFE側のナビに置く「会社を切り替え」リンク */
+.co-switch{display:flex;align-items:center;gap:10px;border:1px dashed var(--line);border-radius:12px;padding:8px 12px;text-decoration:none;color:var(--ink);font-size:.82rem;font-weight:700;background:var(--panel)}
+.co-switch i{width:22px;height:22px;border-radius:6px;background:#8cc63f;color:#fff;display:grid;place-items:center;font-style:normal;font-size:.7rem;flex:none}
+.co-switch:hover{border-color:var(--accent)}
+body.pt-mode{background:var(--pw-bg)}
+
+.ptws{max-width:1440px;margin-inline:auto;display:grid;grid-template-columns:232px minmax(0,1fr);gap:0;color:var(--pw-ink);font-family:"Noto Sans JP","Hiragino Sans",system-ui,sans-serif;border:1px solid var(--pw-line);border-radius:18px;overflow:hidden;background:var(--pw-bg);box-shadow:var(--pw-shadow);min-height:calc(100vh - 44px)}
+@media (max-width:900px){.ptws{grid-template-columns:minmax(0,1fr)}}
+.ptws button,.ptws select,.ptws textarea{font:inherit;color:inherit}
+.ptws h1,.ptws h2,.ptws h3{margin:0;font-family:inherit}
+.pw-num{font-variant-numeric:tabular-nums}
+
+.pw-side{background:var(--pw-side);color:var(--pw-side-ink);padding:18px 14px;display:flex;flex-direction:column;gap:14px}
+@media (max-width:900px){.pw-side{flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px;padding:12px}}
+.pw-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem;letter-spacing:.01em}
+.pw-brand svg{width:26px;height:26px;color:var(--pw-accent)}
+.pw-new{display:flex;align-items:center;gap:8px;border:1px solid var(--pw-side-hi);background:transparent;border-radius:10px;padding:8px 12px;cursor:pointer;color:var(--pw-side-ink);font-weight:500}
+.pw-new:hover{background:var(--pw-side-hi)}
+.pw-nav{display:flex;flex-direction:column;gap:2px}
+@media (max-width:900px){.pw-nav{flex-direction:row;flex-wrap:wrap}.pw-sec,.pw-owner{display:none!important}}
+.pw-nav button,.pw-nav a{display:flex;align-items:center;gap:10px;border:0;background:none;padding:8px 10px;border-radius:9px;cursor:pointer;text-align:left;color:var(--pw-side-ink);font-size:.88rem;text-decoration:none}
+.pw-nav button:hover,.pw-nav a:hover{background:var(--pw-side-hi)}
+.pw-nav [aria-current="page"]{background:var(--pw-side-hi);font-weight:700}
+.pw-nav svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.pw-sec{font-size:.72rem;color:var(--pw-side-soft);padding:8px 10px 2px}
+.pw-co{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;color:var(--pw-side-ink);text-decoration:none;font-size:.85rem;border:1px dashed var(--pw-side-hi)}
+.pw-co:hover{background:var(--pw-side-hi)}
+.pw-co i{width:22px;height:22px;border-radius:6px;background:#17a77a;color:#fff;display:grid;place-items:center;font-style:normal;font-size:.7rem;font-weight:800;flex:none}
+.pw-owner{margin-top:auto;display:flex;align-items:center;gap:10px;border-top:1px solid var(--pw-side-hi);padding-top:12px;font-size:.8rem;color:var(--pw-side-soft)}
+.pw-owner b{display:block;color:var(--pw-side-ink);font-size:.86rem}
+.pw-owner .ava{width:34px;height:34px;border-radius:50%;background:var(--pw-side-hi);display:grid;place-items:center;font-weight:700;color:var(--pw-side-ink)}
+
+.pw-main{display:grid;grid-template-rows:auto minmax(0,1fr);min-width:0}
+.pw-head{display:flex;justify-content:space-between;align-items:center;gap:10px 16px;flex-wrap:wrap;padding:14px 20px;border-bottom:1px solid var(--pw-line);background:var(--pw-panel)}
+.pw-title{display:flex;align-items:center;gap:12px;min-width:0}
+.pw-title .pic{width:44px;height:44px;border-radius:12px;background:color-mix(in srgb,var(--pw-lime) 22%,var(--pw-panel));color:#4f7a12;display:grid;place-items:center;flex:none}
+.pw-title .pic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pw-title h1{font-size:1.25rem;font-weight:800;line-height:1.3}
+.pw-title p{margin:0;font-size:.82rem;color:var(--pw-soft)}
+.pw-hbtns{display:flex;gap:8px;flex-wrap:wrap}
+.pw-btn{border:1px solid var(--pw-line);background:var(--pw-panel);border-radius:10px;padding:7px 14px;cursor:pointer;font-weight:600;font-size:.84rem;display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--pw-ink)}
+.pw-btn:hover{background:var(--pw-panel2)}
+.pw-btn.primary{background:var(--pw-ink);color:var(--pw-panel);border-color:transparent}
+.pw-btn:disabled{opacity:.5;cursor:not-allowed}
+
+.pw-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);min-height:0}
+@media (max-width:1180px){.pw-body{grid-template-columns:minmax(0,1fr)}}
+.pw-chat{display:grid;grid-template-rows:minmax(0,1fr) auto;border-right:1px solid var(--pw-line);min-height:0;min-width:0}
+@media (max-width:1180px){.pw-chat{border-right:0;border-bottom:1px solid var(--pw-line)}.pw-thread{min-height:160px;max-height:60vh}}
+.pw-thread{padding:18px 20px;display:flex;flex-direction:column;gap:16px;overflow:auto;max-height:calc(100vh - 230px);min-height:320px}
+.pw-m{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:start}
+.pw-m .ava{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-weight:700;font-size:.85rem}
+.pw-m.owner .ava{background:#5b5f6b;color:#fff}
+.pw-m.ceo .ava{background:color-mix(in srgb,var(--pw-accent) 18%,var(--pw-panel));color:var(--pw-accent)}
+.pw-m.ceo .ava svg{width:20px;height:20px}
+.pw-bub{border-radius:14px;padding:12px 14px;line-height:1.7;font-size:.9rem;min-width:0;overflow-wrap:anywhere}
+.pw-m.owner .pw-bub{background:var(--pw-panel2);border:1px solid var(--pw-line)}
+.pw-m.ceo .pw-bub{background:var(--pw-panel);border:1px solid var(--pw-line);box-shadow:var(--pw-shadow)}
+.pw-bub .who{font-size:.72rem;color:var(--pw-soft);display:flex;justify-content:space-between;gap:8px;margin-bottom:2px}
+.pw-bub .tx{white-space:pre-wrap}
+.pw-steps{border:1px solid var(--pw-line);border-radius:12px;margin-top:10px;overflow:hidden}
+.pw-step{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--pw-line);font-size:.86rem}
+.pw-step:last-child{border-bottom:0}
+.pw-step .st{font-size:.74rem;color:var(--pw-soft);white-space:nowrap}
+.pw-step .st.doing{color:var(--pw-blue);font-weight:700} .pw-step .st.wait{color:var(--pw-warn);font-weight:700}
+.pw-ck{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;flex:none;border:2px solid var(--pw-line)}
+.pw-ck.done{background:var(--pw-ok);border-color:var(--pw-ok);color:#fff}
+.pw-ck.done::after{content:"";width:4px;height:8px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.pw-ck.doing{border-color:var(--pw-blue);border-style:dotted;animation:pwspin 2.4s linear infinite}
+.pw-ck.wait{border-color:var(--pw-warn)}
+@keyframes pwspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.pw-ck.doing{animation:none}}
+.pw-empty{color:var(--pw-soft);font-size:.86rem;border:1px dashed var(--pw-line);border-radius:12px;padding:14px;background:var(--pw-panel2)}
+.pw-empty b{color:var(--pw-ink)}
+
+.pw-comp{padding:12px 16px 16px;border-top:1px solid var(--pw-line);background:var(--pw-panel)}
+.pw-box{border:1px solid var(--pw-line);border-radius:16px;background:var(--pw-panel);box-shadow:var(--pw-shadow);padding:8px 10px;display:grid;gap:6px}
+.pw-box textarea{border:0;background:transparent;resize:vertical;min-height:52px;padding:6px 4px;line-height:1.6;outline:none;width:100%}
+.pw-box .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pw-box select{border:1px solid var(--pw-line);background:var(--pw-panel2);border-radius:9px;padding:4px 8px;font-size:.8rem;max-width:100%}
+.pw-send{width:36px;height:36px;border-radius:10px;border:0;background:var(--pw-accent);color:#fff;display:grid;place-items:center;cursor:pointer;margin-left:auto}
+.pw-send svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.pw-send:disabled{opacity:.45;cursor:not-allowed}
+.pw-hint{font-size:.72rem;color:var(--pw-soft)}
+.pw-toast{font-size:.78rem;min-height:1.2em;margin-top:4px}
+.pw-toast.err{color:#d4493a} .pw-toast.ok{color:var(--pw-ok)}
+
+.pw-right{padding:12px 18px 20px;min-width:0;overflow:auto;max-height:calc(100vh - 120px)}
+.pw-tabs{display:flex;gap:4px;border-bottom:1px solid var(--pw-line);margin-bottom:14px;overflow-x:auto}
+.pw-tabs button{border:0;background:none;padding:10px 12px;cursor:pointer;color:var(--pw-soft);font-weight:600;font-size:.88rem;border-bottom:2px solid transparent;white-space:nowrap}
+.pw-tabs button[aria-selected="true"]{color:var(--pw-ink);border-bottom-color:var(--pw-ink)}
+.pw-card{background:var(--pw-panel);border:1px solid var(--pw-line);border-radius:14px;padding:14px 16px;box-shadow:var(--pw-shadow);min-width:0}
+.pw-card + .pw-card{margin-top:14px}
+.pw-ch{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.pw-ch h2{font-size:1rem;font-weight:700}
+.pw-prog{display:grid;grid-template-columns:auto minmax(60px,1fr) auto;gap:12px;align-items:center;margin-bottom:6px}
+.pw-prog b{font-size:.92rem}
+.pw-track{height:8px;border-radius:4px;background:var(--pw-line);overflow:hidden}
+.pw-track i{display:block;height:100%;background:var(--pw-blue);border-radius:4px}
+.pw-tl{display:grid}
+.pw-tl .pw-step{padding:9px 2px}
+.pw-chips{display:flex;gap:6px;flex-wrap:wrap}
+.pw-chips button{border:1px solid var(--pw-line);background:var(--pw-panel);border-radius:9px;padding:4px 12px;font-size:.8rem;cursor:pointer;color:var(--pw-ink)}
+.pw-chips button[aria-pressed="true"]{background:var(--pw-ink);color:var(--pw-panel);border-color:transparent;font-weight:700}
+.pw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-top:12px}
+.pw-cc{border:1px solid var(--pw-line);border-radius:12px;overflow:hidden;background:var(--pw-panel);display:flex;flex-direction:column;min-width:0;text-decoration:none;color:var(--pw-ink)}
+a.pw-cc:hover{border-color:var(--pw-soft)}
+.pw-cover{white-space:pre-line;aspect-ratio:1.5/1;display:grid;place-items:center;padding:12px;text-align:center;font-weight:800;line-height:1.35;font-size:.95rem;position:relative;color:#fff;background:var(--cv,#2f3a2a)}
+.pw-cover small{position:absolute;right:8px;bottom:6px;font-size:.62rem;font-weight:600;opacity:.8}
+.pw-cover.text{color:var(--pw-ink);background:var(--pw-blue-soft);text-align:left;place-items:start;font-weight:500;font-size:.78rem}
+.pw-cc .bd{padding:8px 10px 10px;display:grid;gap:4px}
+.pw-cc .tt{font-weight:700;font-size:.82rem;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pw-cc .mt{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:.72rem;color:var(--pw-soft)}
+.pw-tag{font-size:.68rem;font-weight:700;padding:1px 7px;border-radius:6px;background:var(--pw-panel2);border:1px solid var(--pw-line);color:var(--pw-soft)}
+
+.pw-staff{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.pw-sc{border:1px solid var(--pw-line);border-radius:12px;padding:12px;background:var(--pw-panel2);display:grid;gap:6px;text-align:left;cursor:pointer;min-width:0}
+.pw-sc.sel{outline:2px solid var(--pw-accent);outline-offset:1px}
+.pw-sc .top{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center}
+.pw-av{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 18%,var(--pw-panel));border:2px solid color-mix(in srgb,var(--c) 55%,var(--pw-panel));overflow:hidden;flex:none}
+.pw-av canvas{width:26px;height:auto;image-rendering:pixelated}
+.pw-sc .nm{font-weight:700;line-height:1.3}
+.pw-sc .rl{font-size:.74rem;color:var(--pw-soft)}
+.pw-sc .ds{font-size:.78rem;color:var(--pw-soft);line-height:1.5}
+.pw-pill{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:700;padding:1px 8px;border-radius:99px;width:max-content;background:var(--pw-panel);border:1px solid var(--pw-line);color:var(--pw-soft)}
+.pw-pill.working{color:var(--pw-ok);border-color:color-mix(in srgb,var(--pw-ok) 40%,var(--pw-line))}
+.pw-pill.waiting{color:var(--pw-warn);border-color:color-mix(in srgb,var(--pw-warn) 40%,var(--pw-line))}
+.pw-kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.pw-kpi{border:1px solid var(--pw-line);border-radius:12px;padding:12px;background:var(--pw-panel2)}
+.pw-kpi .v{font-size:1.6rem;font-weight:800;line-height:1.2}
+.pw-kpi .v small{font-size:.85rem;margin-left:2px}
+.pw-kpi .k{font-size:.76rem;color:var(--pw-soft)}
+.pw-act{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:2px 10px;font-size:.84rem;padding:7px 0;border-bottom:1px solid var(--pw-line);align-items:baseline}
+.pw-act time{font-size:.72rem;color:var(--pw-soft);font-variant-numeric:tabular-nums}
+.pw-act .who{font-weight:700}
+.pw-links{display:grid;gap:6px;font-size:.86rem}
+.pw-dlg{border:1px solid var(--pw-line);border-radius:16px;padding:0;width:min(760px,calc(100vw - 32px));max-height:calc(100vh - 48px);background:var(--pw-panel);color:var(--pw-ink);box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.pw-dlg::backdrop{background:rgba(20,18,15,.45)}
+.pw-dlg .hd{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:14px 18px;border-bottom:1px solid var(--pw-line);position:sticky;top:0;background:var(--pw-panel)}
+.pw-dlg .hd h2{font-size:1.05rem;line-height:1.5;margin:0}
+.pw-dlg .meta{font-size:.76rem;color:var(--pw-soft);margin-top:2px}
+.pw-dlg .bd{padding:14px 18px;line-height:1.85;font-size:.92rem;overflow-wrap:anywhere}
+.pw-thumbbox{margin:0 0 16px;padding:10px;border:1px solid var(--pw-line);border-radius:12px;background:var(--pw-panel2)}
+.pw-thumbbox img{display:block;width:100%;height:auto;border-radius:6px;border:1px solid var(--pw-line)}
+.pw-thumbbox .cap{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:.76rem;color:var(--pw-soft)}
+.pw-dlg .bd h2{font-size:1.05rem;margin:22px 0 8px;padding-left:10px;border-left:4px solid var(--pw-lime)}
+.pw-dlg .bd h3{font-size:.95rem;margin:16px 0 6px}
+.pw-dlg .bd p{margin:0 0 12px}
+.pw-dlg .bd ul{margin:0 0 12px;padding-left:1.3em}
+.pw-dlg .ft{display:flex;gap:8px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--pw-line);position:sticky;bottom:0;background:var(--pw-panel)}
+.pw-dlg .paywall{display:block;margin:14px 0;padding:6px 10px;border:1px dashed var(--pw-warn);border-radius:8px;color:var(--pw-warn);font-weight:700;font-size:.8rem;text-align:center;white-space:normal}
+.pw-nrow{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--pw-line);font-size:.84rem}
+.pw-nrow:last-child{border-bottom:0}
+.pw-nrow a{color:var(--pw-ink);text-decoration:none;font-weight:600;overflow-wrap:anywhere}
+.pw-nrow a:hover{text-decoration:underline}
+.pw-nrow .lk{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+.pw-nrow .pr{font-size:.7rem;color:var(--pw-soft);white-space:nowrap}
+.pw-links a{color:var(--pw-blue)}
+</style>
+
+<dialog class="pw-dlg" id="pwDlg" aria-labelledby="pwDlgTitle">
+  <div class="hd"><div><h2 id="pwDlgTitle"></h2><div class="meta" id="pwDlgMeta"></div></div><button type="button" class="pw-btn" id="pwDlgClose" aria-label="閉じる">閉じる</button></div>
+  <div class="bd" id="pwDlgBody"></div>
+  <div class="ft"><button type="button" class="pw-btn" id="pwCopyTitle">タイトルをコピー</button><button type="button" class="pw-btn primary" id="pwCopyBody">本文をコピー</button><a class="pw-btn" href="https://note.com/notes/new" target="_blank" rel="noopener">note で新しく書く ↗</a><span class="pw-toast" id="pwCopyMsg" role="status"></span></div>
+</dialog>
+<div class="ptws" id="ptws" hidden>
+  <aside class="pw-side">
+    <div class="pw-brand"><svg viewBox="0 0 24 24" aria-hidden="true"><g stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 2.5v19M2.5 12h19M5.3 5.3l13.4 13.4M18.7 5.3L5.3 18.7"/></g></svg>PT国試ドリル</div>
+    <button type="button" class="pw-new" id="pwNew"><span aria-hidden="true">＋</span>新しい指示</button>
+    <nav class="pw-nav" aria-label="PT編集部メニュー">
+      <button type="button" data-pt="tasks" aria-current="page"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>ホーム</button>
+      <button type="button" data-pt="staff"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M17 14.2c2.6.3 4.5 2.2 4.5 5.3"/></svg>AI社員</button>
+      <div class="pw-sec">プロジェクト</div>
+      <button type="button" data-pt="contents" data-kind="all"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>PT国試ドリル編集部</button>
+      <button type="button" data-pt="contents" data-kind="question"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6M12 17h.01"/></svg>問題作成</button>
+      <button type="button" data-pt="contents" data-kind="note"><svg viewBox="0 0 24 24"><path d="M4 20l1.2-4.2L16 5l3 3L8.2 18.8z"/></svg>note・解説</button>
+      <button type="button" data-pt="contents" data-kind="post"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg>告知・SNS</button>
+      <button type="button" data-pt="analysis"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>分析・改善</button>
+      <a href="https://note.com/dashboard" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 15l3-4 3 2 4-5"/></svg>note ダッシュボード ↗</a>
+      <div class="pw-sec">会社を切り替え</div>
+      <a class="pw-co" href="#home"><i>A</i>AFE本社</a>
+    </nav>
+    <div class="pw-owner"><span class="ava">オ</span><div><b>オーナー</b><span id="pwCeo">社長の状態を確認中</span></div></div>
+  </aside>
+
+  <section class="pw-main">
+    <header class="pw-head">
+      <div class="pw-title"><span class="pic"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span>
+        <div><h1>PT国試ドリル 編集部</h1><p>出題・検品・解説・note・告知を回す AI 編集チーム</p></div></div>
+      <div class="pw-hbtns">
+        <a class="pw-btn" href="https://takochi92.github.io/pt-kokushi/" target="_blank" rel="noopener">サイトを開く ↗</a>
+        <a class="pw-btn" href="https://note.com/8192844" target="_blank" rel="noopener">note ↗</a>
+        <a class="pw-btn" href="https://note.com/dashboard" target="_blank" rel="noopener">note ダッシュボード ↗</a>
+        <a class="pw-btn" href="#home">AFE本社へ →</a>
+      </div>
+    </header>
+
+    <div class="pw-body">
+      <div class="pw-chat">
+        <div class="pw-thread" id="pwThread" aria-live="polite"></div>
+        <form class="pw-comp" id="pwForm" autocomplete="off">
+          <div class="pw-box">
+            <textarea id="pwText" placeholder="社長にメッセージを送信…（例：運動学の問題を10問追加して検品まで）" aria-label="社長への指示"></textarea>
+            <div class="row">
+              <label class="pw-hint" for="pwTo">宛先</label>
+              <select id="pwTo"></select>
+              <span class="pw-hint">社長（Claude）が受け取り、担当の社員に割り振ります</span>
+              <button type="submit" class="pw-send" id="pwSend" aria-label="指示を送る"><svg viewBox="0 0 24 24"><path d="M12 19V5M5.5 11.5L12 5l6.5 6.5"/></svg></button>
+            </div>
+          </div>
+          <div class="pw-toast" id="pwToast" role="status"></div>
+        </form>
+      </div>
+
+      <div class="pw-right">
+        <div class="pw-tabs" role="tablist">
+          <button type="button" role="tab" data-tab="tasks" aria-selected="true">タスク</button>
+          <button type="button" role="tab" data-tab="contents" aria-selected="false">生成コンテンツ</button>
+          <button type="button" role="tab" data-tab="staff" aria-selected="false">AI社員</button>
+          <button type="button" role="tab" data-tab="analysis" aria-selected="false">分析</button>
+        </div>
+
+        <div data-pane="tasks">
+          <div class="pw-card">
+            <div class="pw-prog"><b>進行中のタスク</b><span class="pw-track"><i id="pwBar" style="width:0%"></i></span><b class="pw-num" id="pwProg">0 / 0 完了</b></div>
+            <div class="pw-tl" id="pwTasks"></div>
+          </div>
+          <div class="pw-card">
+            <div class="pw-ch"><h2>生成されたコンテンツ</h2><button type="button" class="pw-btn" data-tab-go="contents">すべて見る →</button></div>
+            <div class="pw-grid" id="pwLatest"></div>
+          </div>
+        </div>
+
+        <div data-pane="contents" hidden>
+          <div class="pw-card">
+            <div class="pw-ch"><h2>生成されたコンテンツ</h2></div>
+            <div class="pw-chips" id="pwKinds"></div>
+            <div class="pw-grid" id="pwContents"></div>
+          </div>
+        </div>
+
+        <div data-pane="staff" hidden>
+          <div class="pw-card">
+            <div class="pw-ch"><h2>AI社員（押すと宛先に選べます）</h2></div>
+            <div class="pw-staff" id="pwStaff"></div>
+          </div>
+        </div>
+
+        <div data-pane="analysis" hidden>
+          <div class="pw-card">
+            <div class="pw-ch"><h2>サイトの数字</h2><span class="pw-hint" id="pwKpiAt"></span></div>
+            <div class="pw-kpis" id="pwKpis"></div>
+          </div>
+          <div class="pw-card">
+            <div class="pw-ch"><h2>note の記事（公開データ）</h2><span class="pw-hint" id="pwNoteAt"></span></div>
+            <div class="pw-kpis" id="pwNoteKpis"></div>
+            <div id="pwNoteList" style="margin-top:10px"></div>
+            <p class="pw-hint" style="margin:8px 0 0">閲覧数・売上は <a href="https://note.com/dashboard" target="_blank" rel="noopener" style="color:var(--pw-blue)">note ダッシュボード</a> で確認できます（ログインが必要なため、ここには出ません）。</p>
+          </div>
+          <div class="pw-card">
+            <div class="pw-ch"><h2>社員の動き</h2></div>
+            <div id="pwAct"></div>
+          </div>
+          <div class="pw-card">
+            <div class="pw-ch"><h2>リンク</h2></div>
+            <div class="pw-links">
+              <a href="https://takochi92.github.io/pt-kokushi/" target="_blank" rel="noopener">PT国試ドリル（公開サイト）</a>
+              <a href="https://github.com/takochi92/pt-kokushi" target="_blank" rel="noopener">GitHub リポジトリ pt-kokushi</a>
+              <a href="https://note.com/8192844" target="_blank" rel="noopener">note（リハビリの読みもの）</a>
+              <a href="https://note.com/dashboard" target="_blank" rel="noopener">note ダッシュボード（アクセス・売上の確認。note へのログインが必要）</a>
+              <a href="#home">AFE本社ワークスペースへ戻る</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(() => {
+"use strict";
+/* 2ページの切り替え：#pt… で PT編集部、それ以外は AFE本社（AFE側のコードには手を入れない） */
+const afe = document.querySelector(".app"), pt = document.getElementById("ptws");
+const isPt = () => /^#pt/.test(location.hash);
+function route(){
+  const on = isPt();
+  pt.hidden = !on; if (afe) afe.hidden = on;
+  document.body.classList.toggle("pt-mode", on);
+  document.title = on ? "PT国試ドリル編集部" : "AFE本社ワークスペース";
+}
+window.addEventListener("hashchange", () => { route(); window.scrollTo(0, 0); });
+route();
+// AFE本社のナビにPT編集部へのリンクを足す
+const afeNav = document.getElementById("nav");
+if (afeNav) {
+  const a = document.createElement("a"); a.className = "co-switch"; a.href = "#pt";
+  a.innerHTML = "<i>PT</i>PT国試ドリル編集部へ →";
+  afeNav.after(a);
+}
+
+const SESSION_ID = "session_017MXkh1PjovTaLkApifirf7";
+const SERVER = "Claude Code Remote";
+const TZ = "Asia/Tokyo";
+const STAFF = [
+  {id:"ceo",       name:"Claude", role:"社長（編集長）", dept:"社長室",   c:"#d97757", hair:"#e9dcc4", skin:"#f1c9a5", shirt:"#d97757", pants:"#3b3a33", desc:"指示を受けて各部署に割り振り、仕上がりを確認する"},
+  {id:"question",  name:"ユイ",   role:"出題",           dept:"出題部",   c:"#4a7fe0", hair:"#2b2b2b", skin:"#f1c9a5", shirt:"#4a7fe0", pants:"#2f3542", desc:"出題基準に沿ったオリジナル問題を分野別に作る"},
+  {id:"checker",   name:"ケイ",   role:"検品",           dept:"検品部",   c:"#d4493a", hair:"#3a2a4a", skin:"#f1c9a5", shirt:"#a33f3f", pants:"#2c2630", desc:"正答・解説の医学的な正しさと転載の有無を確かめる"},
+  {id:"explainer", name:"アオイ", role:"解説",           dept:"解説部",   c:"#8a5bd6", hair:"#6b3e26", skin:"#e8b892", shirt:"#8a5bd6", pants:"#3d3428", desc:"なぜその答えになるかを学生向けにやさしく書く"},
+  {id:"note",      name:"リョウ", role:"note編集",       dept:"note編集部", c:"#2e9d5b", hair:"#1f1f1f", skin:"#d9a27a", shirt:"#5f8a36", pants:"#2e3326", desc:"リハビリの note 記事（無料・有料）を企画して書く"},
+  {id:"sns",       name:"ミオ",   role:"告知",           dept:"告知部",   c:"#e39a22", hair:"#4a2e1e", skin:"#f1c9a5", shirt:"#c9822b", pants:"#22263a", desc:"Instagram などの告知文と画像の案を作る"},
+  {id:"analyst",   name:"タクミ", role:"分析",           dept:"分析部",   c:"#14a39a", hair:"#8f8f8f", skin:"#e8b892", shirt:"#5b6b7a", pants:"#2d3238", desc:"アクセスや正答率の傾向から改善案を出す"},
+  {id:"dev",       name:"ゲン",   role:"サイト開発",     dept:"開発部",   c:"#5a67c8", hair:"#2b2b2b", skin:"#c68a5e", shirt:"#2f4f8f", pants:"#22263a", desc:"サイトの機能追加・修正・公開"},
+];
+const KINDS = [["all","すべて"],["question","問題"],["note","note・解説"],["post","告知文"],["image","画像"],["site","サイト"],["posted","投稿済み"]];
+const KIND_LABEL = Object.fromEntries(KINDS);
+const COVER = {question:"#3d6b1f", note:"#2a2a2a", post:"#7a4b12", image:"#34495e", site:"#4f7a12"};
+const ST_LABEL = {working:"稼働中", idle:"待機中", waiting:"確認待ち"};
+const live = Object.fromEntries(STAFF.map(s => [s.id, {status:"idle", task:"", at:""}]));
+let tasks = null, contents = null, orders = [], activity = [], kpi = null, ceo = null, selected = "ceo", kind = "all";
+let db = null, mcp = null, comments = null;
+
+const $ = id => document.getElementById(id);
+const h = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt = iso => { const d = new Date(iso); if (isNaN(d)) return ""; const now = new Date(), k = x => x.toLocaleDateString("sv-SE",{timeZone:TZ});
+  const hm = d.toLocaleTimeString("ja-JP",{timeZone:TZ,hour:"2-digit",minute:"2-digit"});
+  if (k(d) === k(now)) return "今日 " + hm; const y = new Date(now - 864e5); if (k(d) === k(y)) return "昨日 " + hm;
+  return d.toLocaleDateString("ja-JP",{timeZone:TZ,month:"numeric",day:"numeric"}) + " " + hm; };
+const staffOf = id => STAFF.find(s => s.id === id);
+const ownerName = id => { const s = staffOf(id); return id === "owner" ? "オーナー" : s ? `${s.dept}・${s.name}` : ""; };
+
+function avatar(s){
+  const c = document.createElement("canvas"); c.width = 12; c.height = 18; const x = c.getContext("2d");
+  const P = (dx,dy,w,hh,col) => { x.fillStyle = col; x.fillRect(6+dx, 16+dy, w, hh); };
+  P(-3,-2,2,2,s.pants); P(1,-2,2,2,s.pants); P(-4,-8,8,6,s.shirt); P(-5,-7,1,4,s.shirt); P(4,-7,1,4,s.shirt);
+  P(-5,-3,1,1,s.skin); P(4,-3,1,1,s.skin); P(-3,-14,6,6,s.skin); P(-3,-15,6,2,s.hair); P(-4,-14,1,4,s.hair); P(3,-14,1,4,s.hair);
+  P(-2,-11,1,1,"#2c2a21"); P(1,-11,1,1,"#2c2a21");
+  if (s.id === "checker") { P(-3,-11,3,1,"#2c2a21"); P(0,-11,3,1,"#2c2a21"); }
+  if (s.id === "ceo") P(-1,-8,2,2,"#f4ecd6");
+  if (s.id === "explainer" || s.id === "sns") { P(-4,-13,1,5,s.hair); P(3,-13,1,5,s.hair); }
+  c.setAttribute("aria-hidden","true"); return c;
+}
+
+/* ---------- タブ ---------- */
+function tab(name){
+  for (const b of pt.querySelectorAll(".pw-tabs button")) b.setAttribute("aria-selected", String(b.dataset.tab === name));
+  for (const p of pt.querySelectorAll("[data-pane]")) p.hidden = p.dataset.pane !== name;
+  for (const b of pt.querySelectorAll(".pw-nav [data-pt]")) {
+    const on = b.dataset.pt === name && (name !== "contents" || (b.dataset.kind || "all") === kind);
+    if (on) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current");
+  }
+  if (name === "tasks") { const t = pt.querySelector('.pw-nav [data-pt="tasks"]'); t.setAttribute("aria-current","page"); }
+}
+for (const b of pt.querySelectorAll(".pw-tabs button")) b.addEventListener("click", () => tab(b.dataset.tab));
+for (const b of pt.querySelectorAll("[data-tab-go]")) b.addEventListener("click", () => tab(b.dataset.tabGo));
+for (const b of pt.querySelectorAll(".pw-nav [data-pt]")) b.addEventListener("click", () => { if (b.dataset.kind) { kind = b.dataset.kind; renderContents(); } tab(b.dataset.pt); });
+$("pwNew").addEventListener("click", () => { $("pwText").focus(); });
+
+/* ---------- 下書きを読む・コピー ---------- */
+const dlg = $("pwDlg"); let draft = null;
+const PAYWALL = "▼▼▼ ここから有料 ▼▼▼";
+// note の見出し画像（1280×670）をその場で描く。表紙の文字（cover）を大きく、白地に黄緑
+async function drawThumb(c){
+  const W = 1280, H = 670, cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+  const g = cv.getContext("2d");
+  const head = '"M PLUS Rounded 1c","Noto Sans JP","Hiragino Sans",sans-serif';
+  try { await Promise.all([document.fonts.load('800 80px "M PLUS Rounded 1c"'), document.fonts.load('700 30px "Noto Sans JP"')]); } catch {}
+  g.fillStyle = "#ffffff"; g.fillRect(0, 0, W, H);
+  g.fillStyle = "#f3f9ea"; g.fillRect(W - 360, 0, 360, H);
+  g.fillStyle = "#8cc63f"; g.fillRect(0, 0, 26, H);
+  // 右側の飾り（棒グラフ風）
+  [[0.42,"#8cc63f"],[0.7,"#8cc63f"],[0.3,"#f0ad4e"],[0.85,"#8cc63f"],[0.6,"#8cc63f"]].forEach(([r,col],i) => { g.fillStyle = col; const bh = 300 * r; g.fillRect(W - 320 + i * 58, 470 - bh, 40, bh); });
+  g.fillStyle = "rgba(31,42,26,.25)"; g.fillRect(W - 330, 488, 300, 3);
+  // 上のラベル
+  const tag = c.price ? "PT実習生向け・保存版" : "PT実習生向け";
+  g.font = "700 30px " + head; const tw = g.measureText(tag).width;
+  g.fillStyle = "#8cc63f"; g.fillRect(90, 80, tw + 40, 54); g.fillStyle = "#ffffff"; g.textBaseline = "middle"; g.fillText(tag, 110, 108);
+  // 表紙の文字（最大3行、幅に合わせて縮める）
+  const lines = String(c.cover || c.title || "").split("\n").map(x => x.trim()).filter(Boolean).slice(0, 3);
+  const maxW = W - 360 - 90 - 50; let size = 92;
+  const fit = () => { g.font = `800 ${size}px ${head}`; return Math.max(...lines.map(l => g.measureText(l).width)); };
+  while (size > 44 && fit() > maxW) size -= 4;
+  const lh = size * 1.28, top = 170 + (3 - lines.length) * lh * 0.35;
+  g.fillStyle = "#1f2a1a"; g.textBaseline = "top";
+  lines.forEach((l, i) => g.fillText(l, 90, top + i * lh));
+  // 下の帯
+  g.font = "700 28px " + head; g.fillStyle = "#4f7a12"; g.textBaseline = "alphabetic";
+  g.fillText("理学療法士・PT学生のための読みもの", 90, H - 70);
+  g.font = "500 24px " + head; g.fillStyle = "#5d6b55"; g.fillText("PT国試ドリル", 90, H - 34);
+  return cv.toDataURL("image/png");
+}
+function openDraft(c){
+  draft = c;
+  $("pwDlgTitle").textContent = c.title || "";
+  $("pwDlgMeta").textContent = [c.price ? "有料（後半）¥" + c.price + "（目安）" : "無料記事", c.tags ? c.tags : "", c.checked ? "検品済み" : "検品前", fmt(c.at)].filter(Boolean).join("　");
+  const body = $("pwDlgBody"); body.replaceChildren();
+  const tb = document.createElement("div"); tb.className = "pw-thumbbox";
+  tb.innerHTML = '<img alt="見出し画像（サムネ）" width="1280" height="670"><div class="cap"><span>見出し画像（1280×670）。PC は右クリック→「名前を付けて画像を保存」、スマホは長押しで保存し、note の「見出し画像」に設定してください。</span><button type="button" class="pw-btn" hidden>画像を保存</button></div>';
+  body.append(tb);
+  drawThumb(c).then(async url => {
+    tb.querySelector("img").src = url;
+    const dl = window.claude?.use ? await window.claude.use("downloads").catch(() => null) : null;
+    const btn = tb.querySelector("button");
+    if (!dl) return;
+    btn.hidden = false;
+    btn.addEventListener("click", async () => {
+      try { const blob = await (await fetch(url)).blob(); const r = await dl.save({filename: "note-" + (c.id || "thumb") + ".png", data: blob}); $("pwCopyMsg").textContent = r.status === "saved" ? "画像を保存しました" : ""; }
+      catch (e) { if (e?.code === "unavailable") btn.hidden = true; else if (e?.code !== "cancelled" && e?.code !== "declined") $("pwCopyMsg").textContent = "画像を保存できませんでした。画像を右クリック（長押し）して保存してください"; }
+    });
+  }).catch(() => tb.remove());
+  const parts = String(c.body || "").split(PAYWALL);
+  const a = document.createElement("div"); a.innerHTML = mdToHtml(parts[0]); body.append(a);
+  if (parts.length > 1) { const w = document.createElement("span"); w.className = "paywall"; w.textContent = "ここから有料（note の「有料エリア設定」でこの位置に区切りを入れる）"; const b2 = document.createElement("div"); b2.innerHTML = mdToHtml(parts.slice(1).join("")); body.append(w, b2); }
+  $("pwCopyMsg").textContent = "";
+  if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+}
+$("pwDlgClose").addEventListener("click", () => dlg.close ? dlg.close() : dlg.removeAttribute("open"));
+async function copyText(t){
+  try { await navigator.clipboard.writeText(t); return true; } catch {}
+  const ta = document.createElement("textarea"); ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0"; dlg.append(ta); ta.select();
+  let ok = false; try { ok = document.execCommand("copy"); } catch {} ta.remove(); return ok;
+}
+// 本文（Markdown）を note の編集画面に貼れる形（見出し・段落・箇条書き）の HTML にする
+function mdToHtml(md){
+  const esc2 = t => t.replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+  const out = [];
+  for (const block of String(md).replace(/\r/g, "").split(/\n{2,}/)) {
+    const lines = block.split("\n").filter(l => l.trim() !== "");
+    if (!lines.length) continue;
+    if (/^###\s/.test(lines[0]) && lines.length === 1) { out.push("<h3>" + esc2(lines[0].replace(/^###\s+/, "")) + "</h3>"); continue; }
+    if (/^##\s/.test(lines[0]) && lines.length === 1) { out.push("<h2>" + esc2(lines[0].replace(/^##\s+/, "")) + "</h2>"); continue; }
+    if (/^#{2,3}\s/.test(lines[0])) { const tag = lines[0].startsWith("###") ? "h3" : "h2"; out.push(`<${tag}>` + esc2(lines.shift().replace(/^#{2,3}\s+/, "")) + `</${tag}>`); }
+    if (lines.length && lines.every(l => /^[-・]\s?/.test(l))) { out.push("<ul>" + lines.map(l => "<li>" + esc2(l.replace(/^[-・]\s?/, "")) + "</li>").join("") + "</ul>"); continue; }
+    if (lines.length) out.push("<p>" + lines.map(esc2).join("<br>") + "</p>");
+  }
+  return out.join("\n");
+}
+async function copyRich(md){
+  const html = mdToHtml(md), plain = String(md).replace(/^#{2,3}\s+/gm, "");
+  try {
+    if (window.ClipboardItem && navigator.clipboard?.write) {
+      await navigator.clipboard.write([new ClipboardItem({"text/html": new Blob([html], {type:"text/html"}), "text/plain": new Blob([plain], {type:"text/plain"})})]);
+      return true;
+    }
+  } catch {}
+  // 使えない環境：見えない編集欄に HTML を入れて選択→コピー（書式つきでコピーされる）
+  const box = document.createElement("div"); box.contentEditable = "true"; box.innerHTML = html;
+  box.style.cssText = "position:fixed;left:-9999px;top:0;white-space:normal"; dlg.append(box);
+  const r = document.createRange(); r.selectNodeContents(box); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+  let ok = false; try { ok = document.execCommand("copy"); } catch {} sel.removeAllRanges(); box.remove();
+  return ok || copyText(plain);
+}
+$("pwCopyTitle").addEventListener("click", async () => { $("pwCopyMsg").textContent = await copyText(draft?.title || "") ? "タイトルをコピーしました" : "コピーできませんでした。選んでコピーしてください"; });
+$("pwCopyBody").addEventListener("click", async () => { $("pwCopyMsg").textContent = await copyRich(String(draft?.body || "").replace(PAYWALL + "\n", "").replace(PAYWALL, "")) ? "本文をコピーしました（見出し・段落つき。有料の区切りは note で設定）" : "コピーできませんでした。本文を選んでコピーしてください"; });
+
+/* ---------- 描画 ---------- */
+function stepNode(t){
+  const d = document.createElement("div"); d.className = "pw-step";
+  const lab = {done:"完了", doing:"実行中", wait:"オーナー確認待ち", todo:"これから"}[t.col] || "";
+  d.innerHTML = `<span class="pw-ck ${h(t.col)}"></span><span>${h(t.title)}<br><small style="color:var(--pw-soft);font-size:.72rem">${h(ownerName(t.owner))}</small></span><span class="st ${h(t.col)}">${h(lab)}</span>`;
+  return d;
+}
+function renderTasks(){
+  const el = $("pwTasks");
+  if (!tasks) { el.innerHTML = '<div class="pw-empty">読み込んでいます…</div>'; return; }
+  const rank = {doing:0, wait:1, todo:2, done:3};
+  const list = [...tasks].sort((a,b) => rank[a.col] - rank[b.col] || (a.order ?? 99) - (b.order ?? 99));
+  const open = list.filter(t => t.col !== "done");
+  const shown = open.length ? [...open, ...list.filter(t => t.col === "done").slice(0, 4)] : list.slice(0, 8);
+  const done = tasks.filter(t => t.col === "done").length;
+  $("pwProg").textContent = `${done} / ${tasks.length} 完了`;
+  $("pwBar").style.width = (tasks.length ? Math.round(done / tasks.length * 100) : 0) + "%";
+  if (!shown.length) { el.innerHTML = '<div class="pw-empty"><b>まだタスクがありません。</b><br>指示欄から社長に指示を送ると、ここに並びます。</div>'; return; }
+  el.replaceChildren(...shown.map(stepNode));
+}
+function card(c){
+  const link = c.posted && c.postedUrl ? c.postedUrl : c.url;
+  const readable = !c.posted && c.body;
+  const a = document.createElement(readable ? "button" : link ? "a" : "div"); a.className = "pw-cc";
+  if (readable) { a.type = "button"; a.style.textAlign = "left"; a.style.padding = "0"; a.style.cursor = "pointer"; a.style.font = "inherit"; a.addEventListener("click", () => openDraft(c)); }
+  else if (link) { a.href = link; a.target = "_blank"; a.rel = "noopener"; }
+  const cover = c.kind === "post"
+    ? `<div class="pw-cover text">${h(c.preview || c.title)}</div>`
+    : `<div class="pw-cover" style="--cv:${COVER[c.kind] || "#3a3935"}">${h(c.cover || c.title)}<small>${h(c.kind === "note" ? "note" : "PT国試ドリル")}</small></div>`;
+  a.innerHTML = `${cover}<div class="bd"><div class="tt">${h(c.title)}</div><div class="mt"><span class="pw-tag">${h(c.posted ? "投稿済み" : (KIND_LABEL[c.kind] || c.kind))}</span><span>${h(c.price ? "有料 ¥" + c.price : (c.kind === "note" && !c.posted ? "無料" : ""))}</span><span>${h(fmt(c.posted && c.postedAt ? c.postedAt : c.at))}</span></div></div>`;
+  return a;
+}
+function sortedContents(){ return [...(contents || [])].sort((a,b) => String(b.at).localeCompare(String(a.at))); }
+// note に投稿済みになったもの（posted）は棚から外し、「投稿済み」でだけ見られる
+function renderContents(){
+  const chips = $("pwKinds"), every = sortedContents(), posted = every.filter(c => c.posted), all = every.filter(c => !c.posted);
+  chips.replaceChildren(...KINDS.map(([k,l]) => {
+    const n = k === "all" ? all.length : k === "posted" ? posted.length : all.filter(c => c.kind === k).length;
+    const b = document.createElement("button"); b.type = "button"; b.textContent = `${l} (${n})`; b.setAttribute("aria-pressed", String(k === kind));
+    b.addEventListener("click", () => { kind = k; renderContents(); tab("contents"); }); return b;
+  }));
+  const list = kind === "all" ? all : kind === "posted" ? posted : all.filter(c => c.kind === kind);
+  const empty = '<div class="pw-empty" style="grid-column:1/-1">まだありません。社員が作ると、ここに並びます。</div>';
+  if (!contents) { $("pwContents").innerHTML = $("pwLatest").innerHTML = '<div class="pw-empty" style="grid-column:1/-1">読み込んでいます…</div>'; return; }
+  if (list.length) $("pwContents").replaceChildren(...list.map(card)); else $("pwContents").innerHTML = empty;
+  if (all.length) $("pwLatest").replaceChildren(...all.slice(0, 6).map(card)); else $("pwLatest").innerHTML = empty;
+}
+function renderStaff(){
+  const sel = $("pwTo");
+  $("pwStaff").replaceChildren(...STAFF.map(s => {
+    const l = live[s.id];
+    const st = s.id === "ceo" && ceo ? ceo.status : l.status;
+    const lab = s.id === "ceo" && ceo ? ceo.label : (ST_LABEL[st] || st);
+    const mine = (tasks || []).filter(t => t.owner === s.id), done = mine.filter(t => t.col === "done").length;
+    const b = document.createElement("button"); b.type = "button"; b.className = "pw-sc" + (s.id === selected ? " sel" : "");
+    b.innerHTML = `<div class="top"><span class="pw-av" style="--c:${s.c}"></span><div style="min-width:0"><div class="nm">${h(s.role)}担当</div><div class="rl">${h(s.name)}・${h(s.dept)}</div></div></div>
+      <span class="pw-pill ${h(st)}">● ${h(lab)}</span><div class="ds">${h(l.task || s.desc)}</div>
+      <div class="rl">${mine.length ? `${done} / ${mine.length} タスク完了` : "タスクなし"}${l.at ? "・更新 " + h(fmt(l.at)) : ""}</div>`;
+    b.querySelector(".pw-av").append(avatar(s));
+    b.addEventListener("click", () => { selected = s.id; sel.value = s.id; renderStaff(); $("pwText").focus(); });
+    return b;
+  }));
+}
+function renderAnalysis(){
+  const k = kpi || {};
+  const items = [["収録問題", k.questions, "問"], ["分野", k.fields, ""], ["note 記事（取り込み）", k.noteItems, "本"], ["生成コンテンツ", (contents || []).length, "件"], ["完了タスク", (tasks || []).filter(t => t.col === "done").length, "件"], ["アクセス（7日）", k.pv7, "PV"]];
+  $("pwKpis").innerHTML = items.map(([l,v,u]) => `<div class="pw-kpi"><div class="v pw-num">${typeof v === "number" ? v.toLocaleString("ja-JP") : "―"}<small>${typeof v === "number" ? h(u) : ""}</small></div><div class="k">${h(l)}</div></div>`).join("");
+  $("pwKpiAt").textContent = k.updatedAt ? "更新 " + fmt(k.updatedAt) + (k.note ? "　" + k.note : "") : (k.note || "");
+  const n = (k.noteStats && typeof k.noteStats === "object") ? k.noteStats : null, nl = $("pwNoteList");
+  $("pwNoteKpis").innerHTML = [["記事", n?.articles, "本"], ["スキ合計", n?.likes, ""], ["コメント合計", n?.comments, ""], ["有料記事", n?.paid, "本"]]
+    .map(([l,v,u]) => `<div class="pw-kpi"><div class="v pw-num">${typeof v === "number" ? v.toLocaleString("ja-JP") : "―"}<small>${typeof v === "number" ? h(u) : ""}</small></div><div class="k">${h(l)}</div></div>`).join("");
+  $("pwNoteAt").textContent = n?.fetchedAt ? "取得 " + fmt(n.fetchedAt) : "";
+  const top = Array.isArray(n?.top) ? n.top : [];
+  if (!top.length) nl.innerHTML = '<div class="pw-empty">' + h(n?.message || "毎朝の自動更新のあとに、社長がスキ数の多い記事をここに並べます。") + '</div>';
+  else nl.replaceChildren(...top.map(a => { const d = document.createElement("div"); d.className = "pw-nrow";
+    const t = document.createElement("a"); t.href = a.url || "#"; t.target = "_blank"; t.rel = "noopener"; t.textContent = a.title || "";
+    const lk = document.createElement("span"); lk.className = "lk"; lk.textContent = "♡ " + (a.likes ?? 0);
+    const pr = document.createElement("span"); pr.className = "pr"; pr.textContent = (a.price ? "¥" + a.price + "・" : "") + (a.publishedAt ? fmt(a.publishedAt).replace(/ .*/, "") : "");
+    d.append(t, lk, pr); return d; }));
+  const el = $("pwAct");
+  if (!activity.length) { el.innerHTML = '<div class="pw-empty">まだ記録がありません。</div>'; return; }
+  el.replaceChildren(...activity.map(a => { const d = document.createElement("div"); d.className = "pw-act";
+    d.innerHTML = `<time>${h(fmt(a.at))}</time><span class="who">${h(a.who || "")}</span><span>${h(a.text || "")}</span>`; return d; }));
+}
+const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><g stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/></g></svg>';
+function msg(kind, who, at, text, steps){
+  const m = document.createElement("div"); m.className = "pw-m " + kind;
+  m.innerHTML = `<span class="ava">${kind === "owner" ? "オ" : STAR}</span><div class="pw-bub"><div class="who"><span></span><span></span></div><div class="tx"></div></div>`;
+  m.querySelector(".who span").textContent = who; m.querySelectorAll(".who span")[1].textContent = at ? fmt(at) : "";
+  m.querySelector(".tx").textContent = text;
+  if (steps && steps.length) { const s = document.createElement("div"); s.className = "pw-steps"; s.replaceChildren(...steps.map(stepNode)); m.querySelector(".pw-bub").append(s); }
+  return m;
+}
+function renderThread(){
+  const el = $("pwThread"), atBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
+  const nodes = [];
+  const ORDER_NOTE = {sending:"送信しています…", sent:"承知しました。担当に割り振ります。進み具合はこの下と右のタスク欄に出ます。", queued:"まだ届いていません。", unknown:"届いたか確認できませんでした。返事が出なければ、もう一度送ってください。", failed:"送れませんでした。"};
+  for (const o of [...orders].sort((a,b) => String(a.createdAt).localeCompare(String(b.createdAt)))) {
+    const to = staffOf(o.to);
+    nodes.push(msg("owner", "オーナー" + (to && to.id !== "ceo" ? ` → ${to.dept}` : ""), o.createdAt, o.text));
+    const steps = (tasks || []).filter(t => t.orderId === o.id).sort((a,b) => (a.order ?? 99) - (b.order ?? 99));
+    const text = o.reply || ((ORDER_NOTE[o.state] || "") + (o.note && o.state !== "sent" ? `（${o.note}）` : ""));
+    if (text || steps.length) nodes.push(msg("ceo", "社長（Claude）", o.repliedAt || o.createdAt, text, steps));
+  }
+  if (!nodes.length) {
+    const e = document.createElement("div"); e.className = "pw-empty";
+    e.innerHTML = "<b>PT国試ドリル編集部へようこそ。</b><br>下の欄から社長に指示を送ると、社長が担当の社員に割り振り、進み具合をここに返します。<br>例：「臨床医学の問題を10問追加して、検品まで」「今週の note 記事の企画を3本」";
+    nodes.push(e);
+  }
+  el.replaceChildren(...nodes);
+  if (atBottom) el.scrollTop = el.scrollHeight;
+}
+function renderCeo(){ $("pwCeo").textContent = ceo ? "社長：" + ceo.label : "社長の状態：不明"; }
+function renderAll(){ renderThread(); renderTasks(); renderContents(); renderStaff(); renderAnalysis(); renderCeo(); }
+
+/* ---------- 指示の送信 ---------- */
+const form = $("pwForm"), ta = $("pwText"), send = $("pwSend"), toast = $("pwToast"), sel = $("pwTo");
+for (const s of STAFF) { const o = document.createElement("option"); o.value = s.id; o.textContent = s.id === "ceo" ? "社長（Claude）" : `${s.dept}・${s.name}`; sel.append(o); }
+sel.addEventListener("change", () => { selected = sel.value; renderStaff(); });
+try { const d = localStorage.getItem("pt-ws-draft"); if (d) ta.value = d; } catch {}
+ta.addEventListener("input", () => { try { localStorage.setItem("pt-ws-draft", ta.value); } catch {} });
+ta.addEventListener("keydown", e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); form.requestSubmit(); } });
+const say = (t, k = "") => { toast.textContent = t; toast.className = "pw-toast " + k; };
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  const text = ta.value.trim();
+  if (!text) { say("指示の内容を入力してください。", "err"); ta.focus(); return; }
+  if (!db && !mcp && !comments) { say("この表示では指示を送れません。Claude のアプリか claude.ai でこのページを開いてください。", "err"); return; }
+  send.disabled = true; say("送信しています…");
+  const s = staffOf(sel.value) || STAFF[0];
+  const createdAt = new Date().toISOString();
+  let ref = null;
+  if (db) { try { ref = await db.collection("pt_orders").add({text, to:s.id, createdAt, state:"sending"}); } catch {} }
+  const message = `【PT国試ドリル編集部ワークスペースからの指示】宛先：${s.id === "ceo" ? "社長" : s.dept + "（" + s.name + "）"}${ref ? "\n指示ID：" + ref.id : ""}\n${text}`;
+  let state = "queued", note = "";
+  if (comments) {
+    try {
+      const can = await comments.canSendToClaude();
+      if (can === "available") {
+        const anchor = await comments.anchorFor(form);
+        await comments.sendToClaude({anchor, text: message.slice(0, 1300)});
+        state = "sent";
+      } else note = {writers_only:"このページの編集権限がないため、社長に直接は送れません。", no_session:"社長（Claudeのセッション）が今は受け取れない状態です。", off:"この表示ではClaudeへの送信が使えません。"}[can] || "";
+    } catch (err) {
+      const code = err?.code;
+      note = code === "consent_required" ? "コメントの許可が必要です。表示された確認で許可してから、もう一度送ってください。" : code === "rate_limited" ? "送信が続いたため一時的に止まっています。少し待ってから送ってください。" : (err?.message || String(code || ""));
+    }
+  }
+  if (state !== "sent" && mcp) {
+    try { await mcp.callTool(SERVER, "send_message", {session_id: SESSION_ID, message}); state = "sent"; note = ""; }
+    catch (err) {
+      const code = err?.code;
+      if (code === "server_unavailable" || code === "upstream_error" || code === "cancelled") { state = "unknown"; note = "届いたか確認できませんでした"; }
+      else if (code === "needs_reauth") note = "Claude Code Remote の接続が切れています。設定 → コネクタで再接続してください。";
+      else if (code === "server_not_connected") note = "Claude Code Remote コネクタがありません。設定 → コネクタで追加してください。";
+      else if (code === "not_in_manifest" || code === "approval_required") note = "このページからの送信が許可されていません。ページの権限メニューで許可してください。";
+      else note = err?.message || String(code || "送信エラー");
+    }
+  } else if (state !== "sent" && !note) note = "社長に直接届けられないため保留しました。社長が次に動いたときに読みます。";
+  if (ref) { try { await ref.update({state, note}); } catch {} } else if (state !== "sent") state = "failed";
+  send.disabled = false;
+  if (state === "sent") { say("社長に届きました。", "ok"); ta.value = ""; try { localStorage.removeItem("pt-ws-draft"); } catch {} }
+  else if (state === "queued") { say("保留しました：" + note, "err"); ta.value = ""; try { localStorage.removeItem("pt-ws-draft"); } catch {} }
+  else say((state === "unknown" ? "" : "送れませんでした：") + note, "err");
+});
+
+/* ---------- 起動 ---------- */
+function bucketOf(p){
+  const ccr = p?.ccr || p || {}, b = String(ccr.status_bucket || "");
+  if (/WORKING/.test(b)) return {status:"working", label:"作業中"};
+  if (/BLOCKED/.test(b)) return {status:"waiting", label:"オーナーの返事待ち"};
+  if (/FAILED/.test(b)) return {status:"waiting", label:"エラーで停止"};
+  return {status:"idle", label:"待機中（指示を受け付けます）"};
+}
+renderAll();
+(async () => {
+  if (!window.claude?.use) { tasks = []; contents = []; renderAll(); return; }
+  claude.use("db").then(d => {
+    db = d;
+    if (!db) { tasks = []; contents = []; renderAll(); return; }
+    db.collection("pt_staff").onSnapshot(snap => { for (const doc of snap.docs) if (live[doc.id]) { const v = doc.data() || {}; live[doc.id] = {status: v.status || "idle", task: v.task || "", at: v.updatedAt || ""}; } renderStaff(); }, () => {});
+    db.collection("pt_tasks").onSnapshot(snap => { tasks = snap.docs.map(x => ({id:x.id, ...x.data()})); renderTasks(); renderStaff(); renderThread(); renderAnalysis(); }, () => { tasks = []; renderAll(); });
+    db.collection("pt_contents").onSnapshot(snap => { contents = snap.docs.map(x => ({id:x.id, ...x.data()})); renderContents(); renderAnalysis(); }, () => { contents = []; renderContents(); });
+    db.collection("pt_orders").orderBy("createdAt","desc").limit(30).onSnapshot(snap => { orders = snap.docs.map(x => ({id:x.id, ...x.data()})); renderThread(); }, () => {});
+    db.collection("pt_activity").orderBy("at","desc").limit(40).onSnapshot(snap => { activity = snap.docs.map(x => x.data()); renderAnalysis(); }, () => {});
+    db.collection("pt_kpi").onSnapshot(snap => { const doc = snap.docs.find(x => x.id === "summary"); kpi = doc ? doc.data() : null; renderAnalysis(); }, () => {});
+  });
+  claude.use("comments").then(c => { comments = c; });
+  claude.use("mcp").then(m => {
+    mcp = m; if (!mcp) return;
+    mcp.watchTool(SERVER, "get_session", {session_id: SESSION_ID}, ev => {
+      if (ev.type === "data") ceo = bucketOf(ev.result.payload);
+      else if (!["server_unavailable","upstream_error"].includes(ev.error?.code)) ceo = null;
+      renderCeo(); renderStaff();
+    }, {refetchInterval: 30000});
+  });
+})();
+})();
+</script>
+
+</body></html>
