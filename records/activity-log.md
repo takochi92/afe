@@ -2,6 +2,7 @@
 
 新しい記録を上に追記する。形式: `- YYYY-MM-DD HH:MM [部署] 内容（成果物パス）`
 
+- 2026-10-12 11:21 JST [社長] Threadsに1件投稿（昼の回・投稿01「親の口座が別の会社」・検品合格済み・画像つき）。https://www.threads.com/@flysheep59/post/DeYJX8HIPFs（posts/queue/post-01.md）。今日3件目
 - 2026-10-12 10:26 JST [社長] Threadsに1件投稿（午前の回・投稿07「18歳になったら」・検品合格済み・画像つき）。https://www.threads.com/@flysheep59/post/DeYDMIgoDs5（posts/queue/post-07.md）。画像置き場のクローンが別ブランチだったため、main へ直接反映して投稿
 - 2026-10-12 08:55 JST [社長] Threadsに1件投稿（午前の回・投稿03「きょうだいが2人以上」・検品合格済み・画像つき）。https://www.threads.com/@flysheep59/post/DeX4bY3iUO1（posts/queue/post-03.md）
 - 2026-10-11 [編集部・品質管理部・社長] ブログ記事「こどもNISAと学資保険の比べ方」を公開（検品2回目で合格。原文未確認の資料は記事側で弱めて明記。既存2本から関連リンクを追加）（blog/content/posts/kodomo-nisa-gakushi-hoken.md、reviews/blog-kodomo-nisa-gakushi-hoken.md）
