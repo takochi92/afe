@@ -83,19 +83,19 @@ def run(post):
     roots = api(f"/{USER_ID}/threads?fields=id,has_replies,text&limit=20").get("data", [])
     candidates = []
     for root in roots:
-        if not root.get("has_replies") or "NISA" not in root.get("text", "").upper():
+        if not root.get("has_replies") or "NISA" not in (root.get("text") or "").upper():
             continue
         root_id = root["id"]
         query = urllib.parse.urlencode({"fields": "id,text,username,is_reply_owned_by_me,replied_to,timestamp", "limit": 100})
         conversation = api(f"/{root_id}/conversation?{query}").get("data", [])
-        answered_ids = {str(x.get("replied_to", {}).get("id")) for x in conversation if x.get("is_reply_owned_by_me")}
+        answered_ids = {str((x.get("replied_to") or {}).get("id")) for x in conversation if x.get("is_reply_owned_by_me")}
         for item in conversation:
             reply_id = str(item.get("id", ""))
             if not reply_id or item.get("is_reply_owned_by_me") or reply_id in done_ids or reply_id in answered_ids:
                 continue
-            if str(item.get("replied_to", {}).get("id", "")) != root_id:
+            if str((item.get("replied_to") or {}).get("id", "")) != root_id:
                 continue
-            response = answer(item.get("text", ""))
+            response = answer(item.get("text") or "")
             if response:
                 candidates.append((root_id, reply_id, response))
     remaining = max(0, DAILY_LIMIT - posted_today)
