@@ -1,7 +1,8 @@
 # Instagram投稿案｜こどもNISA「申込開始」と制度開始の違い
 
-予定: 2026-10-14 11:11 JST（未予約）
-状態: 原稿・画像完成／SNS公開未実施
+投稿候補: 2026-10-14 11:11 JST（Claude側の次回自動起動で選択・公開する想定。予約確定ではない）
+状態: 検品合格（reviews/kodomo-nisa-jizen-2026-10-14.md）／公開待ち
+重複確認: 投稿直前に records/ig_posts.csv とInstagram直近投稿を照合し、同内容が公開済みなら投稿しない。公開後はURLを records/ig_posts.csv に記録する。
 画像: https://raw.githubusercontent.com/takochi92/afe-assets/main/images/2026-10-13-kodomo-nisa-jizen/slide-01.jpg
 画像: https://raw.githubusercontent.com/takochi92/afe-assets/main/images/2026-10-13-kodomo-nisa-jizen/slide-02.jpg
 画像: https://raw.githubusercontent.com/takochi92/afe-assets/main/images/2026-10-13-kodomo-nisa-jizen/slide-03.jpg
