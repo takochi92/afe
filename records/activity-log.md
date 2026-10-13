@@ -2,6 +2,7 @@
 
 新しい記録を上に追記する。形式: `- YYYY-MM-DD HH:MM [部署] 内容（成果物パス）`
 
+- 2026-10-13 09:08 JST [社長] Instagramに1件投稿（夜の回・ジュニアNISAを持っている人へ・6枚・検品は2回目で合格）。https://www.instagram.com/p/DeafD2rm9eG/（posts/ig/2026-10-13-2.md、reviews/ig-2026-10-13-2.md）。今日2件目
 - 2026-10-13 06:55 JST [社長] Instagramに1件投稿（夜の回・学資保険とこどもNISAの3つの見方・6枚・検品は2回目で合格）。https://www.instagram.com/p/DeaPvSkGdZI/（posts/ig/2026-10-13-1.md、reviews/ig-2026-10-13-1.md）。afe-assetsの保存先が別ブランチだったため main へ反映して投稿
 - 2026-10-12 15:40 JST [社長] Threadsに1件投稿（午後の回・投稿05「12歳からの払出し」・検品合格済み・画像つき）。https://www.threads.com/@flysheep59/post/DeYnCLRHNgH（posts/queue/post-05.md）。今日5件目＝上限。夕の回は投稿なし
 - 2026-10-12 12:27 JST [社長] Threadsに1件投稿（昼の回・投稿04「ジュニアNISAとの違い」）。https://www.threads.com/@flysheep59/post/DeYRFFHnEQD。当時の記録コミットが残っていなかったため、午後の回でposts.csvとINDEXに追記
