@@ -9,7 +9,7 @@ let affUsed = false;
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 function parse(file) {
-  const raw = fs.readFileSync(file, 'utf8');
+  const raw = fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n');
   const m = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
   const meta = {}; let body = raw;
   if (m) { body = m[2]; for (const line of m[1].split('\n')) { const i = line.indexOf(':'); if (i > 0) meta[line.slice(0, i).trim()] = line.slice(i + 1).trim().replace(/^"(.*)"$/, '$1'); } }
@@ -65,11 +65,12 @@ blockquote{margin:1.2em 0;padding:.4em 1em;border-left:6px solid var(--pop);back
 .cards{display:grid;gap:14px;margin-top:20px}.card{background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:14px 18px}.card a.t{font-weight:700;font-size:1.08rem;text-decoration:none}.card p{margin:.3em 0 0;color:var(--soft);font-size:.9rem;line-height:1.6}
 .talk{display:flex;gap:14px;align-items:flex-start;margin:1.2em 0}.talk img{width:68px;height:68px;border-radius:50%;border:3px solid var(--ink);background:#fff;object-fit:cover;flex:none}.talk .b{background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:10px 14px;flex:1}.talk.owl .b{background:#FFF3C4;color:#161616}
 figure{margin:1.4em 0}.prtag{font-size:.7rem;border:1px solid var(--ink);border-radius:4px;padding:0 4px;margin-left:4px;color:var(--soft)}img.fig{display:block;width:100%;height:auto;background:#fff;border:3px solid var(--ink);border-radius:14px}
+.sharebox{background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:16px;margin:2em 0}.sharebox p{margin:.2em 0 .8em}.shareactions{display:flex;gap:10px;flex-wrap:wrap}.shareactions button{font:inherit;font-weight:700;cursor:pointer;border:2px solid var(--ink);border-radius:10px;padding:8px 14px;background:var(--pop);color:#161616}.shareactions button+button{background:var(--card);color:var(--ink)}.shareactions button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}.sharestatus{min-height:1.5em;font-size:.86rem;color:var(--soft)}.related{margin:2em 0}.related ul{padding-left:1.25em}
 footer{border-top:1px solid var(--line);color:var(--soft);font-size:.82rem;padding-block:20px}footer a{color:var(--soft)}
 `;
 const layout = ({ title, desc, body, url, jsonld, noindex, ogType, ogImage }) => `<!doctype html><html lang="${site.lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)}</title><meta name="description" content="${esc(desc)}">${noindex ? '<meta name="robots" content="noindex">' : ''}${site.googleVerification ? `<meta name="google-site-verification" content="${esc(site.googleVerification)}">` : ''}${site.baseUrl && !noindex ? `<link rel="canonical" href="${site.baseUrl}${url}">` : ''}
-<link rel="icon" href="/img/owl.jpg" type="image/jpeg"><meta property="og:type" content="${ogType || 'website'}"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:site_name" content="${esc(site.name)}"><meta property="og:locale" content="ja_JP">${site.baseUrl ? `<meta property="og:url" content="${site.baseUrl}${url}"><meta property="og:image" content="${esc(ogImage || site.baseUrl + '/img/owl.jpg')}">` : ''}<meta name="twitter:card" content="summary">
+<link rel="icon" href="/img/owl.jpg" type="image/jpeg"><meta property="og:type" content="${ogType || 'website'}"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:site_name" content="${esc(site.name)}"><meta property="og:locale" content="ja_JP">${site.baseUrl ? `<meta property="og:url" content="${site.baseUrl}${url}"><meta property="og:image" content="${esc(ogImage || site.baseUrl + '/img/owl.jpg')}"><meta property="og:image:alt" content="${esc(title)}">` : ''}<meta name="twitter:card" content="${ogImage ? 'summary_large_image' : 'summary'}">${ogImage ? `<meta name="twitter:image" content="${esc(ogImage)}">` : ''}
 
 <link rel="alternate" type="application/rss+xml" title="${esc(site.name)}" href="/rss.xml"><style>${CSS}</style>${jsonld ? `<script type="application/ld+json">${jsonld}</script>` : ''}</head><body>
 <header class="top"><div class="wrap"><img src="/img/owl.jpg" alt="ふくろう博士" width="52" height="52"><a class="name" href="/">${esc(site.name)}</a><p class="tag">${esc(site.tagline)}</p></div></header>
@@ -92,11 +93,14 @@ const urls = [{ u: '/', m: posts[0] ? posts[0].meta.updated : '' }];
 for (const p of posts) {
   affUsed = false;
   const { meta } = p, url = `/${meta.slug}/`; urls.push({ u: url, m: meta.updated });
-  const jsonld = JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: meta.title, dateModified: meta.updated, datePublished: meta.published || meta.updated, inLanguage: 'ja', author: { '@type': 'Organization', name: site.name }, publisher: { '@type': 'Organization', name: site.name } });
+  const jsonld = JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: meta.title, description: meta.description || '', image: meta.ogImage || undefined, mainEntityOfPage: site.baseUrl ? `${site.baseUrl}${url}` : undefined, dateModified: meta.updated, datePublished: meta.published || meta.updated, inLanguage: 'ja', author: { '@type': 'Organization', name: site.name }, publisher: { '@type': 'Organization', name: site.name } });
   const head = `<p class="meta">更新日：${esc(meta.updated)}${meta.published ? `　公開日：${esc(meta.published)}` : ''}　${esc(meta.asof || '')}</p><h1>${esc(meta.title)}</h1>`;
   const bodyHtml = talk(md(p.body));
   const pr = (meta.pr === 'true' || affUsed) ? '<div class="note">本記事はアフィリエイト広告（PR）を含みます。</div>' : '';
-  write(url + 'index.html', layout({ title: `${meta.title} | ${site.name}`, desc: meta.description || '', url, jsonld, ogType: 'article', ogImage: meta.ogImage, body: `<article>${head}${pr}${bodyHtml}<div class="note">この記事は、公表資料にもとづいて作成しています。制度や手続きは変更されることがあります。最新の情報は各金融機関や公式の資料で確認してください。投資には元本割れのリスクがあります。</div></article>` }));
+  const shareUrl = site.baseUrl ? `${site.baseUrl}${url}?utm_source=reader_share&utm_medium=referral&utm_campaign=kodomo_nisa_2026` : url;
+  const share = `<aside class="sharebox" aria-label="記事を共有"><strong>家族にも、この図解を共有</strong><p>「申込」と「制度開始」の違いを、一緒に確認できます。</p><div class="shareactions"><button type="button" data-share-url="${esc(shareUrl)}" data-share-title="${esc(meta.title)}">共有する</button><button type="button" data-copy-url="${esc(shareUrl)}">リンクをコピー</button></div><p class="sharestatus" role="status" aria-live="polite"></p></aside><script>document.querySelectorAll('.sharebox').forEach(box=>{const status=box.querySelector('.sharestatus');const copy=async url=>{try{await navigator.clipboard.writeText(url);status.textContent='リンクをコピーしました';}catch{status.textContent='リンクをコピーできませんでした。ブラウザの共有機能をご利用ください。';}};box.querySelector('[data-copy-url]').addEventListener('click',e=>copy(e.currentTarget.dataset.copyUrl));box.querySelector('[data-share-url]').addEventListener('click',async e=>{const b=e.currentTarget;if(navigator.share){try{await navigator.share({title:b.dataset.shareTitle,url:b.dataset.shareUrl});}catch(err){if(err.name!=='AbortError')copy(b.dataset.shareUrl);}}else copy(b.dataset.shareUrl);});});</script>`;
+  const related = posts.filter(x => x.meta.slug !== meta.slug).slice(0, 3).map(x => `<li><a href="/${x.meta.slug}/">${esc(x.meta.title)}</a></li>`).join('');
+  write(url + 'index.html', layout({ title: `${meta.title} | ${site.name}`, desc: meta.description || '', url, jsonld, ogType: 'article', ogImage: meta.ogImage, body: `<article>${head}${pr}${bodyHtml}${share}${related ? `<aside class="related"><h2>あわせて読む</h2><ul>${related}</ul></aside>` : ''}<div class="note">この記事は、公表資料にもとづいて作成しています。制度や手続きは変更されることがあります。最新の情報は各金融機関や公式の資料で確認してください。投資には元本割れのリスクがあります。</div></article>` }));
 }
 for (const p of pages) {
   const { meta } = p, url = `/${meta.slug}/`; urls.push({ u: url, m: meta.updated });
@@ -109,3 +113,4 @@ write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http:
 write('rss.xml', `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>${esc(site.name)}</title><link>${base}/</link><description>${esc(site.tagline)}</description>${posts.map(p => `<item><title>${esc(p.meta.title)}</title><link>${base}/${p.meta.slug}/</link><description>${esc(p.meta.description || '')}</description></item>`).join('')}</channel></rss>`);
 write('robots.txt', `User-agent: *\nAllow: /\n${base ? `Sitemap: ${base}/sitemap.xml\n` : ''}`);
 console.log(`built: ${posts.length} posts, ${pages.length} pages`);
+
