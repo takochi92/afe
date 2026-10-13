@@ -23,5 +23,7 @@
 
 次の優先候補: 08 → 09 → 10。08のInstagram原稿は `posts/ig/2026-10-14-kodomo-nisa-jizen.md`。Threads原稿は順に `posts/queue/2026-10-14-kodomo-nisa-jizen.md`、`posts/queue/2026-10-15-kodomo-nisa-checklist.md`、`posts/queue/2026-10-16-kodomo-nisa-60man.md`。08・09・10は同日にまとめて出さず、各題材の間を1日以上空ける。投稿前に records とアカウントの直近投稿で重複・制度の更新を確認し、上限内で出す。投稿後に公開URLを表へ記録する。各原稿のリンクはThreadsからブログへの流入を識別するためのもの。
 
+投稿後の24時間・72時間の確認と改善手順は `docs/kodomo-nisa-growth-runbook.md`。
+
 旧ストックの推奨順: 06 → 03 → 07 → 01 → 04 → 05（02は保留）。使えるものが尽きたら、リサーチ資料から新しく作る（手順は docs/daily-sns-routine.md）。
 
