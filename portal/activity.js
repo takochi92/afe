@@ -25,6 +25,13 @@
     care: new Set(["raw.githubusercontent.com"]),
     boat: new Set(["raw.githubusercontent.com"])
   };
+  function postedDrafts() {
+    try {
+      const value = JSON.parse(localStorage.getItem("afe-posted-drafts-v1") || "{}");
+      return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+    }
+    catch { return {}; }
+  }
 
   function validLink(value, type) {
     try {
@@ -83,7 +90,9 @@
 
   async function careRows(data) {
     if (!data || !Array.isArray(data.posts)) throw new Error("おやのての下書き一覧を取得できませんでした");
+    const posted = postedDrafts();
     const items = data.posts.flatMap(post => {
+      if (posted["care:" + post.date]) return [];
       if (!/^\d{4}-\d{2}-\d{2}$/.test(post.date)) return [];
       const date = new Date(post.date + "T06:43:00+09:00");
       const root = "https://raw.githubusercontent.com/takochi92/kaigo-/sns-auto/";
@@ -113,8 +122,11 @@
 
   function boatRows(data) {
     if (!data || !Array.isArray(data.posts)) throw new Error("艇ろぐの原稿一覧を取得できませんでした");
+    const posted = postedDrafts();
+    const today = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
+    const keepFrom = new Date(Date.parse(today) - 13 * 86400e3).toISOString().slice(0, 10);
     return data.posts.flatMap(post => {
-      if (post.project !== "teirogu" || post.channel !== "X" || typeof post.text !== "string") return [];
+      if (post.project !== "teirogu" || post.channel !== "X" || typeof post.text !== "string" || post.date < keepFrom || posted["boat:" + post.id]) return [];
       const date = new Date(post.created_at);
       return Number.isFinite(date.getTime())
         ? [{type: "boat", date, url: "#drafts", title: "艇ろぐ · X 原稿を作成",
@@ -223,6 +235,8 @@
   }
 
   refresh.addEventListener("click", load);
+  window.addEventListener("afe-draft-status-changed", load);
+  window.addEventListener("storage", event => { if (event.key === "afe-posted-drafts-v1") load(); });
   load();
   setInterval(load, 5 * 60 * 1000);
 })();
