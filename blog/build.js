@@ -67,9 +67,9 @@ blockquote{margin:1.2em 0;padding:.4em 1em;border-left:6px solid var(--pop);back
 figure{margin:1.4em 0}.prtag{font-size:.7rem;border:1px solid var(--ink);border-radius:4px;padding:0 4px;margin-left:4px;color:var(--soft)}img.fig{display:block;width:100%;height:auto;background:#fff;border:3px solid var(--ink);border-radius:14px}
 footer{border-top:1px solid var(--line);color:var(--soft);font-size:.82rem;padding-block:20px}footer a{color:var(--soft)}
 `;
-const layout = ({ title, desc, body, url, jsonld, noindex, ogType }) => `<!doctype html><html lang="${site.lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+const layout = ({ title, desc, body, url, jsonld, noindex, ogType, ogImage }) => `<!doctype html><html lang="${site.lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)}</title><meta name="description" content="${esc(desc)}">${noindex ? '<meta name="robots" content="noindex">' : ''}${site.googleVerification ? `<meta name="google-site-verification" content="${esc(site.googleVerification)}">` : ''}${site.baseUrl && !noindex ? `<link rel="canonical" href="${site.baseUrl}${url}">` : ''}
-<link rel="icon" href="/img/owl.jpg" type="image/jpeg"><meta property="og:type" content="${ogType || 'website'}"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:site_name" content="${esc(site.name)}"><meta property="og:locale" content="ja_JP">${site.baseUrl ? `<meta property="og:url" content="${site.baseUrl}${url}"><meta property="og:image" content="${site.baseUrl}/img/owl.jpg">` : ''}<meta name="twitter:card" content="summary">
+<link rel="icon" href="/img/owl.jpg" type="image/jpeg"><meta property="og:type" content="${ogType || 'website'}"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:site_name" content="${esc(site.name)}"><meta property="og:locale" content="ja_JP">${site.baseUrl ? `<meta property="og:url" content="${site.baseUrl}${url}"><meta property="og:image" content="${esc(ogImage || site.baseUrl + '/img/owl.jpg')}">` : ''}<meta name="twitter:card" content="summary">
 
 <link rel="alternate" type="application/rss+xml" title="${esc(site.name)}" href="/rss.xml"><style>${CSS}</style>${jsonld ? `<script type="application/ld+json">${jsonld}</script>` : ''}</head><body>
 <header class="top"><div class="wrap"><img src="/img/owl.jpg" alt="ふくろう博士" width="52" height="52"><a class="name" href="/">${esc(site.name)}</a><p class="tag">${esc(site.tagline)}</p></div></header>
@@ -96,7 +96,7 @@ for (const p of posts) {
   const head = `<p class="meta">更新日：${esc(meta.updated)}${meta.published ? `　公開日：${esc(meta.published)}` : ''}　${esc(meta.asof || '')}</p><h1>${esc(meta.title)}</h1>`;
   const bodyHtml = talk(md(p.body));
   const pr = (meta.pr === 'true' || affUsed) ? '<div class="note">本記事はアフィリエイト広告（PR）を含みます。</div>' : '';
-  write(url + 'index.html', layout({ title: `${meta.title} | ${site.name}`, desc: meta.description || '', url, jsonld, ogType: 'article', body: `<article>${head}${pr}${bodyHtml}<div class="note">この記事は、公表資料にもとづいて作成しています。制度や手続きは変更されることがあります。最新の情報は各金融機関や公式の資料で確認してください。投資には元本割れのリスクがあります。</div></article>` }));
+  write(url + 'index.html', layout({ title: `${meta.title} | ${site.name}`, desc: meta.description || '', url, jsonld, ogType: 'article', ogImage: meta.ogImage, body: `<article>${head}${pr}${bodyHtml}<div class="note">この記事は、公表資料にもとづいて作成しています。制度や手続きは変更されることがあります。最新の情報は各金融機関や公式の資料で確認してください。投資には元本割れのリスクがあります。</div></article>` }));
 }
 for (const p of pages) {
   const { meta } = p, url = `/${meta.slug}/`; urls.push({ u: url, m: meta.updated });
