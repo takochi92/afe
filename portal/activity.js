@@ -7,7 +7,7 @@
     threads: "https://raw.githubusercontent.com/takochi92/afe/ccr-622bec71-djrqes/records/posts.csv",
     note: "https://raw.githubusercontent.com/takochi92/pt-kokushi/stats/note-stats.json",
     care: "https://raw.githubusercontent.com/takochi92/kaigo-/sns-auto/index.json",
-    boat: "https://api.github.com/repos/takochi92/minamoyomi/actions/workflows/daily-x.yml/runs?per_page=12"
+    boat: "https://raw.githubusercontent.com/takochi92/minamoyomi/x-auto/index.json"
   };
   const list = document.getElementById("activity-list");
   const status = document.getElementById("activity-status");
@@ -23,7 +23,7 @@
     threads: new Set(["www.threads.com", "threads.com"]),
     note: new Set(["note.com", "www.note.com"]),
     care: new Set(["raw.githubusercontent.com"]),
-    boat: new Set(["github.com"])
+    boat: new Set(["raw.githubusercontent.com"])
   };
 
   function validLink(value, type) {
@@ -112,14 +112,13 @@
   }
 
   function boatRows(data) {
-    if (!data || !Array.isArray(data.workflow_runs)) throw new Error("艇ろぐの作成履歴を取得できませんでした");
-    return data.workflow_runs.flatMap(run => {
-      if (run.status !== "completed" || run.conclusion !== "success") return [];
-      const date = new Date(run.created_at);
-      const url = validLink(run.html_url, "boat");
-      return Number.isFinite(date.getTime()) && url
-        ? [{type: "boat", date, url, title: "艇ろぐ · X 原稿の作成処理",
-            detail: "自動生成ワークフローの成功記録。原稿は Atelier で確認", state: "処理成功"}]
+    if (!data || !Array.isArray(data.posts)) throw new Error("艇ろぐの原稿一覧を取得できませんでした");
+    return data.posts.flatMap(post => {
+      if (post.project !== "teirogu" || post.channel !== "X" || typeof post.text !== "string") return [];
+      const date = new Date(post.created_at);
+      return Number.isFinite(date.getTime())
+        ? [{type: "boat", date, url: "#drafts", title: "艇ろぐ · X 原稿を作成",
+            detail: excerpt(post.text), state: "下書き作成済み"}]
         : [];
     });
   }
@@ -159,8 +158,10 @@
       const heading = document.createElement("strong");
       const link = document.createElement("a");
       link.href = item.url;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
+      if (!item.url.startsWith("#")) {
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+      }
       link.textContent = item.title + " ↗";
       heading.append(link);
       const detail = document.createElement("small");
