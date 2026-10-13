@@ -9,7 +9,7 @@
 
 「こどもNISAの申込開始」＝もう買える？🦉まだです。2026年10月は一部で事前申込、制度開始は2027年1月予定。図解で確認👇
 https://kodomo-okane-note.site-kanri19.workers.dev/kodomo-nisa-jizen-2027/?utm_source=threads
-※投資は元本割れあり
+受付と開始、どちらが紛らわしかった？ ※投資は元本割れあり
 
 ## 追加返信案（投稿日をずらす）
 
