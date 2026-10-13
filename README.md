@@ -49,3 +49,9 @@ AIが代行しない（できない）部分です。
 - `[[AFF:案件名]]` プレースホルダを実際のアフィリエイトリンクに差し替えて公開
 - ASP管理画面の成果数値を `/weekly-report` で入力
 - 法令面で判断に迷う表現の最終確認（`docs/compliance.md`）
+
+## 事業ポータル
+
+4つの事業へ移動する表紙ページは [`portal/index.html`](portal/index.html) です。公開先は [AFE 事業ポータル](https://afe-business-portal.politechar16.chatgpt.site)（現在はオーナー限定）。
+
+完了報告の3件は画面デザイン用の表示例で、実際の履歴とはまだ連携していません。公開版は Sites で運用しているため、GitHub のファイルを変更しただけでは公開ページに自動反映されません。
