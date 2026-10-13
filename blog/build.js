@@ -19,7 +19,7 @@ function parse(file) {
 const inline = t => esc(t)
   .replace(/!\[([^\]]*)\]\((\/[^)\s]+)\)/g, (_, a, u) => `<img class="fig" src="${u}" alt="${a}" loading="lazy" width="800">`)
   .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-  .replace(/\[([^\]]+)\]\(aff:([a-z0-9-]+)\)/g, (_, a, k) => { const u = AFF[k] && AFF[k].url; if (!u) return a; affUsed = true; return `<a href="${esc(u)}" rel="sponsored nofollow noopener" target="_blank">${a}</a><span class="prtag">PR</span>`; })
+  .replace(/\[([^\]]+)\]\(aff:([a-z0-9-]+)\)/g, (_, a, k) => { const ad = AFF[k]; const u = ad && ad.url; if (!u) return a; affUsed = true; return ad.html ? `${ad.html}<span class="prtag">PR</span>` : `<a href="${esc(u)}" rel="sponsored nofollow noopener" target="_blank">${a}</a><span class="prtag">PR</span>`; })
   .replace(/\[([^\]]+)\]\((https?:[^)\s]+|\/[^)\s]*)\)/g, (_, a, u) => `<a href="${u}"${u.startsWith('http') ? ' rel="noopener nofollow" target="_blank"' : ''}>${a}</a>`);
 function md(src) {
   const lines = src.replace(/\r/g, '').split('\n'); const out = []; let i = 0;
