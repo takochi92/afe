@@ -1,6 +1,6 @@
 #!/bin/bash
 # Instagramに1件投稿（1枚または複数枚）して records/ig_posts.csv に記録する。【未テスト】
-# 使い方: scripts/instagram_post.sh "<キャプション>" <画像.jpg> [<画像.jpg> ...]   （画像は1〜10枚、JPEG）
+# 使い方: scripts/instagram_post.sh "<キャプション>" <画像.jpg または afe-assets の公開画像URL> ... （画像は1〜10枚、JPEG）
 # 前提: 環境のネットワークシークレット（INSTAGRAM_ACCESS_TOKEN、graph.instagram.com 宛てに Authorization: Bearer が自動で付く）。
 #       画像は /home/user/afe-assets（公開リポジトリ）をクローン済みであること。呼ぶのは、検品に合格した投稿だけ。
 set -euo pipefail
@@ -14,12 +14,27 @@ if [ -n "${IGID:-}" ]; then
   RECENT=$(curl -sS -m 20 "$API/$IGID/media?fields=caption&limit=25" || true)
   if echo "$RECENT" | python3 -c "import sys,json;t=sys.argv[1][:30];d=json.load(sys.stdin).get('data',[]);sys.exit(0 if any((p.get('caption') or '')[:30]==t for p in d) else 1)" "$CAP" 2>/dev/null; then echo "同じ書き出しの投稿が直近にあるため、投稿しません（二重投稿の防止）"; exit 6; fi
 fi
-[ -d "$ASSETS/.git" ] || { echo "afe-assets がありません"; exit 2; }
-# 1) 画像を公開リポジトリに保存して、公開URLを作る
-mkdir -p "$ASSETS/images/$D/ig-$T"; URLS=()
-for f in "$@"; do n=$(basename "$f"); cp "$f" "$ASSETS/images/$D/ig-$T/$n"; URLS+=("https://raw.githubusercontent.com/takochi92/afe-assets/main/images/$D/ig-$T/$n"); done
-git -C "$ASSETS" add -A; git -C "$ASSETS" -c user.name=takochi92 -c user.email=kotaro.0218777@gmail.com commit -q -m "Instagram用の画像を追加: $D/ig-$T"; git -C "$ASSETS" push -q origin main
-for u in "${URLS[@]}"; do for i in 1 2 3 4 5 6; do [ "$(curl -s -o /dev/null -w '%{http_code}' "$u")" = 200 ] && break; sleep 3; done; done
+# 1) 公開済みURLはそのまま使い、ローカル画像だけ公開リポジトリに保存する
+URLS=(); NEED_PUSH=0
+for f in "$@"; do
+  if [[ "$f" == https://raw.githubusercontent.com/takochi92/afe-assets/main/images/*.jpg ]]; then
+    URLS+=("$f")
+  else
+    [ -f "$f" ] || { echo "画像ファイルがありません: $f"; exit 2; }
+    [ -d "$ASSETS/.git" ] || { echo "afe-assets がありません"; exit 2; }
+    mkdir -p "$ASSETS/images/$D/ig-$T"
+    n=$(basename "$f"); cp "$f" "$ASSETS/images/$D/ig-$T/$n"
+    URLS+=("https://raw.githubusercontent.com/takochi92/afe-assets/main/images/$D/ig-$T/$n")
+    NEED_PUSH=1
+  fi
+done
+if [ "$NEED_PUSH" -eq 1 ]; then
+  git -C "$ASSETS" add -A; git -C "$ASSETS" -c user.name=takochi92 -c user.email=kotaro.0218777@gmail.com commit -q -m "Instagram用の画像を追加: $D/ig-$T"; git -C "$ASSETS" push -q origin main
+fi
+for u in "${URLS[@]}"; do
+  for i in 1 2 3 4 5 6; do [ "$(curl -sS -L -o /dev/null -w '%{http_code}' --max-time 20 "$u")" = 200 ] && break; sleep 3; done
+  [ "$(curl -sS -L -o /dev/null -w '%{http_code}' --max-time 20 "$u")" = 200 ] || { echo "画像URLを取得できません: $u"; exit 2; }
+done
 # 2) アカウントidを取得
 ME=$(curl -sS -m 20 "$API/me?fields=user_id,username"); IG=$(echo "$ME" | j user_id); [ -n "$IG" ] || { echo "アカウント取得に失敗: $ME"; exit 3; }
 wait_ready() { for i in $(seq 1 12); do S=$(curl -sS -m 20 "$API/$1?fields=status_code" | j status_code); [ "$S" = FINISHED ] && return 0; [ "$S" = ERROR ] && { echo "処理エラー: $1"; return 1; }; sleep 5; done; return 1; }
@@ -46,3 +61,4 @@ with open(f,'a',newline='') as fh:
     w.writerow([datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d %H:%M:%S'),mid,pl,n,cap])
 PY
 echo "投稿しました: $PL"
+
