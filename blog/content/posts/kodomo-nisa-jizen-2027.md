@@ -5,6 +5,7 @@ description: 2026年10月の事前申込と2027年1月の制度開始予定を�
 updated: 2026-10-13
 published: 2026-10-13
 asof: 2026年10月時点
+ogImage: https://raw.githubusercontent.com/takochi92/afe-assets/main/images/2026-10-13-kodomo-nisa-jizen/slide-01.jpg
 ---
 「こどもNISAの申込が始まった」と聞くと、もう投資できるのか気になりますよね。**2026年10月に始まったのは、一部の金融機関での事前申込です。制度の開始は2027年1月の予定**です。
 
