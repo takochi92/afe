@@ -13,12 +13,15 @@
 | 06 | 児童手当を積み立てる | 合格 | 不要（制度の数字を使わない一般的な注意） | 2026-10-11 https://www.threads.com/@flysheep59/post/DeWVWanm0tV |
 | 07 | 18歳になったら | 合格 | 省略（オーナー承認。後で公式を確認） | 2026-10-12 https://www.threads.com/@flysheep59/post/DeYDMIgoDs5 |
 | 08 | 申込開始＝もう買える？（図解） | 合格（reviews/kodomo-nisa-jizen-2026-10-14.md） | 済（金融庁・SBI証券・マネックス証券） | 未投稿 |
+| 09 | 事前申込前の3点チェック | 合格（reviews/kodomo-nisa-growth-2026-10-13.md） | 済（金融庁・マネックス証券） | 未投稿 |
+| 10 | 年間60万円は目標ではない | 合格（reviews/kodomo-nisa-growth-2026-10-13.md） | 済（金融庁） | 未投稿 |
 
 ## 使い方
 - 投稿文は各ファイルの「## 投稿文」の節だけを使う（冒頭の「修正済み」の行は使わない）
 - 画像は `scripts/make_card.js` で、各ファイルの「## カード」の1行JSONから作る。08は画像が公開済みのため、同ファイルの画像URLを使う
 - 公式確認の対象ドメイン（fsa.go.jp / mof.go.jp / nta.go.jp / caa.go.jp）は、環境のネットワーク設定で許可すると、私が直接確認できる
 
-次の優先候補: 08（Threads原稿は `posts/queue/2026-10-14-kodomo-nisa-jizen.md`、Instagramは `posts/ig/2026-10-14-kodomo-nisa-jizen.md`）。投稿前に records とアカウントの直近投稿で重複を確認し、上限内で出す。投稿後に公開URLを表へ記録する。
+次の優先候補: 08 → 09 → 10。08のInstagram原稿は `posts/ig/2026-10-14-kodomo-nisa-jizen.md`。Threads原稿は順に `posts/queue/2026-10-14-kodomo-nisa-jizen.md`、`posts/queue/2026-10-15-kodomo-nisa-checklist.md`、`posts/queue/2026-10-16-kodomo-nisa-60man.md`。08・09・10は同日にまとめて出さず、各題材の間を1日以上空ける。投稿前に records とアカウントの直近投稿で重複・制度の更新を確認し、上限内で出す。投稿後に公開URLを表へ記録する。各原稿のリンクはThreadsからブログへの流入を識別するためのもの。
 
 旧ストックの推奨順: 06 → 03 → 07 → 01 → 04 → 05（02は保留）。使えるものが尽きたら、リサーチ資料から新しく作る（手順は docs/daily-sns-routine.md）。
+
