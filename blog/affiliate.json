@@ -1,6 +1,23 @@
 {
-  "sbi-kodomo": {"name": "SBI証券 こども口座", "url": ""},
-  "matsui": {"name": "松井証券 口座開設", "url": ""},
-  "rakuten": {"name": "楽天証券 口座開設", "url": ""},
-  "smbc-nl": {"name": "三井住友カード（NL）", "url": ""}
+  "sbi-kodomo": {
+    "name": "SBI証券 こども口座",
+    "url": ""
+  },
+  "matsui": {
+    "name": "松井証券 口座開設",
+    "url": ""
+  },
+  "rakuten": {
+    "name": "楽天証券 口座開設",
+    "url": ""
+  },
+  "smbc-nl": {
+    "name": "三井住友カード（NL）",
+    "url": ""
+  },
+  "matsui-ideco": {
+    "name": "松井証券 iDeCo",
+    "url": "https://px.a8.net/svt/ejp?a8mat=4BEESY+FG2VSI+3XCC+BXIYQ",
+    "html": "<a href=\"https://px.a8.net/svt/ejp?a8mat=4BEESY+FG2VSI+3XCC+BXIYQ\" rel=\"nofollow\">松井証券ではじめるiDeCo</a>\n<img border=\"0\" width=\"1\" height=\"1\" src=\"https://www17.a8.net/0.gif?a8mat=4BEESY+FG2VSI+3XCC+BXIYQ\" alt=\"\">"
+  }
 }
