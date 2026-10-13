@@ -18,7 +18,7 @@
 
 ## 使い方
 - 投稿文は各ファイルの「## 投稿文」の節だけを使う（冒頭の「修正済み」の行は使わない）
-- 画像は `scripts/make_card.js` で、各ファイルの「## カード」の1行JSONから作る。08は画像が公開済みのため、同ファイルの画像URLを使う
+- 画像は `scripts/make_card.js` で、各ファイルの「## カード」の1行JSONから作る。08〜10は画像が公開済みのため、各ファイルの画像URLを `scripts/threads_post.sh` の第2引数にそのまま渡す。第3引数にトピック `こどもNISA` を渡す
 - 公式確認の対象ドメイン（fsa.go.jp / mof.go.jp / nta.go.jp / caa.go.jp）は、環境のネットワーク設定で許可すると、私が直接確認できる
 
 次の優先候補: 08 → 09 → 10。08のInstagram原稿は `posts/ig/2026-10-14-kodomo-nisa-jizen.md`。Threads原稿は順に `posts/queue/2026-10-14-kodomo-nisa-jizen.md`、`posts/queue/2026-10-15-kodomo-nisa-checklist.md`、`posts/queue/2026-10-16-kodomo-nisa-60man.md`。08・09・10は同日にまとめて出さず、各題材の間を1日以上空ける。投稿前に records とアカウントの直近投稿で重複・制度の更新を確認し、上限内で出す。投稿後に公開URLを表へ記録する。各原稿のリンクはThreadsからブログへの流入を識別するためのもの。
