@@ -54,4 +54,4 @@ AIが代行しない（できない）部分です。
 
 4つの事業へ移動する表紙ページは [`portal/index.html`](portal/index.html) です。公開先は [AFE 事業ポータル](https://afe-business-portal.politechar16.chatgpt.site)（現在はオーナー限定）。
 
-完了報告の3件は画面デザイン用の表示例で、実際の履歴とはまだ連携していません。公開版は Sites で運用しているため、GitHub のファイルを変更しただけでは公開ページに自動反映されません。
+完了報告は AFE の Instagram・Threads 投稿記録と PT国試ドリルの note 公開データを読み込み、新しい順に表示します。画面は5分ごとに更新されます。公開版は Sites で運用しているため、GitHub のファイルを変更しただけでは公開ページに自動反映されません。
