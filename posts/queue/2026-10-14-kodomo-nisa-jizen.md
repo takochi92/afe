@@ -1,6 +1,7 @@
 # Threads投稿案｜こどもNISAの申込開始と制度開始
 
-状態: 原稿・画像完成／SNS公開未実施
+状態: 検品合格（reviews/kodomo-nisa-jizen-2026-10-14.md）／公開待ち
+投稿前に records/posts.csv とThreads直近投稿を確認し、同内容が公開済みなら投稿しない。公開後はURLを records/posts.csv と posts/queue/INDEX.md に記録する。
 画像: https://raw.githubusercontent.com/takochi92/afe-assets/main/images/2026-10-13-kodomo-nisa-jizen/slide-01.jpg
 ブログ: https://kodomo-okane-note.site-kanri19.workers.dev/kodomo-nisa-jizen-2027/
 
