@@ -57,9 +57,24 @@ SBI証券やマネックス証券などが、こどもNISA口座の事前受付�
 
 家族と確認するときは、この図を見返してください。詳しい制度の比較は[ジュニアNISAとこどもNISAの違い](/junior-nisa-tigai/)にまとめています。
 
+## よくある質問
+
+### 2026年10月に、こどもNISAで投資信託を買えますか？
+
+まだ買えません。2026年10月に一部の金融機関で始まったのは口座開設の**事前申込**です。制度上の口座開設・利用は2027年1月から順次予定されています。受付の開始日と手続きは金融機関によって異なります。
+
+### 事前申込を今すぐしないと損ですか？
+
+この制度は2027年1月開始予定で、事前申込を急ぐほど運用成績が良くなるものではありません。まず必要書類、親権者と子どもの口座、家計から出せる金額を確認してください。
+
+### 年間60万円を必ず積み立てる必要がありますか？
+
+ありません。60万円は年間の上限です。使う予定が近い教育費や生活費まで投資に回す必要はありません。投資信託には元本割れの可能性があります。
+
 ## 出典
 
 - [金融庁｜NISAを知る](https://www.fsa.go.jp/policy/nisa2/know/index.html)
 - [金融庁｜令和8年度税制改正について](https://www.fsa.go.jp/news/r7/sonota/20251226-2/01.pdf)
 - [SBI証券｜こどもNISAの事前受付案内](https://www.sbisec.co.jp/ETGate/?OutSide=on&_ActionID=DefaultAID&_ControlID=WPLETmgR001Control&_DataStoreID=DSWPLETmgR001Control&_PageID=WPLETmgR001Mdtl30&burl=search_home&cat1=home&cat2=corporate&dir=corporate&file=irpress%2Fhome_prestory260911_011600.html&getFlg=on)
 - [マネックス証券｜こどもNISA口座の申込み](https://info.monex.co.jp/nisa/kodomo-nisa/apply/index.html)
+
