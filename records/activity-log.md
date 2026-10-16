@@ -1,6 +1,7 @@
 # 業務日誌
 
 新しい記録を上に追記する。形式: `- YYYY-MM-DD HH:MM [部署] 内容（成果物パス）`
+- 2026-10-17 08:45 JST [社長] Instagramに1件投稿（朝の回・こどもNISAは金融機関を変更できない。開く前に確認すること・6枚・検品は1回目で合格）。https://www.instagram.com/p/DekvFpbERN5/（posts/ig/2026-10-17-1.md、reviews/ig-2026-10-17-1.md）。注意: records/ig_posts.csv の10/13の行が崩れている（要整備）
 - 2026-10-17 08:09 JST [社長] 【ミス】朝の回でストック03を投稿したが、03は2026-10-12に投稿済みだった（作業コピーが古く、重複確認を取り違えた）。重複投稿 https://www.threads.com/@flysheep59/post/DekrcupkR4w。削除はオーナーに確認。返信スクリーニングは403で未実施
 
 - 2026-10-17 06:28 JST [リサーチ部・企画部・編集部・品質管理部・社長] ブログ記事「こどもNISAの口座開設前に確認すること｜変更できない理由」を公開（検品2回目で合格。官公庁の原文のみで事実確認。証券会社サイトは接続不可のため会社ごとの条件は「質問チェックリスト」にした。案件リンク aff:sbi-kodomo は1か所、url が空のため文字のみ表示）。既存3本から関連リンクを追加（blog/content/posts/kouza-kaisetsu-mae-kakunin.md、reviews/blog-kouza-kaisetsu-mae-kakunin.md）
