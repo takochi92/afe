@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" role="img" aria-labelledby="t d" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif">
+<title id="t">公式で決まっていることと、会社に確認することの分かれ目</title><desc id="d">左は共通のルール（対象、枠、金融機関は変更できない）。右は会社ごとに確かめること（親の口座、必要書類、受付の時期）。金融機関を変えられないので右を先に確認する</desc>
+<rect width="800" height="400" fill="#fff"/>
+<g font-weight="700" fill="#161616">
+<text x="400" y="32" text-anchor="middle" font-size="22" font-weight="900">申し込む前に、右側を先に確かめる</text>
+<rect x="30" y="52" width="340" height="270" rx="16" fill="#FFF3C4" stroke="#161616" stroke-width="3"/>
+<text x="200" y="88" text-anchor="middle" font-size="22">公式で決まっていること</text>
+<text x="200" y="112" text-anchor="middle" font-size="15" fill="#5b5640">どの会社でも同じ</text>
+<text x="56" y="154" font-size="18">・対象は0〜17歳</text>
+<text x="56" y="188" font-size="18">・使えるのはつみたて投資枠だけ</text>
+<text x="56" y="222" font-size="18">・年間60万円／合計600万円まで</text>
+<text x="56" y="256" font-size="18">・口座は子ども1人に1つ</text>
+<text x="56" y="296" font-size="19" font-weight="900" fill="#E5322D">・金融機関は変更できない</text>
+<rect x="430" y="52" width="340" height="270" rx="16" fill="#fff" stroke="#161616" stroke-width="3"/>
+<text x="600" y="88" text-anchor="middle" font-size="22">会社に確かめること</text>
+<text x="600" y="112" text-anchor="middle" font-size="15" fill="#5b5640">会社ごとに違うかもしれない</text>
+<text x="456" y="154" font-size="18">・親の口座は必要か</text>
+<text x="456" y="188" font-size="18">・必要な書類</text>
+<text x="456" y="222" font-size="18">・事前受付はいつからか</text>
+<text x="456" y="256" font-size="18">・子の預貯金口座の扱い</text>
+<text x="456" y="296" font-size="15" fill="#5b5640">※各社の公式ページや窓口で確認</text>
+<line x1="378" y1="187" x2="422" y2="187" stroke="#E5322D" stroke-width="6"/>
+<polygon points="378,187 398,174 398,200" fill="#E5322D"/>
+<text x="400" y="168" text-anchor="middle" font-size="13" fill="#E5322D">先に</text>
+<rect x="30" y="338" width="740" height="46" rx="12" fill="#161616"/>
+<text x="400" y="368" text-anchor="middle" font-size="18" fill="#fff">最初の1社が固定されるので、右の確認を先に</text>
+</g>
+</svg>

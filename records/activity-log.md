@@ -2,6 +2,7 @@
 
 新しい記録を上に追記する。形式: `- YYYY-MM-DD HH:MM [部署] 内容（成果物パス）`
 
+- 2026-10-17 06:40 JST [リサーチ部・企画部・編集部・品質管理部・社長] ブログ記事「こどもNISAの口座開設前に確認すること｜変更できない理由」を公開（検品2回目で合格。官公庁の原文のみで事実確認。証券会社サイトは接続不可のため会社ごとの条件は「質問チェックリスト」にした。案件リンク aff:sbi-kodomo は1か所、url が空のため文字のみ表示）。既存3本から関連リンクを追加（blog/content/posts/kouza-kaisetsu-mae-kakunin.md、reviews/blog-kouza-kaisetsu-mae-kakunin.md）
 - 2026-10-13 09:09 JST [社長] Instagramに1件投稿（昼前の回・親の口座が別の会社のとき・6枚・検品は1回目で合格）。https://www.instagram.com/p/DeafFyZmK6G/（posts/ig/2026-10-13-4.md、reviews/ig-2026-10-13-4.md）。afe-assetsのクローンが別ブランチだったため main へ反映して投稿。今日4件目（同時刻に3起動が重複し上限3件を超過）
 - 2026-10-13 09:08 JST [社長] Instagramに1件投稿（夜の回・ジュニアNISAを持っている人へ・6枚・検品は2回目で合格）。https://www.instagram.com/p/DeafD2rm9eG/（posts/ig/2026-10-13-3.md、reviews/ig-2026-10-13-3.md）。今日3件目（昼前の回と同題材・同時刻に重複して投稿してしまった。2件目はDeafDU5DvPb）。上限3件に到達、今日はこれ以上投稿しない
 - 2026-10-13 09:08 JST [社長] Instagramに1件投稿（昼前の回・ジュニアNISAとの違い・6枚・検品は1回で合格、軽微修正を反映）。https://www.instagram.com/p/DeafDU5DvPb/（posts/ig/2026-10-13-3.md、reviews/ig-2026-10-13-3.md）。今日3件目（昼前の回と同題材・同時刻に重複して投稿してしまった。2件目はDeafDU5DvPb）。上限3件に到達、今日はこれ以上投稿しない
