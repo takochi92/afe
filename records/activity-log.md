@@ -2,6 +2,7 @@
 
 新しい記録を上に追記する。形式: `- YYYY-MM-DD HH:MM [部署] 内容（成果物パス）`
 
+- 2026-10-16 20:42 JST [社長] Instagramに1件投稿（夜の回・「申込開始」は投資開始？・6枚・検品部が合格、キャプションの話者をうさぎに統一）。https://www.instagram.com/p/DejcqcglNZs/（posts/ig/2026-10-14-kodomo-nisa-jizen.md、reviews/ig-2026-10-16-1.md）。今日1件目
 - 2026-10-13 09:09 JST [社長] Instagramに1件投稿（昼前の回・親の口座が別の会社のとき・6枚・検品は1回目で合格）。https://www.instagram.com/p/DeafFyZmK6G/（posts/ig/2026-10-13-4.md、reviews/ig-2026-10-13-4.md）。afe-assetsのクローンが別ブランチだったため main へ反映して投稿。今日4件目（同時刻に3起動が重複し上限3件を超過）
 - 2026-10-13 09:08 JST [社長] Instagramに1件投稿（夜の回・ジュニアNISAを持っている人へ・6枚・検品は2回目で合格）。https://www.instagram.com/p/DeafD2rm9eG/（posts/ig/2026-10-13-3.md、reviews/ig-2026-10-13-3.md）。今日3件目（昼前の回と同題材・同時刻に重複して投稿してしまった。2件目はDeafDU5DvPb）。上限3件に到達、今日はこれ以上投稿しない
 - 2026-10-13 09:08 JST [社長] Instagramに1件投稿（昼前の回・ジュニアNISAとの違い・6枚・検品は1回で合格、軽微修正を反映）。https://www.instagram.com/p/DeafDU5DvPb/（posts/ig/2026-10-13-3.md、reviews/ig-2026-10-13-3.md）。今日3件目（昼前の回と同題材・同時刻に重複して投稿してしまった。2件目はDeafDU5DvPb）。上限3件に到達、今日はこれ以上投稿しない
