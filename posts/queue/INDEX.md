@@ -15,6 +15,7 @@
 | 08 | 申込開始＝もう買える？（図解） | 合格（reviews/kodomo-nisa-jizen-2026-10-14.md） | 済（金融庁・SBI証券・マネックス証券） | 2026-10-17 https://www.threads.com/@flysheep59/post/Dek7EezlA87 |
 | 09 | 事前申込前の3点チェック | 合格（reviews/kodomo-nisa-growth-2026-10-13.md） | 済（金融庁・マネックス証券） | 未投稿 |
 | 10 | 年間60万円は目標ではない | 合格（reviews/kodomo-nisa-growth-2026-10-13.md） | 済（金融庁） | 未投稿 |
+| 11 | 0〜17歳はつみたて投資枠のみ | 合格（reviews/sns-2026-10-17-tsumitate-only.md） | 済（金融庁・財務省） | 2026-10-17 https://www.threads.com/@flysheep59/post/DelJGGvFW4S |
 
 ## 使い方
 - 投稿文は各ファイルの「## 投稿文」の節だけを使う（冒頭の「修正済み」の行は使わない）
