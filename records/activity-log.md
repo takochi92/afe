@@ -1,6 +1,7 @@
 # 業務日誌
 
 新しい記録を上に追記する。形式: `- YYYY-MM-DD HH:MM [部署] 内容（成果物パス）`
+- 2026-10-18 08:40 JST [社長] Instagramに1件投稿（朝の回・6枚・検品合格 reviews/ig-2026-10-18-1.md）。題材：親の新NISAとこどもNISAの枠の違い。https://www.instagram.com/p/DenT16XFUpq/ 。本日1/3件（posts/ig/2026-10-18-1.md）
 - 2026-10-18 08:09 JST [社長] Threadsに1件投稿（朝の回・投稿09「事前申込前の3点チェック」・検品合格済み・画像つき）。https://www.threads.com/@flysheep59/post/DenQO4PmAA9（posts/queue/2026-10-15-kodomo-nisa-checklist.md）。今日1件目
 - 2026-10-18 [リサーチ部・企画部・編集部・品質管理部・社長] ブログ記事「こどもNISAの前に、親の新NISA枠をどう考えるか」を公開（検品2回目で合格。官公庁の原文で確認。証券会社のサイトは読めず、官公庁で書ける題材を選択。案件リンクは1か所、url空のため文字のみ。既存4本から関連リンクを追加）（blog/content/posts/oya-nisa-yusen.md、reviews/blog-oya-nisa-yusen.md）
 - 2026-10-17 20:40 JST [社長] Instagramに1件投稿（夜の回・年間60万円は「上限」・6枚・検品合格）。https://www.instagram.com/p/DemBds6oAjF/（posts/ig/2026-10-17-3.md、reviews/ig-2026-10-17-3.md）。今日3件目（上限）。afe-assetsへの保存も成功
