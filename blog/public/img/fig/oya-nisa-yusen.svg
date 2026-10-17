@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" role="img" aria-labelledby="t d" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif">
+<title id="t">親の新NISAとこどもNISAの枠を並べた図</title><desc id="d">親の新NISA（18歳以上）は年間最大360万円、上限1,800万円（成長投資枠は1,200万円まで）、期間は無期限。こどもNISA（0〜17歳）は年間60万円、上限600万円、つみたて投資枠のみ。親の枠との関係は公式資料で確認できていない。2026年10月時点</desc>
+<rect width="800" height="400" fill="#fff"/>
+<g font-weight="700" fill="#161616">
+<text x="400" y="32" text-anchor="middle" font-size="22" font-weight="900">枠の数字を並べて見る</text>
+<rect x="30" y="52" width="340" height="250" rx="16" fill="#FFF3C4" stroke="#161616" stroke-width="3"/>
+<text x="200" y="88" text-anchor="middle" font-size="22">親の新NISA</text>
+<text x="200" y="112" text-anchor="middle" font-size="15" fill="#5b5640">18歳以上</text>
+<text x="52" y="152" font-size="17">・年間 最大360万円</text>
+<text x="52" y="180" font-size="15" fill="#5b5640">　（つみたて120万＋成長240万）</text>
+<text x="52" y="212" font-size="17">・上限 1,800万円</text>
+<text x="52" y="240" font-size="15" fill="#5b5640">　（成長投資枠は1,200万円まで）</text>
+<text x="52" y="272" font-size="17">・期間は無期限</text>
+<rect x="430" y="52" width="340" height="250" rx="16" fill="#fff" stroke="#161616" stroke-width="3"/>
+<text x="600" y="88" text-anchor="middle" font-size="22">こどもNISA</text>
+<text x="600" y="112" text-anchor="middle" font-size="15" fill="#5b5640">0〜17歳</text>
+<text x="452" y="152" font-size="17">・年間 60万円</text>
+<text x="452" y="188" font-size="17">・上限 600万円</text>
+<text x="452" y="224" font-size="17">・使えるのはつみたて投資枠だけ</text>
+<text x="452" y="260" font-size="17">・0〜17歳は原則払出し不可</text>
+<text x="452" y="284" font-size="15" fill="#5b5640">　（12歳以降は条件つき）</text>
+<text x="400" y="190" text-anchor="middle" font-size="46" font-weight="900" fill="#E5322D">?</text>
+<text x="400" y="326" text-anchor="middle" font-size="16" font-weight="900" fill="#E5322D">親の枠との関係は、公式資料では確認できていません</text>
+<rect x="30" y="338" width="740" height="40" rx="12" fill="#161616"/>
+<text x="400" y="364" text-anchor="middle" font-size="17" fill="#fff">どちらが先かは、使う時期と家計から家庭ごとに考える</text>
+<text x="770" y="394" text-anchor="end" font-size="14" fill="#5b5640">2026年10月時点</text>
+</g>
+</svg>

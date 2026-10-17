@@ -1,6 +1,7 @@
 # 業務日誌
 
 新しい記録を上に追記する。形式: `- YYYY-MM-DD HH:MM [部署] 内容（成果物パス）`
+- 2026-10-18 [リサーチ部・企画部・編集部・品質管理部・社長] ブログ記事「こどもNISAの前に、親の新NISA枠をどう考えるか」を公開（検品2回目で合格。官公庁の原文で確認。証券会社のサイトは読めず、官公庁で書ける題材を選択。案件リンクは1か所、url空のため文字のみ。既存4本から関連リンクを追加）（blog/content/posts/oya-nisa-yusen.md、reviews/blog-oya-nisa-yusen.md）
 - 2026-10-17 20:40 JST [社長] Instagramに1件投稿（夜の回・年間60万円は「上限」・6枚・検品合格）。https://www.instagram.com/p/DemBds6oAjF/（posts/ig/2026-10-17-3.md、reviews/ig-2026-10-17-3.md）。今日3件目（上限）。afe-assetsへの保存も成功
 - 2026-10-17 19:44 JST [社長] Threadsに1件投稿（夕の回・新規「こどもNISAの関連法は2026年3月31日に成立済み」・検品1回目で合格）。https://www.threads.com/@flysheep59/post/Del6_tzFWi1（posts/queue/2026-10-17-law-passed.md、reviews/sns-2026-10-17-law-passed.md）。本日のThreads投稿は5件目（上限）。09・10は08と同日を避けるため見送り
 - 2026-10-17 15:42 JST [社長] Threadsに1件投稿（午後の回・新規「年間60万円・600万円は買った金額（取得対価）で数える」・検品2回目で合格）。https://www.threads.com/@flysheep59/post/DelfBLknNPw（posts/queue/2026-10-17-kaiire-base.md、reviews/sns-2026-10-17-kaiire-base.md）。本日のThreads投稿は4件目。09・10は08と同日を避け見送り。返信確認：自分の投稿への質問なし、公開検索は403のため他人への返信は未実施
