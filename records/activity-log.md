@@ -1,6 +1,7 @@
 # 業務日誌
 
 新しい記録を上に追記する。形式: `- YYYY-MM-DD HH:MM [部署] 内容（成果物パス）`
+- 2026-10-17 12:42 JST [社長] Instagramに1件投稿（昼の回・きょうだいが2人以上のとき・6枚・検品1回目で合格）。https://www.instagram.com/p/DelKcZinBYZ/（posts/ig/2026-10-17-2.md、reviews/ig-2026-10-17-2.md）。本日のInstagram投稿は2件目。afe-assets への画像保存は、ローカルの main が古く最初の push が拒否されたため、HEAD から main へ push して解決
 - 2026-10-17 12:28 JST [社長] Threadsに1件投稿（昼の回・新規「0〜17歳はつみたて投資枠のみ」・検品1回で合格）。https://www.threads.com/@flysheep59/post/DelJGGvFW4S（posts/queue/2026-10-17-tsumitate-only.md、reviews/sns-2026-10-17-tsumitate-only.md）。本日のThreads投稿は3件目。09・10は「08と同日に出さない」ため見送り
 - 2026-10-17 10:25 JST [社長] Threadsに1件投稿（午前の回・ストック08「申込開始＝もう買える？」図解つき・検品済み）。https://www.threads.com/@flysheep59/post/Dek7EezlA87。本日のThreads投稿は2件目（8:09の1件は03の重複ミス）。疑問投稿の発見返信は公開検索がAPIで403のため送信せず（自分の投稿への返信確認は対象なし）
 - 2026-10-17 08:45 JST [社長] Instagramに1件投稿（朝の回・こどもNISAは金融機関を変更できない。開く前に確認すること・6枚・検品は1回目で合格）。https://www.instagram.com/p/DekvFpbERN5/（posts/ig/2026-10-17-1.md、reviews/ig-2026-10-17-1.md）。注意: records/ig_posts.csv の10/13の行が崩れている（要整備）
