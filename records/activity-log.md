@@ -37,4 +37,4 @@
 - 2026-10-10 [営業部] こどもNISA関連の案件を調査し、13行を追記（証券10行・関連候補3行。報酬はすべて要オーナー確認）。ASPへの問い合わせメールを下書き（sales/programs.md, sales/drafts/20261010-kodomo-nisa-inquiry.md）
 - 2026-10-10 [リサーチ部] 新規性のあるジャンルを探索。候補：こどもNISA・蛍光灯2027年問題・自転車の青切符（research/20261010-genre-scan.md）
 - 2026-10-10 [社長] 会社設立。6部署（リサーチ・企画・執筆・検品・記録・営業）を配置
-- 2026-10-18 15:50 JST [社長] Threadsに1件投稿（午後の回・親の新NISAとこどもNISAの枠を比べる・検品1回で合格・画像なし）。https://www.threads.com/@flysheep59/post/DeoDzdWFgqG（posts/queue/2026-10-18-oya-nisa-waku.md、reviews/sns-2026-10-18-oya-wakus.md）。今日2件目。自動返信は対象なし。公開検索の返信確認は権限エラー（403）のため送信せず
+- 2026-10-18 15:39 JST [社長] Threadsに1件投稿（午後の回・親の新NISAとこどもNISAの枠を比べる・検品1回で合格・画像なし）。https://www.threads.com/@flysheep59/post/DeoDzdWFgqG（posts/queue/2026-10-18-oya-nisa-waku.md、reviews/sns-2026-10-18-oya-wakus.md）。今日2件目。自動返信は対象なし。公開検索の返信確認は権限エラー（403）のため送信せず
