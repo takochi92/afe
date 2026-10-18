@@ -1,6 +1,7 @@
 # 業務日誌
 
 新しい記録を上に追記する。形式: `- YYYY-MM-DD HH:MM [部署] 内容（成果物パス）`
+- 2026-10-18 19:42 [社長] Threads夕の回：「年間60万円は目標ではない」（図解つき・検品合格済み）を投稿。https://www.threads.com/@flysheep59/post/DeofoS_Fc5R 。今日（日本時間）3件目。自動返信の確認は、API 403（権限不足）のため返信せず（posts/queue/INDEX.md の10番）
 - 2026-10-18 12:41 JST [社長] Instagramに1件投稿（昼の回・子どもが18歳になったら、こどもNISAはどうなる？・6枚・検品は2回目で合格）。https://www.instagram.com/p/DenvZxnDsUq/（posts/ig/2026-10-18-2.md、reviews/ig-2026-10-18-2.md）。本日2/3件。afe-assetsのローカル main を origin/main に合わせてから投稿
 - 2026-10-18 08:40 JST [社長] Instagramに1件投稿（朝の回・6枚・検品合格 reviews/ig-2026-10-18-1.md）。題材：親の新NISAとこどもNISAの枠の違い。https://www.instagram.com/p/DenT16XFUpq/ 。本日1/3件（posts/ig/2026-10-18-1.md）
 - 2026-10-18 08:09 JST [社長] Threadsに1件投稿（朝の回・投稿09「事前申込前の3点チェック」・検品合格済み・画像つき）。https://www.threads.com/@flysheep59/post/DenQO4PmAA9（posts/queue/2026-10-15-kodomo-nisa-checklist.md）。今日1件目
