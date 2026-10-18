@@ -1,6 +1,7 @@
 # 業務日誌
 
 新しい記録を上に追記する。形式: `- YYYY-MM-DD HH:MM [部署] 内容（成果物パス）`
+- 2026-10-18 20:41 JST [社長] Instagramに1件投稿（夜の回・教育費はiDeCoで準備できる？・6枚・検品1回目で合格 reviews/ig-2026-10-18-3.md）。https://www.instagram.com/p/DeomNhrlfbZ/（posts/ig/2026-10-18-3.md）。本日のInstagramは3件で上限。afe-assetsの手元クローンが古く最初のpushが拒否されたため、画像コミットをmainへ反映して再投稿
 - 2026-10-18 20:25 JST [管理部・社長] 週次レポート（10/12〜10/18）を作成。Threads 11件・Instagram 10件（台帳上）、ブログ公開2本、収益0円、SBI証券こども口座は申請中。Search Console等は未入力。articles.csvと実際の記事数の食い違い（3本 / 9本）を指摘（records/weekly/20261018.md）
 - 2026-10-18 12:41 JST [社長] Instagramに1件投稿（昼の回・子どもが18歳になったら、こどもNISAはどうなる？・6枚・検品は2回目で合格）。https://www.instagram.com/p/DenvZxnDsUq/（posts/ig/2026-10-18-2.md、reviews/ig-2026-10-18-2.md）。本日2/3件。afe-assetsのローカル main を origin/main に合わせてから投稿
 - 2026-10-18 08:40 JST [社長] Instagramに1件投稿（朝の回・6枚・検品合格 reviews/ig-2026-10-18-1.md）。題材：親の新NISAとこどもNISAの枠の違い。https://www.instagram.com/p/DenT16XFUpq/ 。本日1/3件（posts/ig/2026-10-18-1.md）
