@@ -40,3 +40,4 @@
 - 2026-10-10 [営業部] こどもNISA関連の案件を調査し、13行を追記（証券10行・関連候補3行。報酬はすべて要オーナー確認）。ASPへの問い合わせメールを下書き（sales/programs.md, sales/drafts/20261010-kodomo-nisa-inquiry.md）
 - 2026-10-10 [リサーチ部] 新規性のあるジャンルを探索。候補：こどもNISA・蛍光灯2027年問題・自転車の青切符（research/20261010-genre-scan.md）
 - 2026-10-10 [社長] 会社設立。6部署（リサーチ・企画・執筆・検品・記録・営業）を配置
+- 2026-10-19 08:10 JST [社長] Threadsに1件投稿（朝の回・学資保険とこどもNISAの違い・文字のみ・検品合格、推奨修正を反映）。https://www.threads.com/@flysheep59/post/Dep1IrkFSAM（posts/queue/2026-10-19-gakushi-hoken.md、reviews/sns-2026-10-19-gakushi-hoken.md）。なお10/18に出ていた投稿10「年間60万円は目標ではない」（DeofoS_Fc5R）と「親の新NISAとの枠比較」（DeoDzdWFgqG、06:39 UTC）は記録が残っていなかった。後者は出典の原稿が見つからず要確認。自動返信の確認は両スクリプトとも403（権限不足）のため返信なし
