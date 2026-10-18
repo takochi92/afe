@@ -2,7 +2,7 @@
 title: こどもNISAの前に、親の新NISA枠をどう考えるか｜優先順位を整理
 slug: oya-nisa-yusen
 description: 親の新NISAの年360万円・上限1,800万円と、こどもNISAの年60万円・上限600万円を公式資料で並べ、優先順位を決める前に使う時期から考える順番を初心者向けに整理します。（2026年10月時点）
-updated: 2026-10-18
+updated: 2026-10-19
 published: 2026-10-18
 asof: 2026年10月時点
 ---
@@ -183,6 +183,7 @@ NISAは、運用で出た利益に税金がかからない制度です。これ�
 - 関連記事：[子育て世帯がiDeCoを考える前に](/oya-ideco-kyoikuhi/)
 - 関連記事：[こどもNISAの口座開設前に確認すること](/kouza-kaisetsu-mae-kakunin/)
 - 関連記事：[こどもNISAの申込が始まった？](/kodomo-nisa-jizen-2027/)
+- 関連記事：[こどもNISAの口座は誰が管理する？](/kouza-kanrisha-sofubo/)
 
 ## 出典
 

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" role="img" aria-labelledby="t d" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif">
+<title id="t">口座の管理について、公式に決まっていることと、公式の説明にないこと</title><desc id="d">口座の名義は子。左は公式に決まっていること：払出しの申出は親権者等（口座管理者）が金融機関に出し、子の同意を示す書面を添える。右は公式の説明に記載が見当たらないこと：祖父母の位置づけ、申込や取引をする人、親権者等と口座管理者の定義。会社ごとの案内で確認する</desc>
+<rect width="800" height="400" fill="#fff"/>
+<g font-weight="700" fill="#161616">
+<text x="400" y="32" text-anchor="middle" font-size="22" font-weight="900">口座の名義は子（0〜17歳）</text>
+<rect x="30" y="52" width="340" height="270" rx="16" fill="#FFF3C4" stroke="#161616" stroke-width="3"/>
+<text x="200" y="88" text-anchor="middle" font-size="22">公式に決まっていること</text>
+<text x="200" y="112" text-anchor="middle" font-size="15" fill="#5b5640">金融庁の案内</text>
+<text x="56" y="156" font-size="18">・払出しの申出は</text>
+<text x="76" y="184" font-size="19" font-weight="900" fill="#E5322D">親権者等（口座管理者）</text>
+<text x="76" y="212" font-size="18">が金融機関に出す</text>
+<text x="56" y="250" font-size="18">・12歳以降は一定の要件のもと、</text>
+<text x="76" y="276" font-size="18">子の同意を示す書面を添える</text>
+<text x="56" y="306" font-size="18">・口座は子ども1人に1つ</text>
+<rect x="430" y="52" width="340" height="270" rx="16" fill="#fff" stroke="#161616" stroke-width="3" stroke-dasharray="10 7"/>
+<text x="600" y="88" text-anchor="middle" font-size="22">公式の説明にないこと</text>
+<text x="600" y="112" text-anchor="middle" font-size="15" fill="#5b5640">読んだ資料に記載が見当たらない</text>
+<text x="456" y="156" font-size="18">・祖父母の位置づけ</text>
+<text x="456" y="190" font-size="18">・申込や取引をする人</text>
+<text x="456" y="224" font-size="18">・親権者等と口座管理者の</text>
+<text x="476" y="250" font-size="18">定義</text>
+<text x="456" y="288" font-size="14" fill="#5b5640">※「決まっていない」という意味では</text>
+<text x="456" y="308" font-size="14" fill="#5b5640">ありません</text>
+<rect x="30" y="338" width="740" height="46" rx="12" fill="#161616"/>
+<text x="400" y="368" text-anchor="middle" font-size="18" fill="#fff">右側は、会社ごとの案内で確認する</text>
+</g>
+</svg>
