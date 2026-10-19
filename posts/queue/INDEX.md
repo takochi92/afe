@@ -19,6 +19,7 @@
 | 12 | 年間60万円・600万円は買った金額で数える | 合格（reviews/sns-2026-10-17-kaiire-base.md、2回目） | 済（財務省の大綱） | 2026-10-17 https://www.threads.com/@flysheep59/post/DelfBLknNPw |
 | 13 | こどもNISAの法律は成立済み | 合格（reviews/sns-2026-10-17-law-passed.md） | 済（財務省・金融庁） | 2026-10-17 https://www.threads.com/@flysheep59/post/Del6_tzFWi1 |
 | 14 | 口座は誰が管理する？（テキスト） | 合格（reviews/sns-2026-10-19-kouza-kanrisha.md、2回目） | 済（金融庁・財務省） | 2026-10-19 https://www.threads.com/@flysheep59/post/DeqEvNIm-Av |
+| 15 | 学資保険とこどもNISA、迷ったら「いつ使うか」から（テキスト） | 合格（reviews/sns-2026-10-19-gakushi-hoken.md） | 済（調査資料。原文未確認をレビューに明記） | 2026-10-19 https://www.threads.com/@flysheep59/post/DeqSq18AJwG |
 
 ## 使い方
 - 投稿文は各ファイルの「## 投稿文」の節だけを使う（冒頭の「修正済み」の行は使わない）
