@@ -1,6 +1,7 @@
 # 業務日誌
 
 新しい記録を上に追記する。形式: `- YYYY-MM-DD HH:MM [部署] 内容（成果物パス）`
+- 2026-10-20 08:10 JST [社長] Threadsに1件投稿（朝の回・こどもNISAは金融機関を後から変えられない→会社選びは事前申込の前に・検品1回目で合格 reviews/sns-2026-10-20-kinyu-kikan-henkou.md・テキストのみ）。https://www.threads.com/@flysheep59/post/DesZ57Hmoou（posts/queue/2026-10-20-kinyu-kikan-henkou.md）。今日1/5件。返信確認：threads_autoreply.py は403、discovery は出力なしで返信は送らず
 - 2026-10-19 20:41 JST [社長] Instagramの夜の回は投稿できず終了。題材「こどもNISAで使える枠は？（つみたて投資枠のみ）」の6枚カルーセルを作り、検品は1回目で合格（reviews/ig-2026-10-19-2.md、posts/ig/2026-10-19-2.md）。画像の保存は成功したが、公開の段階でInstagram APIが「Application request limit reached（コード4・サブコード2207051、action is blocked）」を返した。投稿されていないことを確認（records/ig_posts.csv は増えていない）。再試行はしていない（制限を悪化させないため）。オーナーに確認を依頼
 - 2026-10-19 19:42 JST [社長] 夕の回は投稿せず終了。今日はすでに4件（08:09・10:26・12:27・15:39 JST）がアカウント上にあり、未投稿の使えるストックと新規ネタが尽きたため（10は10/18投稿済み、02は保留）。08:09と15:39の2件はリポジトリの記録に無かったため、アカウントの公開情報から records/posts.csv に補記（15:39分の検品記録は未確認）。返信の定時確認は、自分の投稿向けも公開検索も、Threads APIが403で返信なし
 - 2026-10-19 12:27 JST [社長] Threadsに1件投稿（昼の回・学資保険とこどもNISA、迷ったら「いつ使うか」から・検品1回目で合格 reviews/sns-2026-10-19-gakushi-hoken.md・テキストのみ）。https://www.threads.com/@flysheep59/post/DeqSq18AJwG（posts/queue/2026-10-19-gakushi-hoken.md）。今日2/5件。返信確認：threads_discovery_reply.py（または autoreply）が403で、返信は送らず（権限未承認の可能性）
