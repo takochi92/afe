@@ -1,6 +1,7 @@
 # 業務日誌
 
 新しい記録を上に追記する。形式: `- YYYY-MM-DD HH:MM [部署] 内容（成果物パス）`
+- 2026-10-19 10:26 JST [社長] Threadsに1件投稿（午前の回・口座は誰が管理する？・検品は2回目で合格・テキストのみ）。https://www.threads.com/@flysheep59/post/DeqEvNIm-Av（posts/queue/2026-10-19-kouza-kanrisha.md、reviews/sns-2026-10-19-kouza-kanrisha.md）。注意：アカウント上に records/posts.csv 未記録の投稿が3件ある（10-18 15:39 JST「親の新NISA比較」、10-18 19:42 JST「60万円は目標ではない」、10-19 08:09 JST「学資保険との違い」）。今日は計2件。返信確認：自分の投稿への返信確認は実行できず、公開検索の返信確認は403エラー（権限不足）のため送信せず
 - 2026-10-19 08:41 JST [社長] Instagramに1件投稿（朝の回・こどもNISAの口座は誰が管理する？・6枚・検品は2回目で合格 reviews/ig-2026-10-19-1.md）。https://www.instagram.com/p/Dep4tK-G0JM/（posts/ig/2026-10-19-1.md）。公開用リポジトリへの画像保存は1回目に競合で拒否され、取り込み直して再実行。投稿スクリプトは公開時に「Application request limit reached」を返して異常終了したが、投稿自体は公開済みで、台帳は手で追記した。次回以降、二重投稿に注意
 - 2026-10-19 06:40 [編集部・品質管理部・社長] ブログ記事「こどもNISAの口座は誰が管理する？親権者等と祖父母を整理」を公開（検品2回目で合格。官公庁の原文で確認、証券会社の原文は未読で記事側に明記。税の話は扱わず。既存5本から張り返し）（blog/content/posts/kouza-kanrisha-sofubo.md、reviews/blog-kouza-kanrisha-sofubo.md）
 - 2026-10-18 20:41 JST [社長] Instagramに1件投稿（夜の回・教育費はiDeCoで準備できる？・6枚・検品1回目で合格 reviews/ig-2026-10-18-3.md）。https://www.instagram.com/p/DeomNhrlfbZ/（posts/ig/2026-10-18-3.md）。本日のInstagramは3件で上限。afe-assetsの手元クローンが古く最初のpushが拒否されたため、画像コミットをmainへ反映して再投稿
