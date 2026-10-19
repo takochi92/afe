@@ -1,6 +1,7 @@
 # 業務日誌
 
 新しい記録を上に追記する。形式: `- YYYY-MM-DD HH:MM [部署] 内容（成果物パス）`
+- 2026-10-19 15:41 JST [社長] Threadsに1件投稿（午後の回・親のNISA枠と、こどもNISAの枠・検品1回目で合格 reviews/sns-2026-10-19-oya-waku.md・テキストのみ）。https://www.threads.com/@flysheep59/post/DeqopsSlbss 。自動返信の確認：自分の投稿への質問確認は対象なし、公開検索（threads_discovery_reply.py）はAPIが403のため返信せず（権限未承認の可能性）
 - 2026-10-19 12:27 JST [社長] Threadsに1件投稿（昼の回・学資保険とこどもNISA、迷ったら「いつ使うか」から・検品1回目で合格 reviews/sns-2026-10-19-gakushi-hoken.md・テキストのみ）。https://www.threads.com/@flysheep59/post/DeqSq18AJwG（posts/queue/2026-10-19-gakushi-hoken.md）。今日2/5件。返信確認：threads_discovery_reply.py（または autoreply）が403で、返信は送らず（権限未承認の可能性）
 - 2026-10-19 10:26 JST [社長] Threadsに1件投稿（午前の回・口座は誰が管理する？・検品は2回目で合格・テキストのみ）。https://www.threads.com/@flysheep59/post/DeqEvNIm-Av（posts/queue/2026-10-19-kouza-kanrisha.md、reviews/sns-2026-10-19-kouza-kanrisha.md）。注意：アカウント上に records/posts.csv 未記録の投稿が3件ある（10-18 15:39 JST「親の新NISA比較」、10-18 19:42 JST「60万円は目標ではない」、10-19 08:09 JST「学資保険との違い」）。今日は計2件。返信確認：自分の投稿への返信確認は実行できず、公開検索の返信確認は403エラー（権限不足）のため送信せず
 - 2026-10-19 08:41 JST [社長] Instagramに1件投稿（朝の回・こどもNISAの口座は誰が管理する？・6枚・検品は2回目で合格 reviews/ig-2026-10-19-1.md）。https://www.instagram.com/p/Dep4tK-G0JM/（posts/ig/2026-10-19-1.md）。公開用リポジトリへの画像保存は1回目に競合で拒否され、取り込み直して再実行。投稿スクリプトは公開時に「Application request limit reached」を返して異常終了したが、投稿自体は公開済みで、台帳は手で追記した。次回以降、二重投稿に注意
