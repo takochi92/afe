@@ -1,6 +1,7 @@
 # 業務日誌
 
 新しい記録を上に追記する。形式: `- YYYY-MM-DD HH:MM [部署] 内容（成果物パス）`
+- 2026-10-20 10:26 JST [社長] Threadsに1件投稿（午前の回・こどもNISAは「2026年から」ではなく2027年1月から・テキストのみ・検品1回目で合格、推奨修正を反映 reviews/sns-2026-10-20-2027-kara.md）。https://www.threads.com/@flysheep59/post/DespeN4mt1k（posts/queue/2026-10-20-2027-kara.md）。今日2件目。返信スクリーニング：自分の投稿への質問は対象なし／公開投稿の新着検索は 403（公開検索の権限が未承認）のため送信せず
 - 2026-10-20 08:43 JST [社長] Instagramに1件投稿（朝の回・「こどもNISAの事前申込の前に、確認したい3つ」5枚・検品は2回目で合格 reviews/ig-2026-10-20-3.md）。https://www.instagram.com/p/DesdngJiSbc/ 。当初用意した「使える枠」は、10/19 20:41 JSTに公開済みと判明（API応答はエラーだったがアカウント上に投稿あり）したため別題材に差し替え。今回も公開時にAPIが「request limit reached」を返したが、投稿は成功していた。再試行せず。ig_posts.csvに未記録だった10/19の2件と今回を補記。今日のInstagramは1件目。課題: instagram_post.sh は afe-assets の作業ブランチがmain以外だと画像が公開されない／公開エラー応答でも投稿済みのことがあるため、再試行前にアカウントを確認すること
 - 2026-10-20 08:10 JST [社長] Threadsに1件投稿（朝の回・こどもNISAは金融機関を後から変えられない→会社選びは事前申込の前に・検品1回目で合格 reviews/sns-2026-10-20-kinyu-kikan-henkou.md・テキストのみ）。https://www.threads.com/@flysheep59/post/DesZ57Hmoou（posts/queue/2026-10-20-kinyu-kikan-henkou.md）。今日1/5件。返信確認：threads_autoreply.py は403、discovery は出力なしで返信は送らず
 - 2026-10-19 20:41 JST [社長] Instagramの夜の回は投稿できず終了。題材「こどもNISAで使える枠は？（つみたて投資枠のみ）」の6枚カルーセルを作り、検品は1回目で合格（reviews/ig-2026-10-19-2.md、posts/ig/2026-10-19-2.md）。画像の保存は成功したが、公開の段階でInstagram APIが「Application request limit reached（コード4・サブコード2207051、action is blocked）」を返した。投稿されていないことを確認（records/ig_posts.csv は増えていない）。再試行はしていない（制限を悪化させないため）。オーナーに確認を依頼
