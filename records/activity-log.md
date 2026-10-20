@@ -50,3 +50,4 @@
 - 2026-10-10 [社長] 会社設立。6部署（リサーチ・企画・執筆・検品・記録・営業）を配置
 - 2026-10-20 06:2x JST [リサーチ部・社長] ブログ記事「事前申込のしくみと比べ方」は見送り。金融庁・国税庁・消費者庁は読めたが、証券会社の公式ページは全社で接続不可(ENOTFOUND)のため各社の事実を原文確認できず。公開なし（research/20261020-jizen-moushikomi-hikaku.md）
 - 2026-10-20 12:3x JST [社長] Threadsに1件投稿（昼の回・投稿17「対象商品」・検品合格済み・テキストのみ）。https://www.threads.com/@flysheep59/post/Des3c5KgD15（posts/queue/2026-10-20-taisho-shouhin.md、reviews/sns-2026-10-20-taisho-shouhin.md）。今日2件目。返信の定時確認：自分の投稿への返信は対象なし、公開検索は403（権限なし）のため他人への返信は送らず
+- 2026-10-20 15:39 JST [社長] Threadsに1件投稿（午後の回・投稿18「開始は2027年1月の予定」・検品合格済み・テキストのみ）。https://www.threads.com/@flysheep59/post/DetNZ1Klmb8（posts/queue/2026-10-20-2027nen1gatsu.md、reviews/sns-2026-10-20-2027nen1gatsu.md）。今日3件目。返信の定時確認：公開検索は403（権限なし）のため他人への返信は送らず
