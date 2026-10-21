@@ -25,6 +25,7 @@
 | 18 | 開始は「2027年1月」の予定・今年ではない（テキスト） | 合格（reviews/sns-2026-10-20-2027nen1gatsu.md、軽微修正を反映） | 済（金融庁） | 2026-10-20 https://www.threads.com/@flysheep59/post/DetNZ1Klmb8 |
 | 19 | 配当・売却代金の置き場（預貯金口座／預り金の管理口座）（テキスト） | 合格（reviews/sns-2026-10-20-okane-no-okiba.md、2回目） | 済（財務省の大綱。条文は未読） | 2026-10-20 https://www.threads.com/@flysheep59/post/DetphDMG19o |
 | 20 | 口座開設の本人確認・マイナンバー（成人の手続きと公式に無い部分の区別）（テキスト） | 合格（reviews/sns-2026-10-21-honnin-kakunin.md、軽微修正を反映） | 済（国税庁。成人向け） | 2026-10-21 https://www.threads.com/@flysheep59/post/Deu-zlfGOqq |
+| 21 | NISAは売って損が出ても、他の利益と通算・繰越できない（大人のNISA。こどもNISAは記載なし）（テキスト） | 合格（reviews/sns-2026-10-21-baikyakuson.md） | 済（国税庁。タックスアンサーは要約で確認） | 2026-10-21 https://www.threads.com/@flysheep59/post/DevOR6tESKo |
 
 ## 使い方
 - 投稿文は各ファイルの「## 投稿文」の節だけを使う（冒頭の「修正済み」の行は使わない）
