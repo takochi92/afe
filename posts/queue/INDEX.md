@@ -27,6 +27,7 @@
 | 20 | 口座開設の本人確認・マイナンバー（成人の手続きと公式に無い部分の区別）（テキスト） | 合格（reviews/sns-2026-10-21-honnin-kakunin.md、軽微修正を反映） | 済（国税庁。成人向け） | 2026-10-21 https://www.threads.com/@flysheep59/post/Deu-zlfGOqq |
 | 21 | 払出しは「12歳の年」の前と後で違う（災害などの例外／教育費・生活費）（テキスト） | 合格（reviews/sns-2026-10-21-haraidashi-reigai.md、2回目） | 済（財務省の大綱。条文は未読） | 2026-10-21 https://www.threads.com/@flysheep59/post/Devcah9EQe1 |
 | 22 | 生まれたばかりの赤ちゃんでも口座は開ける？（0歳から・解釈は明示）（テキスト） | 合格（reviews/sns-2026-10-21-0sai.md、2回目） | 済（金融庁。大綱は解釈と明記、条文は未読） | 2026-10-21 https://www.threads.com/@flysheep59/post/DewOUAdHE5- |
+| 23 | 複数の金融機関に申し込んでしまったら？（成人の公式ルールと子の扱いの区別）（テキスト） | 合格（reviews/sns-2026-10-22-fukusuu-moushikomi.md、軽微修正を反映） | 済（国税庁。成人向け） | 2026-10-22 https://www.threads.com/@flysheep59/post/DexjdPaoOfe |
 
 ## 使い方
 - 投稿文は各ファイルの「## 投稿文」の節だけを使う（冒頭の「修正済み」の行は使わない）
