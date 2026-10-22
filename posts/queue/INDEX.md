@@ -29,6 +29,7 @@
 | 22 | 生まれたばかりの赤ちゃんでも口座は開ける？（0歳から・解釈は明示）（テキスト） | 合格（reviews/sns-2026-10-21-0sai.md、2回目） | 済（金融庁。大綱は解釈と明記、条文は未読） | 2026-10-21 https://www.threads.com/@flysheep59/post/DewOUAdHE5- |
 | 23 | 複数の金融機関に申し込んでしまったら？（成人の公式ルールと子の扱いの区別）（テキスト） | 合格（reviews/sns-2026-10-22-fukusuu-moushikomi.md、軽微修正を反映） | 済（国税庁。成人向け） | 2026-10-22 https://www.threads.com/@flysheep59/post/DexjdPaoOfe |
 | 24 | 売った分の枠はいつ戻る？（成人の公式ルールと子の扱いの区別）（テキスト） | 合格（reviews/sns-2026-10-22-waku-fukkatsu.md、推奨修正を反映） | 済（金融庁。成人向け） | 2026-10-22 https://www.threads.com/@flysheep59/post/DeyBGMZkSgu |
+| 25 | 金融庁は「NISA以外も含めて組み合わせて」と案内（成人向け資料の呼びかけ＋こどもNISAは原則18歳まで払出し不可）（テキスト） | 合格（reviews/sns-2026-10-22-nisa-igai.md、推奨修正を反映） | 済（調査資料。金融庁1-2、改正前の版と明記） | 2026-10-22 https://www.threads.com/@flysheep59/post/DeyXAjsnDjN |
 
 ## 使い方
 - 投稿文は各ファイルの「## 投稿文」の節だけを使う（冒頭の「修正済み」の行は使わない）
