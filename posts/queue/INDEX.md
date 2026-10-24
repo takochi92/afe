@@ -31,6 +31,7 @@
 | 24 | 売った分の枠はいつ戻る？（成人の公式ルールと子の扱いの区別）（テキスト） | 合格（reviews/sns-2026-10-22-waku-fukkatsu.md、推奨修正を反映） | 済（金融庁。成人向け） | 2026-10-22 https://www.threads.com/@flysheep59/post/DeyBGMZkSgu |
 | 25 | 金融庁は「NISA以外も含めて組み合わせて」と案内（成人向け資料の呼びかけ＋こどもNISAは原則18歳まで払出し不可）（テキスト） | 合格（reviews/sns-2026-10-22-nisa-igai.md、推奨修正を反映） | 済（調査資料。金融庁1-2、改正前の版と明記） | 2026-10-22 https://www.threads.com/@flysheep59/post/DeyXAjsnDjN |
 | 26 | NISAの非課税で持てる期間は？（成人は無期限・旧制度の期間／子の扱いは公式に記載なし）（テキスト） | 合格（reviews/sns-2026-10-24-hoyuu-kikan.md） | 済（金融庁・国税庁。成人向け） | 2026-10-24 https://www.threads.com/@flysheep59/post/De2tETrGcuM |
+| 27 | 「長期・積立・分散」はリスクを「なくす」ものではない（金融庁の言い方「可能な限り軽減」）（テキスト） | 合格（reviews/sns-2026-10-24-choki-tsumitate-bunsan.md、推奨修正を反映） | 済（調査資料。金融庁1-2、成人向け・改正前の版） | 2026-10-24 https://www.threads.com/@flysheep59/post/De28lxDlRuM |
 
 ## 使い方
 - 投稿文は各ファイルの「## 投稿文」の節だけを使う（冒頭の「修正済み」の行は使わない）
