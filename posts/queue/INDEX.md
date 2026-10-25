@@ -34,6 +34,7 @@
 | 27 | 「長期・積立・分散」はリスクを「なくす」ものではない（金融庁の言い方「可能な限り軽減」）（テキスト） | 合格（reviews/sns-2026-10-24-choki-tsumitate-bunsan.md、推奨修正を反映） | 済（調査資料。金融庁1-2、成人向け・改正前の版） | 2026-10-24 https://www.threads.com/@flysheep59/post/De28lxDlRuM |
 | 28 | 複数の金融機関に商品がある場合も、非課税枠は国税庁が合算で一括管理（成人向け・改正前の版）（テキスト） | 合格（reviews/sns-2026-10-24-gassan-kanri.md、推奨修正を反映） | 済（調査資料。金融庁1-2、成人向け） | 2026-10-24 https://www.threads.com/@flysheep59/post/De3Kqetluzx |
 | 29 | NISAの総枠1,800万円はつみたて投資枠だけで使い切れる／こどもNISAは600万円・つみたて投資枠のみ（テキスト） | 合格（reviews/sns-2026-10-25-tsumitate-tsukikiru.md、推奨修正を反映） | 済（金融庁） | 2026-10-25 https://www.threads.com/@flysheep59/post/De5vgWkHIDj |
+| 30 | NISA口座がどの金融機関か分からないとき、自分で確認できる（確認依頼書・e-Tax、成人向け）（テキスト） | 合格（reviews/sns-2026-10-25-kaisetsu-kakunin.md、推奨修正を反映） | 済（国税庁。成人向け） | 2026-10-25 https://www.threads.com/@flysheep59/post/De6FWsYFini |
 
 ## 使い方
 - 投稿文は各ファイルの「## 投稿文」の節だけを使う（冒頭の「修正済み」の行は使わない）
