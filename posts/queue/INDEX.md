@@ -33,6 +33,7 @@
 | 26 | NISAの非課税で持てる期間は？（成人は無期限・旧制度の期間／子の扱いは公式に記載なし）（テキスト） | 合格（reviews/sns-2026-10-24-hoyuu-kikan.md） | 済（金融庁・国税庁。成人向け） | 2026-10-24 https://www.threads.com/@flysheep59/post/De2tETrGcuM |
 | 27 | 「長期・積立・分散」はリスクを「なくす」ものではない（金融庁の言い方「可能な限り軽減」）（テキスト） | 合格（reviews/sns-2026-10-24-choki-tsumitate-bunsan.md、推奨修正を反映） | 済（調査資料。金融庁1-2、成人向け・改正前の版） | 2026-10-24 https://www.threads.com/@flysheep59/post/De28lxDlRuM |
 | 28 | 複数の金融機関に商品がある場合も、非課税枠は国税庁が合算で一括管理（成人向け・改正前の版）（テキスト） | 合格（reviews/sns-2026-10-24-gassan-kanri.md、推奨修正を反映） | 済（調査資料。金融庁1-2、成人向け） | 2026-10-24 https://www.threads.com/@flysheep59/post/De3Kqetluzx |
+| 29 | 「事前申込」は金融庁の説明ページに記載なし・各社が案内（テキスト） | 合格（reviews/sns-2026-10-25-jizen-moushikomi-kisai.md、推奨修正を反映） | 済（調査資料。金融庁1-1） | 2026-10-25 https://www.threads.com/@flysheep59/post/De5iu5pEZSJ |
 
 ## 使い方
 - 投稿文は各ファイルの「## 投稿文」の節だけを使う（冒頭の「修正済み」の行は使わない）
