@@ -81,3 +81,4 @@
 - 2026-10-25 19:4x JST [社長] Threadsに1件投稿（夕方の回・投稿31「氏名・住所・マイナンバーが変わるときは非課税口座異動届出書」・検品は1回目で合格、推奨修正4点を反映・テキストのみ）。https://www.threads.com/@flysheep59/post/De6hTksFr3d（本日3件目）。定時スクリーニング：自分の投稿への質問は該当なし。公開検索（threads_discovery_reply）はAPIが403（権限未承認）のため返信せず。
 - 2026-10-25 20:2x JST [管理部・社長] 週次レポート（10/19〜10/25）を作成。Threads 21件・Instagram 16件（台帳上）、ブログ公開1本、収益0円、SBI証券こども口座は申請中。Search Console等は未入力。records/weekly/20261025.md
 - 2026-10-25 20:4x JST [社長・検品部] Instagramに1件投稿（夜の回・「60万円ずつで600万円には何年で届く？」6枚。検品は1回目で差し戻し→修正→2回目で合格）。https://www.instagram.com/p/De6oDsoFTts/ 。注意：公開APIが「Application request limit reached」のエラーを返したが、アカウント上で公開済みを確認して台帳に記録（二重投稿防止のため再実行せず）。afe-assets のクローンがブランチ上にあり、スクリプトの push（main）が失敗したため、手で push した。次回は先に `git -C /home/user/afe-assets checkout main` で確認すること
+- 2026-10-26 06:2x JST [社長] ブログ記事は見送り（公開なし）。金融庁などは読めたが、証券会社の公式ページ（SBI・楽天・野村）は接続不可（ENOTFOUND）で、口座開設系の記事に必要な各社の事実を原文確認できないため。5日連続（research/20261026-blog-skip.md）
