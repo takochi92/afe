@@ -37,6 +37,7 @@
 | 30 | NISA口座がどの金融機関か分からないとき、自分で確認できる（確認依頼書・e-Tax、成人向け）（テキスト） | 合格（reviews/sns-2026-10-25-kaisetsu-kakunin.md、推奨修正を反映） | 済（国税庁。成人向け） | 2026-10-25 https://www.threads.com/@flysheep59/post/De6FWsYFini |
 | 31 | 引っ越し・改姓などで氏名・住所・マイナンバーが変わるとき、全ての金融機関に「非課税口座異動届出書」の提出が必要（金融庁FAQ、成人向け。こどもNISAは記載なし）（テキスト） | 合格（reviews/sns-2026-10-25-iddou-todoke.md、推奨修正を反映） | 済（金融庁FAQを2026-10-25に原文確認） | 2026-10-25 https://www.threads.com/@flysheep59/post/De6hTksFr3d |
 | 33 | 海外転勤で出国するとき、NISAの非課税は？（成人の公式ルールと子の扱いの区別）（テキスト） | 合格（reviews/sns-2026-10-26-shukkoku.md、推奨修正を反映） | 済（金融庁。成人向け） | 2026-10-26 https://www.threads.com/@flysheep59/post/De8GPclICsD |
+| 34 | つみたて投資枠と成長投資枠は別々の金融機関で使えない・年単位の変更は可能（成人向け、こどもNISAは区別）（テキスト） | 合格（reviews/sns-2026-10-26-betsubetsu-kinyu-kikan.md、推奨修正を反映） | 済（金融庁FAQを2026-10-26に原文確認） | 2026-10-26 https://www.threads.com/@flysheep59/post/De8UUHRDe4M |
 
 ## 使い方
 - 投稿文は各ファイルの「## 投稿文」の節だけを使う（冒頭の「修正済み」の行は使わない）
