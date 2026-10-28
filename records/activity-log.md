@@ -1,5 +1,6 @@
 # 業務日誌
 
+- 2026-10-28 10:2x JST [社長] Threads午前の回は投稿見送り（ネタ尽き）。今日の投稿は0件。金融庁FAQの題材は投稿済みで、検品済みの新ストックがなく、悩みの切り口からの新規作成も重複リスクが高いため、無理に投稿しない。定時の返信確認：threads_discovery_reply がAPI 403（権限不足）、threads_autoreply は出力なしで返信なし。
 新しい記録を上に追記する。形式: `- YYYY-MM-DD HH:MM [部署] 内容（成果物パス）`
 - 2026-10-25 12:40 JST [社長] Instagramに1件投稿（昼の回・NISA総枠1,800万円はつみたて投資枠だけで使い切れる？／こどもNISAは600万円・つみたて投資枠のみ・6枚・検品は1回目で合格 reviews/ig-2026-10-25-1.md）。https://www.instagram.com/p/De5w3ewlrgZ/（posts/ig/2026-10-25-1.md）。今日1件目。公開時にAPIが「Application request limit reached」を返したが、アカウント上で公開済みを確認（03:40:22 UTC）、再送せず台帳に手で追記。afe-assetsは作業ブランチ上だったためmainに合わせて再実行。検品の推奨：10-19投稿とスライド4が近い、ig_posts.csvの10-22行（補記のみ）・10-13行の崩れの整備を記録部へ
 - 2026-10-24 08:41 JST [社長] Instagramに1件投稿（朝の回・NISAの非課税、いつまで持てる？（非課税保有期間）・6枚・検品は1回目で合格 reviews/ig-2026-10-24-1.md）。https://www.instagram.com/p/De2wvLPoM6r/（posts/ig/2026-10-24-1.md）。今日1件目。公開の呼び出しはAPIが「Application request limit reached」を返したが、アカウントで公開済みを確認（23:41:31 UTC）。再試行せず、台帳に手で追記。afe-assets は作業ブランチ上だったため main へ反映してから再実行。検品の推奨（1枚目に数字なし・6枚目の見出し重複・こどもNISAの期間と10/13投稿の「5年と無期限」の見え方の差）は次回以降へ
