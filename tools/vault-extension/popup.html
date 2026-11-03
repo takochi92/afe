@@ -13,12 +13,14 @@
   <label>マスターパスワード</label>
   <input id="mp" type="password" autocomplete="off" autofocus>
   <button id="unlockBtn" class="p">開く</button>
+  <p class="mu" id="pendHint"></p>
 </section>
 
 <section id="mainView" class="hide">
+  <div id="pending"></div>
   <div class="mu" id="site"></div>
   <div id="matches"></div>
-  <details id="allBox"><summary>すべての項目（コピーのみ）</summary>
+  <details id="allBox"><summary>すべての項目</summary>
     <input id="q" placeholder="検索" autocomplete="off"><div id="all"></div></details>
 </section>
 <script type="module" src="popup.js"></script>

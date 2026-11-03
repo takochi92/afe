@@ -13,6 +13,8 @@ async function init() {
   const ses = await L.getSession();
   if (ses) { try { await open(ses.raw); return; } catch { await L.lock(); } }
   show('lockView'); $('mp').focus();
+  const pc = await chrome.runtime.sendMessage({ type: 'listPending' }).catch(() => ({}));
+  $('pendHint').textContent = pc && pc.count ? '保存の提案が ' + pc.count + ' 件あります（解錠すると表示）' : '';
 }
 async function open(raw, fresh) {
   const v = await L.getVault(settings);
@@ -68,9 +70,37 @@ function card(i, canFill) {
   const cp = el('button', 'パスワード'); cp.onclick = () => copy(i.pass, 'パスワード', true);
   r.append(cu, cp); c.append(r); return c;
 }
+const msgBg = m => chrome.runtime.sendMessage(m).catch(e => ({ ok: false, error: e.message }));
+// 保留中の保存提案（ロック中にページで検知したもの）を、解錠後にまとめて表示
+async function renderPending() {
+  const P = $('pending'); P.replaceChildren();
+  const r = await msgBg({ type: 'listPending' }); const list = (r && r.items) || [];
+  if (!list.length) return;
+  P.append(el('div', '保存の提案（' + list.length + '件）', 't'));
+  for (const p of list) {
+    const c = el('div', null, 'item'), upd = p.mode === 'update';
+    c.append(el('div', (upd ? 'パスワードを更新：' : '新規保存：') + p.host, 't'), el('div', p.user || '(ユーザー名なし)', 'u'));
+    const row = el('div', null, 'row'), y = el('button', upd ? '更新する' : '保存する', 'p'), n = el('button', '保存しない');
+    const act = async accept => { y.disabled = n.disabled = true; const res = await msgBg({ type: 'resolve', pid: p.pid, accept });
+      if (!res.ok) { say(res.error || '失敗しました', true); y.disabled = n.disabled = false; return; }
+      say(accept ? '保存しました' : '破棄しました'); const s = await L.getSession(); if (s) await open(s.raw); };
+    y.onclick = () => act(true); n.onclick = () => act(false);
+    row.append(y, n); c.append(row); P.append(c);
+  }
+}
+function pkCard(i) {
+  const c = el('div', null, 'item');
+  c.append(el('div', (i.title || i.rpId) + '（パスキー）', 't'), el('div', [i.userName, i.rpId].filter(Boolean).join(' ・ '), 'u'));
+  const row = el('div', null, 'row'), d = el('button', '削除');
+  d.onclick = async () => { if (!confirm('このパスキーを金庫から削除しますか？\nサイト側に登録したパスキーは別途削除してください。')) return;
+    const r = await msgBg({ type: 'pkDelete', id: i.id }); if (!r.ok) return say(r.error || '失敗しました', true);
+    const s = await L.getSession(); if (s) await open(s.raw); say('削除しました'); };
+  row.append(d); c.append(row); return c;
+}
 function render() {
+  renderPending();
   const url = tab && tab.url, ok = url && /^https?:/.test(url);
-  const m = ok ? L.matchItems(items, url) : [];
+  const m = ok ? L.matchItems(items.filter(i => i.kind !== 'passkey'), url) : [];
   $('site').textContent = ok ? new URL(url).hostname : 'このページでは使えません';
   const M = $('matches'); M.replaceChildren();
   if (ok && !L.fillAllowed(url)) M.append(el('p', 'https 以外のページです。自動入力はできません（コピーのみ）。', 'mu'));
@@ -80,8 +110,8 @@ function render() {
 }
 function renderAll() {
   const q = $('q').value.toLowerCase(), A = $('all'); A.replaceChildren();
-  items.filter(i => [i.title, i.url, i.user].join(' ').toLowerCase().includes(q))
-    .sort((a, b) => (a.title || '').localeCompare(b.title || '', 'ja')).forEach(i => A.append(card(i, false)));
+  items.filter(i => [i.title, i.url, i.user, i.userName, i.rpId].join(' ').toLowerCase().includes(q))
+    .sort((a, b) => (a.title || '').localeCompare(b.title || '', 'ja')).forEach(i => A.append(i.kind === 'passkey' ? pkCard(i) : card(i, false)));
 }
 $('q').oninput = renderAll;
 init();

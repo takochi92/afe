@@ -1,14 +1,66 @@
 {
   "manifest_version": 3,
   "name": "マイ金庫",
-  "version": "0.1.0",
-  "description": "自作パスワード管理「マイ金庫」のChrome拡張。自宅サーバーの暗号化金庫を開き、ログインフォームに入力します。",
-  "action": { "default_title": "マイ金庫", "default_popup": "popup.html", "default_icon": { "16": "icons/16.png", "48": "icons/48.png", "128": "icons/128.png" } },
-  "icons": { "16": "icons/16.png", "48": "icons/48.png", "128": "icons/128.png" },
-  "background": { "service_worker": "background.js", "type": "module" },
-  "options_ui": { "page": "options.html", "open_in_tab": true },
-  "permissions": ["activeTab", "scripting", "storage", "alarms"],
-  "host_permissions": ["https://desktop-8ern2im.tail0cdc77.ts.net/*"],
-  "optional_host_permissions": ["https://*/*", "http://localhost/*", "http://127.0.0.1/*"],
-  "content_security_policy": { "extension_pages": "script-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'" }
+  "version": "0.2.0",
+  "description": "自作パスワード管理「マイ金庫」のChrome拡張。自宅サーバーの暗号化金庫で、ログインの自動入力・保存提案・パスキーを扱います。",
+  "action": {
+    "default_title": "マイ金庫",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "48": "icons/48.png",
+      "128": "icons/128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://desktop-8ern2im.tail0cdc77.ts.net/*"
+  ],
+  "optional_host_permissions": [
+    "https://*/*",
+    "http://localhost/*",
+    "http://127.0.0.1/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "js": [
+        "page.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "js": [
+        "detect.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
 }

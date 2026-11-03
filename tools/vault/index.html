@@ -189,6 +189,7 @@ function render(){
   if(!shown.length)L.append(el('p','項目がありません。「＋ 追加」から登録できます。','mu'));
   for(const i of shown){
     const row=el('div',null,'item'),left=el('div');
+    if(i.kind==='passkey'){left.append(el('div',i.title||i.rpId||'(無題)'),el('div',['パスキー（編集は拡張でのみ）',i.userName,i.rpId].filter(Boolean).join(' ・ '),'mu'));row.append(left);L.append(row);continue;}
     left.append(el('div',i.title||'(無題)'),el('div',[i.user,i.url].filter(Boolean).join(' ・ '),'mu'));
     const r=el('div',null,'row');
     const cu=el('button','ユーザー名');cu.onclick=()=>copy(i.user,'ユーザー名');
@@ -238,7 +239,7 @@ $('addBtn').onclick=()=>edit(null);
 $('auditBtn').onclick=()=>{
   const A=$('audit');A.replaceChildren();A.classList.toggle('hide',!A.classList.contains('hide'));
   if(A.classList.contains('hide'))return;
-  const live=items.filter(i=>!i.del);const count={};live.forEach(i=>count[i.pass]=(count[i.pass]||0)+1);
+  const live=items.filter(i=>!i.del&&i.kind!=='passkey');const count={};live.forEach(i=>count[i.pass]=(count[i.pass]||0)+1);
   const bad=live.map(i=>({i,w:score(i.pass)<50,d:count[i.pass]>1&&i.pass})).filter(x=>x.w||x.d);
   A.append(el('strong','セキュリティ点検'));
   if(!bad.length)A.append(el('p','問題は見つかりませんでした。','mu'));
