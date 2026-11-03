@@ -1,0 +1,11 @@
+services:
+  vault:
+    build: { context: ., dockerfile: Dockerfile }
+    restart: unless-stopped
+    ports: ["127.0.0.1:8080:8080"]   # 外に出さない。tailscale serve 経由でだけ公開
+    environment:
+      VAULT_TOKEN: ${VAULT_TOKEN:?.env に VAULT_TOKEN を設定}
+    volumes: ["./data:/data"]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]

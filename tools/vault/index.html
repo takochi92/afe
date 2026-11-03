@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; img-src 'none'">
 <title>マイ金庫</title>
 <style>
 :root{--bg:#f6f7f9;--card:#fff;--tx:#1b1f24;--mu:#6a737d;--ac:#2563eb;--bd:#d8dce1;--bad:#d1242f;--ok:#1a7f37}
@@ -46,6 +46,11 @@ label{font-size:13px;color:var(--mu)}
     <input id="mp2" type="password" autocomplete="off">
     <p class="mu">⚠ マスターパスワードを忘れると、データは誰にも復元できません。長い文章（4単語以上）がおすすめです。</p>
   </div>
+  <div id="syncwrap" class="hide">
+    <label>同期トークン（自宅サーバー用。マスターパスワードとは別物）</label>
+    <div class="row"><input class="grow" id="tok" type="password" autocomplete="off" style="margin:0"><button id="tokBtn">保存して同期</button></div>
+    <p class="mu" id="syncState"></p>
+  </div>
   <div class="row"><button id="unlockBtn" class="p"></button>
   <button id="importBtn">バックアップを読み込む</button>
   <input id="importFile" type="file" accept=".json" class="hide"></div>
@@ -87,7 +92,42 @@ async function seal(){
   const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},cryptoKey,enc.encode(JSON.stringify(items)));
   return {v:1,iter:ITER,salt:b64(salt),iv:b64(iv),data:b64(ct)};
 }
-async function save(){localStorage.setItem(KEY,JSON.stringify(await seal()));}
+const VER=KEY+'-ver',DIRTY=KEY+'-dirty',TOK=KEY+'-token';
+const syncOn=()=>location.protocol.startsWith('http');
+const hasTok=()=>syncOn()&&!!localStorage.getItem(TOK);
+const hdr=()=>({'Authorization':'Bearer '+(localStorage.getItem(TOK)||'')});
+const lver=()=>+(localStorage.getItem(VER)||0);
+async function pull(){
+  if(!hasTok())return;
+  try{
+    const r=await fetch('/vault',{headers:hdr(),cache:'no-store'});
+    if(r.status===401){say('同期トークンが違います',1);return;}
+    if(r.ok){const s=await r.json();
+      if(s.version>lver()&&!localStorage.getItem(DIRTY)){localStorage.setItem(KEY,JSON.stringify(s.blob));localStorage.setItem(VER,s.version);}}
+  }catch{say('サーバーに接続できません（この端末のデータを使います）',1);}
+}
+async function push(retry=true){
+  if(!hasTok())return;
+  try{
+    const r=await fetch('/vault',{method:'PUT',headers:{...hdr(),'If-Match':String(lver()),'Content-Type':'application/json'},body:localStorage.getItem(KEY)});
+    if(r.ok){const s=await r.json();localStorage.setItem(VER,s.version);localStorage.removeItem(DIRTY);say('同期しました');}
+    else if(r.status===409&&retry)await mergeRemote();
+    else say('同期に失敗しました（'+r.status+'）。この端末には保存済みです',1);
+  }catch{say('同期できませんでした。この端末には保存済みです',1);}
+}
+async function mergeRemote(){ // 別端末の変更と合流（項目ごとに新しい方を採用）
+  const r=await fetch('/vault',{headers:hdr(),cache:'no-store'}),s=await r.json();
+  if(s.blob.salt!==b64(salt)){say('同期先に別の金庫があります。バックアップを取ってから対処してください',1);return;}
+  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(s.blob.iv)},cryptoKey,unb64(s.blob.data));
+  const m=new Map();
+  for(const i of [...JSON.parse(dec.decode(pt)),...items]){const o=m.get(i.id);if(!o||(i.mt||0)>=(o.mt||0))m.set(i.id,i);}
+  items=[...m.values()];localStorage.setItem(VER,s.version);
+  localStorage.setItem(KEY,JSON.stringify(await seal()));await push(false);render();
+}
+async function save(){
+  localStorage.setItem(KEY,JSON.stringify(await seal()));
+  if(hasTok()){localStorage.setItem(DIRTY,'1');await push();}
+}
 async function open(blob,pw){
   const s=unb64(blob.salt), k=await derive(pw,s);
   const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(blob.iv)},k,unb64(blob.data));
@@ -101,6 +141,8 @@ function showLock(){
   $('mp').value='';$('mp2').value='';
   const has=!!localStorage.getItem(KEY);
   $('mp2wrap').classList.toggle('hide',has);
+  $('syncwrap').classList.toggle('hide',!syncOn());
+  $('syncState').textContent=hasTok()?'同期：有効':'同期：未設定（この端末だけに保存）';
   $('unlockBtn').textContent=has?'開く':'金庫を作る';
   $('lockHelp').textContent=has?'マスターパスワードで金庫を開きます。':'はじめに、マスターパスワードを決めます。データはこの端末のブラウザ内にだけ、暗号化して保存されます。';
 }
@@ -118,6 +160,7 @@ $('unlockBtn').onclick=async()=>{
       salt=crypto.getRandomValues(new Uint8Array(16));cryptoKey=await derive(pw,salt);items=[];await save();
     }
     say('');showApp();
+    if(hasTok()&&(lver()===0||localStorage.getItem(DIRTY)))push();
   }catch{say('マスターパスワードが違うか、データが壊れています',1);}
 };
 $('mp').addEventListener('keydown',e=>e.key==='Enter'&&!$('mp2wrap').offsetParent&&$('unlockBtn').click());
@@ -141,7 +184,7 @@ const scoreColor=s=>s<40?'var(--bad)':s<70?'#d29922':'var(--ok)';
 function el(tag,txt,cls){const e=document.createElement(tag);if(txt!=null)e.textContent=txt;if(cls)e.className=cls;return e;}
 function render(){
   const q=$('q').value.toLowerCase(), L=$('list');L.replaceChildren();
-  const shown=items.filter(i=>[i.title,i.url,i.user].join(' ').toLowerCase().includes(q))
+  const shown=items.filter(i=>!i.del).filter(i=>[i.title,i.url,i.user].join(' ').toLowerCase().includes(q))
     .sort((a,b)=>a.title.localeCompare(b.title,'ja'));
   if(!shown.length)L.append(el('p','項目がありません。「＋ 追加」から登録できます。','mu'));
   for(const i of shown){
@@ -179,13 +222,14 @@ function edit(item){
   const sh=el('button','表示／隠す');sh.onclick=()=>{pi.type=pi.type==='password'?'text':'password';};
   const sv=el('button','保存','p');sv.onclick=async()=>{
     if(!it.title)return say('名前を入れてください',1);
+    it.mt=Date.now();
     const k=items.findIndex(x=>x.id===it.id);k<0?items.push(it):items[k]=it;
     await save();E.classList.add('hide');render();say('保存しました');};
   const ca=el('button','閉じる');ca.onclick=()=>E.classList.add('hide');
   r.append(g,sh,sv,ca);
   if(item){const d=el('button','削除','d');d.onclick=async()=>{
     if(!confirm('「'+it.title+'」を削除しますか？'))return;
-    items=items.filter(x=>x.id!==it.id);await save();E.classList.add('hide');render();};r.append(d);}
+    items=items.map(x=>x.id===it.id?{id:x.id,del:true,mt:Date.now(),title:'',url:'',user:'',pass:'',note:''}:x);await save();E.classList.add('hide');render();};r.append(d);}
   E.append(r);E.scrollIntoView({behavior:'smooth'});
 }
 $('addBtn').onclick=()=>edit(null);
@@ -194,8 +238,8 @@ $('addBtn').onclick=()=>edit(null);
 $('auditBtn').onclick=()=>{
   const A=$('audit');A.replaceChildren();A.classList.toggle('hide',!A.classList.contains('hide'));
   if(A.classList.contains('hide'))return;
-  const count={};items.forEach(i=>count[i.pass]=(count[i.pass]||0)+1);
-  const bad=items.map(i=>({i,w:score(i.pass)<50,d:count[i.pass]>1&&i.pass})).filter(x=>x.w||x.d);
+  const live=items.filter(i=>!i.del);const count={};live.forEach(i=>count[i.pass]=(count[i.pass]||0)+1);
+  const bad=live.map(i=>({i,w:score(i.pass)<50,d:count[i.pass]>1&&i.pass})).filter(x=>x.w||x.d);
   A.append(el('strong','セキュリティ点検'));
   if(!bad.length)A.append(el('p','問題は見つかりませんでした。','mu'));
   bad.forEach(x=>A.append(el('div',x.i.title+'：'+[x.w&&'弱いパスワード',x.d&&'他と使い回し'].filter(Boolean).join('、'),'tag')));
@@ -219,7 +263,11 @@ $('importFile').onchange=async e=>{
   e.target.value='';
 };
 
-showLock();
+$('tokBtn').onclick=async()=>{
+  const t=$('tok').value.trim();if(!t)return;
+  localStorage.setItem(TOK,t);$('tok').value='';await pull();showLock();
+};
+(async()=>{await pull();showLock();})();
 </script>
 </body>
 </html>
