@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"><title>マイ金庫 設定</title></head>
+<body class="wide">
+<h2>🔐 マイ金庫 設定</h2><div id="msg" role="status"></div>
+<label>サーバーURL</label><input id="url" autocomplete="off">
+<label>同期トークン（サーバーの VAULT_TOKEN。マスターパスワードとは別物）</label><input id="token" type="password" autocomplete="off">
+<label>自動ロック（分）</label><input id="lockMin" type="number" min="1" max="120">
+<div class="row"><button id="save" class="p">保存</button><button id="test">接続テスト</button><button id="reset">キャッシュを消す</button></div>
+<p class="mu">トークンとサーバーURLはこの端末の拡張機能ストレージに保存されます。マスターパスワードと復号鍵は保存されません（解錠中のメモリ上のみ）。</p>
+<script type="module" src="options.js"></script>
+</body></html>
