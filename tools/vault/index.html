@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'">
+<title>マイ金庫</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#1b1f24;--mu:#6a737d;--ac:#2563eb;--bd:#d8dce1;--bad:#d1242f;--ok:#1a7f37}
+@media(prefers-color-scheme:dark){:root{--bg:#14171a;--card:#1e2327;--tx:#e6e8ea;--mu:#9aa4ad;--ac:#5b8def;--bd:#333a40;--bad:#ff6b6b;--ok:#4ac26b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,sans-serif}
+main{max-width:720px;margin:0 auto;padding:16px}
+h1{font-size:20px;margin:8px 0 16px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:16px;margin-bottom:12px}
+input,textarea,button{font:inherit;color:inherit}
+input,textarea{width:100%;padding:9px 10px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);margin:4px 0 10px}
+button{padding:8px 14px;border:1px solid var(--bd);border-radius:6px;background:var(--card);cursor:pointer}
+button.p{background:var(--ac);border-color:var(--ac);color:#fff}
+button.d{color:var(--bad)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row>.grow{flex:1;min-width:140px}
+.mu{color:var(--mu);font-size:13px}
+.item{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:10px 0;border-top:1px solid var(--bd)}
+.item:first-child{border-top:0}
+.tag{font-size:12px;color:var(--bad)}
+.bar{height:6px;border-radius:3px;background:var(--bd);overflow:hidden;margin:-4px 0 10px}
+.bar i{display:block;height:100%;width:0}
+.hide{display:none}
+label{font-size:13px;color:var(--mu)}
+#msg{min-height:20px;font-size:13px}
+</style>
+</head>
+<body>
+<main>
+<h1>🔐 マイ金庫</h1>
+<div id="msg" role="status"></div>
+
+<!-- ロック画面 -->
+<section id="lock" class="card">
+  <p id="lockHelp" class="mu"></p>
+  <label>マスターパスワード</label>
+  <input id="mp" type="password" autocomplete="off">
+  <div id="mp2wrap" class="hide">
+    <label>もう一度入力</label>
+    <input id="mp2" type="password" autocomplete="off">
+    <p class="mu">⚠ マスターパスワードを忘れると、データは誰にも復元できません。長い文章（4単語以上）がおすすめです。</p>
+  </div>
+  <div class="row"><button id="unlockBtn" class="p"></button>
+  <button id="importBtn">バックアップを読み込む</button>
+  <input id="importFile" type="file" accept=".json" class="hide"></div>
+</section>
+
+<!-- 金庫画面 -->
+<section id="app" class="hide">
+  <div class="card">
+    <div class="row">
+      <input class="grow" id="q" placeholder="検索（名前・URL・ユーザー名）" style="margin:0">
+      <button id="addBtn" class="p">＋ 追加</button>
+      <button id="auditBtn">点検</button>
+      <button id="exportBtn">バックアップ</button>
+      <button id="lockBtn">ロック</button>
+    </div>
+  </div>
+  <div id="audit" class="card hide"></div>
+  <div id="editor" class="card hide"></div>
+  <div class="card" id="list"></div>
+  <p class="mu">5分操作がないと自動でロックされます。コピーしたパスワードは20秒後にクリップボードから消します。</p>
+</section>
+</main>
+
+<script>
+'use strict';
+const KEY='afe-vault-v1', ITER=600000, enc=new TextEncoder(), dec=new TextDecoder();
+let cryptoKey=null, salt=null, items=[], idle=null, clipTimer=null;
+const $=id=>document.getElementById(id);
+const b64=b=>btoa(String.fromCharCode(...new Uint8Array(b)));
+const unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+const say=(t,bad)=>{const m=$('msg');m.textContent=t;m.style.color=bad?'var(--bad)':'var(--ok)';};
+
+async function derive(pw,s){
+  const base=await crypto.subtle.importKey('raw',enc.encode(pw),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2',salt:s,iterations:ITER,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+}
+async function seal(){
+  const iv=crypto.getRandomValues(new Uint8Array(12));
+  const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},cryptoKey,enc.encode(JSON.stringify(items)));
+  return {v:1,iter:ITER,salt:b64(salt),iv:b64(iv),data:b64(ct)};
+}
+async function save(){localStorage.setItem(KEY,JSON.stringify(await seal()));}
+async function open(blob,pw){
+  const s=unb64(blob.salt), k=await derive(pw,s);
+  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(blob.iv)},k,unb64(blob.data));
+  salt=s;cryptoKey=k;items=JSON.parse(dec.decode(pt));
+}
+
+// ---- 画面切替 ----
+function showLock(){
+  cryptoKey=null;items=[];clearTimeout(idle);
+  $('app').classList.add('hide');$('lock').classList.remove('hide');
+  $('mp').value='';$('mp2').value='';
+  const has=!!localStorage.getItem(KEY);
+  $('mp2wrap').classList.toggle('hide',has);
+  $('unlockBtn').textContent=has?'開く':'金庫を作る';
+  $('lockHelp').textContent=has?'マスターパスワードで金庫を開きます。':'はじめに、マスターパスワードを決めます。データはこの端末のブラウザ内にだけ、暗号化して保存されます。';
+}
+function showApp(){$('lock').classList.add('hide');$('app').classList.remove('hide');render();bump();}
+function bump(){clearTimeout(idle);idle=setTimeout(()=>{showLock();say('自動でロックしました');},5*60*1000);}
+['click','keydown'].forEach(e=>document.addEventListener(e,()=>cryptoKey&&bump()));
+
+$('unlockBtn').onclick=async()=>{
+  const pw=$('mp').value, blob=localStorage.getItem(KEY);
+  try{
+    if(blob){await open(JSON.parse(blob),pw);}
+    else{
+      if(pw.length<12)return say('マスターパスワードは12文字以上にしてください',1);
+      if(pw!==$('mp2').value)return say('2回の入力が一致しません',1);
+      salt=crypto.getRandomValues(new Uint8Array(16));cryptoKey=await derive(pw,salt);items=[];await save();
+    }
+    say('');showApp();
+  }catch{say('マスターパスワードが違うか、データが壊れています',1);}
+};
+$('mp').addEventListener('keydown',e=>e.key==='Enter'&&!$('mp2wrap').offsetParent&&$('unlockBtn').click());
+$('lockBtn').onclick=()=>{showLock();say('ロックしました');};
+
+// ---- 生成・強度 ----
+function gen(len=20){
+  const set='abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789!@#$%^&*-_=+?';
+  const lim=Math.floor(2**32/set.length)*set.length;let out='';
+  while(out.length<len){const r=crypto.getRandomValues(new Uint32Array(1))[0];if(r<lim)out+=set[r%set.length];}
+  return out;
+}
+function score(p){
+  let pool=0;if(/[a-z]/.test(p))pool+=26;if(/[A-Z]/.test(p))pool+=26;if(/\d/.test(p))pool+=10;if(/[^\w]|_/.test(p))pool+=32;
+  const bits=p.length*Math.log2(pool||1);
+  return Math.min(100,Math.round(bits/80*100)); // 80bit以上で満点
+}
+const scoreColor=s=>s<40?'var(--bad)':s<70?'#d29922':'var(--ok)';
+
+// ---- 一覧 ----
+function el(tag,txt,cls){const e=document.createElement(tag);if(txt!=null)e.textContent=txt;if(cls)e.className=cls;return e;}
+function render(){
+  const q=$('q').value.toLowerCase(), L=$('list');L.replaceChildren();
+  const shown=items.filter(i=>[i.title,i.url,i.user].join(' ').toLowerCase().includes(q))
+    .sort((a,b)=>a.title.localeCompare(b.title,'ja'));
+  if(!shown.length)L.append(el('p','項目がありません。「＋ 追加」から登録できます。','mu'));
+  for(const i of shown){
+    const row=el('div',null,'item'),left=el('div');
+    left.append(el('div',i.title||'(無題)'),el('div',[i.user,i.url].filter(Boolean).join(' ・ '),'mu'));
+    const r=el('div',null,'row');
+    const cu=el('button','ユーザー名');cu.onclick=()=>copy(i.user,'ユーザー名');
+    const cp=el('button','パスワード');cp.onclick=()=>copy(i.pass,'パスワード',true);
+    const ed=el('button','編集');ed.onclick=()=>edit(i);
+    r.append(cu,cp,ed);row.append(left,r);L.append(row);
+  }
+}
+$('q').oninput=render;
+
+async function copy(t,label,secret){
+  try{await navigator.clipboard.writeText(t||'');say(label+'をコピーしました'+(secret?'（20秒後に消去）':''));}
+  catch{return say('コピーできませんでした',1);}
+  if(secret){clearTimeout(clipTimer);clipTimer=setTimeout(()=>navigator.clipboard.writeText('').catch(()=>{}),20000);}
+}
+
+// ---- 編集 ----
+function edit(item){
+  const it=item||{id:crypto.randomUUID(),title:'',url:'',user:'',pass:'',note:''};
+  const E=$('editor');E.replaceChildren();E.classList.remove('hide');
+  const f=(label,key,type='text')=>{const l=el('label',label),i=el(type==='area'?'textarea':'input');
+    if(type!=='area')i.type=type;i.value=it[key];i.autocomplete='off';i.oninput=()=>{it[key]=i.value;if(key==='pass')upd();};
+    E.append(l,i);return i;};
+  f('名前','title');f('URL','url');f('ユーザー名／メール','user');
+  const pi=f('パスワード','pass','password');
+  const bar=el('div',null,'bar'),fill=el('i');bar.append(fill);E.append(bar);
+  const upd=()=>{const s=score(it.pass);fill.style.width=s+'%';fill.style.background=scoreColor(s);};upd();
+  f('メモ','note','area');
+  const r=el('div',null,'row');
+  const g=el('button','生成');g.onclick=()=>{pi.value=it.pass=gen();pi.type='text';upd();};
+  const sh=el('button','表示／隠す');sh.onclick=()=>{pi.type=pi.type==='password'?'text':'password';};
+  const sv=el('button','保存','p');sv.onclick=async()=>{
+    if(!it.title)return say('名前を入れてください',1);
+    const k=items.findIndex(x=>x.id===it.id);k<0?items.push(it):items[k]=it;
+    await save();E.classList.add('hide');render();say('保存しました');};
+  const ca=el('button','閉じる');ca.onclick=()=>E.classList.add('hide');
+  r.append(g,sh,sv,ca);
+  if(item){const d=el('button','削除','d');d.onclick=async()=>{
+    if(!confirm('「'+it.title+'」を削除しますか？'))return;
+    items=items.filter(x=>x.id!==it.id);await save();E.classList.add('hide');render();};r.append(d);}
+  E.append(r);E.scrollIntoView({behavior:'smooth'});
+}
+$('addBtn').onclick=()=>edit(null);
+
+// ---- 点検（弱い・使い回し）----
+$('auditBtn').onclick=()=>{
+  const A=$('audit');A.replaceChildren();A.classList.toggle('hide',!A.classList.contains('hide'));
+  if(A.classList.contains('hide'))return;
+  const count={};items.forEach(i=>count[i.pass]=(count[i.pass]||0)+1);
+  const bad=items.map(i=>({i,w:score(i.pass)<50,d:count[i.pass]>1&&i.pass})).filter(x=>x.w||x.d);
+  A.append(el('strong','セキュリティ点検'));
+  if(!bad.length)A.append(el('p','問題は見つかりませんでした。','mu'));
+  bad.forEach(x=>A.append(el('div',x.i.title+'：'+[x.w&&'弱いパスワード',x.d&&'他と使い回し'].filter(Boolean).join('、'),'tag')));
+};
+
+// ---- バックアップ（暗号化したまま書き出し・読み込み）----
+$('exportBtn').onclick=async()=>{
+  const blob=new Blob([JSON.stringify(await seal())],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='vault-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href);
+  say('暗号化されたバックアップを保存しました（開くにはマスターパスワードが必要）');
+};
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=async e=>{
+  const f=e.target.files[0];if(!f)return;
+  try{
+    const b=JSON.parse(await f.text());if(!b.salt||!b.iv||!b.data)throw 0;
+    if(localStorage.getItem(KEY)&&!confirm('今ある金庫をバックアップで置き換えます。よろしいですか？'))return;
+    localStorage.setItem(KEY,JSON.stringify(b));showLock();say('読み込みました。マスターパスワードで開いてください');
+  }catch{say('バックアップの形式が正しくありません',1);}
+  e.target.value='';
+};
+
+showLock();
+</script>
+</body>
+</html>
