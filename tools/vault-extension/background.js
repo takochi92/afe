@@ -121,6 +121,28 @@ async function pkDelete(msg) {
   return { ok: true };
 }
 
+// ---- インライン入力（入力欄の候補）----
+// 照合は送信元タブのURL（Chromeが付けたもの）で行う。ロック中は項目の情報を一切返さない。
+function inlineTarget(sender, s) {
+  const origin = originOf(sender);
+  return L.fillAllowed(origin) && !L.isVaultOrigin(origin, s) ? sender.url : null;
+}
+async function inlineList(msg, sender) {
+  const s = await L.getSettings(), url = inlineTarget(sender, s); if (!url) return { items: [] };
+  const ses = await unlocked(); if (!ses) return { locked: true };
+  const items = (await liveItems(ses, s)).filter(i => !i.del && i.kind !== 'passkey');
+  return { items: L.matchItems(items, url).map(i => ({ id: i.id, title: i.title || L.hostOf(i.url || ''), user: i.user || '' })) };
+}
+async function inlineFill(msg, sender) {
+  const s = await L.getSettings(), url = inlineTarget(sender, s); if (!url) return { ok: false };
+  const ses = await unlocked(); if (!ses) return { ok: false, locked: true };
+  const item = (await liveItems(ses, s)).find(i => i.id === msg.id && !i.del && i.kind !== 'passkey');
+  // 入力の直前に、その項目が送信元のページと本当に一致するかを再検証（一致しなければ資格情報は渡さない）
+  if (!item || !L.matchItems([item], url).length) return { ok: false };
+  await touch(ses, s);
+  return { ok: true, user: item.user || '', pass: item.pass || '' };
+}
+
 const handlers = {
   // ページ（content script）から
   status: async () => ({ unlocked: !!(await unlocked()) }),
@@ -130,11 +152,12 @@ const handlers = {
     await chrome.storage.session.set({ lastUser }); return {}; },
   pendingFor: async (m, s) => { const ses = await unlocked(); if (!ses) return {}; return pendingList(ses, await L.getSettings(), p => p.origin === originOf(s)); },
   pkCheck, pkCreate, pkGet,
+  inlineList, inlineFill,
   // ポップアップから
   listPending: async () => pendingList(await unlocked(), await L.getSettings()),
   pkDelete
 };
-const POPUP_ONLY = new Set(['listPending', 'pkDelete']), PAGE_ONLY = new Set(['capture', 'noteUser', 'pendingFor', 'pkCheck', 'pkCreate', 'pkGet']);
+const POPUP_ONLY = new Set(['listPending', 'pkDelete']), PAGE_ONLY = new Set(['capture', 'noteUser', 'pendingFor', 'pkCheck', 'pkCreate', 'pkGet', 'inlineList', 'inlineFill']);
 
 chrome.runtime.onMessage.addListener((msg, sender, reply) => {
   const h = msg && handlers[msg.type];

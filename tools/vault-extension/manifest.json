@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "マイ金庫",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "自作パスワード管理「マイ金庫」のChrome拡張。自宅サーバーの暗号化金庫で、ログインの自動入力・保存提案・パスキーを扱います。",
   "action": {
     "default_title": "マイ金庫",
@@ -58,6 +58,7 @@
         "https://*/*"
       ],
       "js": [
+        "content.js",
         "detect.js"
       ],
       "run_at": "document_start"

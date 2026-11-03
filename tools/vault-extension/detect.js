@@ -98,6 +98,58 @@
   // 画面遷移した後のページでも、保留中の提案を出す（解錠済みのときだけ）
   ready(() => send({ type: 'pendingFor' }).then(r => (r.items || []).forEach(offer)));
 
+  // ---------- C. インライン入力（入力欄の候補）----------
+  // パスワード欄がちょうど1つのフォームの、テキスト／メール／パスワード欄にフォーカスしたら候補を出す。
+  // 表示はタイトルとユーザー名だけ。パスワードはクリックした時に初めて background から受け取る。
+  const MENU_CSS = `:host{all:initial}
+  .m{position:fixed;z-index:2147483647;min-width:240px;max-width:360px;background:#fff;color:#1b1f24;border:1px solid #d8dce1;border-radius:8px;
+     box-shadow:0 6px 20px rgba(0,0,0,.18);padding:4px;font:13px/1.4 system-ui,sans-serif}
+  @media(prefers-color-scheme:dark){.m{background:#1e2327;color:#e6e8ea;border-color:#3a4249}}
+  button{all:unset;display:block;box-sizing:border-box;width:100%;padding:6px 8px;border-radius:6px;cursor:pointer}
+  button:hover,button:focus{background:rgba(37,99,235,.12)}
+  .t{font-weight:600}.u{font-size:12px;opacity:.7}.l{padding:6px 8px;font-size:12px}`;
+  let menuHost = null, menuRoot = null, menuFor = null, filling = false;
+  function closeMenu() { if (menuRoot) menuRoot.replaceChildren(); menuFor = null; }
+  function menuBox(input) {
+    if (!menuRoot) { menuHost = document.createElement('afe-vault-menu'); menuRoot = menuHost.attachShadow({ mode: 'closed' }); }
+    if (!menuHost.isConnected) (document.body || document.documentElement).appendChild(menuHost);
+    menuRoot.replaceChildren();
+    const st = document.createElement('style'); st.textContent = MENU_CSS;
+    const m = el('div', null, 'm'), r = input.getBoundingClientRect();
+    m.style.top = Math.round(r.bottom + 2) + 'px'; m.style.left = Math.round(Math.max(4, r.left)) + 'px'; m.style.width = Math.round(Math.max(240, r.width)) + 'px';
+    m.addEventListener('mousedown', e => e.preventDefault()); // 押した瞬間に入力欄のフォーカスが外れて閉じないように
+    menuRoot.append(st, m); menuFor = input; return m;
+  }
+  const inlineField = i => i && i.tagName === 'INPUT' && ['text', 'email', 'password', ''].includes(i.type) && !i.disabled && !i.readOnly;
+  const formOf = i => {
+    const f = i.form; if (!f) return null;
+    const pws = [...f.querySelectorAll('input[type=password]')].filter(x => !x.disabled);
+    return pws.length === 1 ? f : null; // 登録・変更画面（パスワード欄2つ以上）は対象外
+  };
+  document.addEventListener('focusin', async e => {
+    const input = e.target; if (filling || !e.isTrusted || !inlineField(input)) return;
+    const form = formOf(input); if (!form) return;
+    const r = await send({ type: 'inlineList' });
+    if (document.activeElement !== input) return; // 問い合わせ中にフォーカスが移った
+    if (r.locked) { const m = menuBox(input); m.append(el('div', '🔒 金庫がロック中です。ツールバーのアイコンから解錠してください', 'l')); return; }
+    const items = r.items || []; if (!items.length) return closeMenu();
+    const m = menuBox(input);
+    for (const it of items) {
+      const b = el('button'); b.append(el('div', '🔐 ' + (it.title || ''), 't'), el('div', it.user || '(ユーザー名なし)', 'u'));
+      b.addEventListener('click', async ev => {
+        if (!ev.isTrusted) return;
+        closeMenu();
+        const c = await send({ type: 'inlineFill', id: it.id });
+        if (c.ok && window.__afeVaultFill) { filling = true; try { window.__afeVaultFill(c.user, c.pass, form); } finally { setTimeout(() => { filling = false; }, 0); } }
+      });
+      m.append(b);
+    }
+  }, true);
+  document.addEventListener('focusout', e => { if (e.target === menuFor) closeMenu(); }, true);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuFor) closeMenu(); }, true);
+  window.addEventListener('scroll', () => menuFor && closeMenu(), true);
+  window.addEventListener('resize', () => menuFor && closeMenu());
+
   // ---------- B. パスキー（page.js からの要求を中継）----------
   const reply = (id, body) => window.postMessage({ __afeVault: 'res', id, ...body }, location.origin);
   const NATIVE = { action: 'native' }, CANCEL = { action: 'error', name: 'NotAllowedError' };
