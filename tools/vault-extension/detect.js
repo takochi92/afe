@@ -121,10 +121,27 @@
     menuRoot.append(st, m); menuFor = input; return m;
   }
   const inlineField = i => i && i.tagName === 'INPUT' && ['text', 'email', 'password', ''].includes(i.type) && !i.disabled && !i.readOnly;
+  const pwCount = c => [...c.querySelectorAll('input[type=password]')].filter(x => !x.disabled).length;
+  // 入力の範囲（scope）を決める。パスワード欄2つ以上（登録・変更画面）は対象外
+  //  - フォームに属する欄：そのフォーム
+  //  - フォームを使わない画面：祖先を最大8階層たどり、パスワード欄をちょうど1つ含む最小のコンテナ（ログインクラスタ）
   const formOf = i => {
-    const f = i.form; if (!f) return null;
-    const pws = [...f.querySelectorAll('input[type=password]')].filter(x => !x.disabled);
-    return pws.length === 1 ? f : null; // 登録・変更画面（パスワード欄2つ以上）は対象外
+    if (i.form) return pwCount(i.form) === 1 ? i.form : null;
+    let c = i.parentElement;
+    for (let depth = 0; c && depth < 8; depth++, c = c.parentElement) {
+      const n = pwCount(c);
+      if (n > 1) return null;
+      if (n === 1) return pairOf(c).includes(i) ? c : null;
+    }
+    return null;
+  };
+  // フォーム無しの場合は、実際に入力される2欄（パスワード欄と、その直前のテキスト欄）のどちらかにフォーカスしたときだけ出す。
+  // （クラスタが body 等の広い範囲になったとき、検索欄など無関係な欄で候補が出ないように）
+  const pairOf = c => {
+    const ins = [...c.querySelectorAll('input')].filter(x => !x.disabled && x.type !== 'hidden');
+    const k = ins.findIndex(x => x.type === 'password'); if (k < 0) return [];
+    for (let j = k - 1; j >= 0; j--) if (['text', 'email', 'tel', ''].includes(ins[j].type)) return [ins[j], ins[k]];
+    return [ins[k]];
   };
   document.addEventListener('focusin', async e => {
     const input = e.target; if (filling || !e.isTrusted || !inlineField(input)) return;
