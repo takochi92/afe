@@ -27,8 +27,8 @@ const sameLogin = p => i => !i.del && i.kind !== 'passkey' && L.hostOf(i.url || 
 function modeFor(items, p) { const ex = items.find(sameLogin(p)); return !ex ? 'new' : ex.pass === p.pass ? 'same' : 'update'; }
 
 async function capture(msg, sender) {
-  const origin = originOf(sender);
-  if (!L.fillAllowed(origin)) return { ok: false };
+  const origin = originOf(sender), s = await L.getSettings();
+  if (!L.fillAllowed(origin) || L.isVaultOrigin(origin, s)) return { ok: false }; // 金庫サーバー自身のページは対象外
   const pass = String(msg.pass || ''); let user = String(msg.user || '').trim();
   if (!pass) return { ok: false }; // 空のパスワードは保存しない
   if (!user) { // 2段階ログイン：直前にユーザー名だけ送信していれば使う
@@ -36,7 +36,7 @@ async function capture(msg, sender) {
     const lu = lastUser[origin]; if (lu && Date.now() - lu.at < USER_TTL) user = lu.user;
   }
   const p = { pid: crypto.randomUUID(), origin, host: L.hostOf(origin), user, pass, at: Date.now() };
-  const ses = await unlocked(), s = await L.getSettings();
+  const ses = await unlocked();
   let mode = 'new';
   if (ses) { try { mode = modeFor(await liveItems(ses, s), p); } catch { } }
   if (mode === 'same') return { ok: true, same: true };
@@ -45,7 +45,7 @@ async function capture(msg, sender) {
   return ses ? { ok: true, pid: p.pid, mode, host: p.host, user } : { ok: true, locked: true };
 }
 async function pendingList(ses, s, filter) {
-  let q = await getQueue(); if (filter) q = q.filter(filter);
+  let q = (await getQueue()).filter(p => !L.isVaultOrigin(p.origin, s)); if (filter) q = q.filter(filter);
   if (!ses) return { locked: true, count: q.length };
   let items = []; try { items = await liveItems(ses, s); } catch { }
   const out = [], drop = new Set();
@@ -125,7 +125,7 @@ const handlers = {
   // ページ（content script）から
   status: async () => ({ unlocked: !!(await unlocked()) }),
   capture, resolve,
-  noteUser: async (m, s) => { const o = originOf(s), u = String(m.user || '').trim(); if (!u) return {};
+  noteUser: async (m, s) => { const o = originOf(s), u = String(m.user || '').trim(); if (!u || L.isVaultOrigin(o, await L.getSettings())) return {};
     const { lastUser = {} } = await chrome.storage.session.get('lastUser'); lastUser[o] = { user: u, at: Date.now() };
     await chrome.storage.session.set({ lastUser }); return {}; },
   pendingFor: async (m, s) => { const ses = await unlocked(); if (!ses) return {}; return pendingList(ses, await L.getSettings(), p => p.origin === originOf(s)); },

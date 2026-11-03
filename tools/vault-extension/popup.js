@@ -100,12 +100,13 @@ function pkCard(i) {
 function render() {
   renderPending();
   const url = tab && tab.url, ok = url && /^https?:/.test(url);
-  const m = ok ? L.matchItems(items.filter(i => i.kind !== 'passkey'), url) : [];
+  const vaultTab = ok && L.isVaultOrigin(url, settings); // 金庫サーバー自身のタブでは「このサイトの項目」を出さない
+  const m = ok && !vaultTab ? L.matchItems(items.filter(i => i.kind !== 'passkey'), url) : [];
   $('site').textContent = ok ? new URL(url).hostname : 'このページでは使えません';
   const M = $('matches'); M.replaceChildren();
   if (ok && !L.fillAllowed(url)) M.append(el('p', 'https 以外のページです。自動入力はできません（コピーのみ）。', 'mu'));
   if (m.length) m.forEach(i => M.append(card(i, L.fillAllowed(url))));
-  else M.append(el('p', ok ? '一致する項目がありません。下の一覧からコピーできます。' : '', 'mu'));
+  else M.append(el('p', vaultTab ? '金庫サーバーのページです（自動入力・照合の対象外）。' : ok ? '一致する項目がありません。下の一覧からコピーできます。' : '', 'mu'));
   $('allBox').open = !m.length; renderAll();
 }
 function renderAll() {

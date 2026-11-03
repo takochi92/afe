@@ -3,6 +3,10 @@ export const DEFAULTS = { url: 'https://desktop-8ern2im.tail0cdc77.ts.net', toke
 const b64d = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 const b64e = u8 => btoa(String.fromCharCode(...u8));
 
+// 設定済みの金庫サーバー自身のオリジンか（金庫ページのマスターパスワード等を、保存提案や照合の対象にしない）
+export function isVaultOrigin(origin, s) {
+  try { return new URL(origin).origin === new URL(s.url).origin; } catch { return false; }
+}
 export async function getSettings() {
   const { settings } = await chrome.storage.local.get('settings');
   return { ...DEFAULTS, ...settings };
